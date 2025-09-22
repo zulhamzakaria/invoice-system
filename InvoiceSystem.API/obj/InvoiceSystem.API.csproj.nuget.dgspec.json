@@ -1,0 +1,299 @@
+{
+  "format": 1,
+  "restore": {
+    "D:\\Learning1\\Projects\\invoice-system\\InvoiceSystem.API\\InvoiceSystem.API.csproj": {}
+  },
+  "projects": {
+    "D:\\Learning1\\Projects\\invoice-system\\InvoiceSystem.API\\InvoiceSystem.API.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "D:\\Learning1\\Projects\\invoice-system\\InvoiceSystem.API\\InvoiceSystem.API.csproj",
+        "projectName": "InvoiceSystem.API",
+        "projectPath": "D:\\Learning1\\Projects\\invoice-system\\InvoiceSystem.API\\InvoiceSystem.API.csproj",
+        "packagesPath": "C:\\Users\\zulham\\.nuget\\packages\\",
+        "outputPath": "D:\\Learning1\\Projects\\invoice-system\\InvoiceSystem.API\\obj\\",
+        "projectStyle": "PackageReference",
+        "fallbackFolders": [
+          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
+        ],
+        "configFilePaths": [
+          "C:\\Users\\zulham\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+        ],
+        "originalTargetFrameworks": [
+          "net8.0"
+        ],
+        "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "D:\\learning1\\dotNet_Microservices_Basics_Course\\packages": {},
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "net8.0": {
+            "targetAlias": "net8.0",
+            "projectReferences": {
+              "D:\\Learning1\\Projects\\invoice-system\\InvoiceSystem.Application\\InvoiceSystem.Application.csproj": {
+                "projectPath": "D:\\Learning1\\Projects\\invoice-system\\InvoiceSystem.Application\\InvoiceSystem.Application.csproj"
+              },
+              "D:\\Learning1\\Projects\\invoice-system\\InvoiceSystem.Infrastructure\\InvoiceSystem.Infrastructure.csproj": {
+                "projectPath": "D:\\Learning1\\Projects\\invoice-system\\InvoiceSystem.Infrastructure\\InvoiceSystem.Infrastructure.csproj"
+              }
+            }
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        },
+        "restoreAuditProperties": {
+          "enableAudit": "true",
+          "auditLevel": "low",
+          "auditMode": "direct"
+        },
+        "SdkAnalysisLevel": "9.0.300"
+      },
+      "frameworks": {
+        "net8.0": {
+          "targetAlias": "net8.0",
+          "dependencies": {
+            "Swashbuckle.AspNetCore": {
+              "target": "Package",
+              "version": "[6.6.2, )"
+            }
+          },
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48",
+            "net481"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": {
+            "Microsoft.AspNetCore.App": {
+              "privateAssets": "none"
+            },
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.301/PortableRuntimeIdentifierGraph.json"
+        }
+      }
+    },
+    "D:\\Learning1\\Projects\\invoice-system\\InvoiceSystem.Application\\InvoiceSystem.Application.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "D:\\Learning1\\Projects\\invoice-system\\InvoiceSystem.Application\\InvoiceSystem.Application.csproj",
+        "projectName": "InvoiceSystem.Application",
+        "projectPath": "D:\\Learning1\\Projects\\invoice-system\\InvoiceSystem.Application\\InvoiceSystem.Application.csproj",
+        "packagesPath": "C:\\Users\\zulham\\.nuget\\packages\\",
+        "outputPath": "D:\\Learning1\\Projects\\invoice-system\\InvoiceSystem.Application\\obj\\",
+        "projectStyle": "PackageReference",
+        "fallbackFolders": [
+          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
+        ],
+        "configFilePaths": [
+          "C:\\Users\\zulham\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+        ],
+        "originalTargetFrameworks": [
+          "net8.0"
+        ],
+        "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "D:\\learning1\\dotNet_Microservices_Basics_Course\\packages": {},
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "net8.0": {
+            "targetAlias": "net8.0",
+            "projectReferences": {
+              "D:\\Learning1\\Projects\\invoice-system\\InvoiceSystem.Domain\\InvoiceSystem.Domain.csproj": {
+                "projectPath": "D:\\Learning1\\Projects\\invoice-system\\InvoiceSystem.Domain\\InvoiceSystem.Domain.csproj"
+              }
+            }
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        },
+        "restoreAuditProperties": {
+          "enableAudit": "true",
+          "auditLevel": "low",
+          "auditMode": "direct"
+        },
+        "SdkAnalysisLevel": "9.0.300"
+      },
+      "frameworks": {
+        "net8.0": {
+          "targetAlias": "net8.0",
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48",
+            "net481"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": {
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.301/PortableRuntimeIdentifierGraph.json"
+        }
+      }
+    },
+    "D:\\Learning1\\Projects\\invoice-system\\InvoiceSystem.Domain\\InvoiceSystem.Domain.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "D:\\Learning1\\Projects\\invoice-system\\InvoiceSystem.Domain\\InvoiceSystem.Domain.csproj",
+        "projectName": "InvoiceSystem.Domain",
+        "projectPath": "D:\\Learning1\\Projects\\invoice-system\\InvoiceSystem.Domain\\InvoiceSystem.Domain.csproj",
+        "packagesPath": "C:\\Users\\zulham\\.nuget\\packages\\",
+        "outputPath": "D:\\Learning1\\Projects\\invoice-system\\InvoiceSystem.Domain\\obj\\",
+        "projectStyle": "PackageReference",
+        "fallbackFolders": [
+          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
+        ],
+        "configFilePaths": [
+          "C:\\Users\\zulham\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+        ],
+        "originalTargetFrameworks": [
+          "net8.0"
+        ],
+        "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "D:\\learning1\\dotNet_Microservices_Basics_Course\\packages": {},
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "net8.0": {
+            "targetAlias": "net8.0",
+            "projectReferences": {}
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        },
+        "restoreAuditProperties": {
+          "enableAudit": "true",
+          "auditLevel": "low",
+          "auditMode": "direct"
+        },
+        "SdkAnalysisLevel": "9.0.300"
+      },
+      "frameworks": {
+        "net8.0": {
+          "targetAlias": "net8.0",
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48",
+            "net481"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": {
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.301/PortableRuntimeIdentifierGraph.json"
+        }
+      }
+    },
+    "D:\\Learning1\\Projects\\invoice-system\\InvoiceSystem.Infrastructure\\InvoiceSystem.Infrastructure.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "D:\\Learning1\\Projects\\invoice-system\\InvoiceSystem.Infrastructure\\InvoiceSystem.Infrastructure.csproj",
+        "projectName": "InvoiceSystem.Infrastructure",
+        "projectPath": "D:\\Learning1\\Projects\\invoice-system\\InvoiceSystem.Infrastructure\\InvoiceSystem.Infrastructure.csproj",
+        "packagesPath": "C:\\Users\\zulham\\.nuget\\packages\\",
+        "outputPath": "D:\\Learning1\\Projects\\invoice-system\\InvoiceSystem.Infrastructure\\obj\\",
+        "projectStyle": "PackageReference",
+        "fallbackFolders": [
+          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
+        ],
+        "configFilePaths": [
+          "C:\\Users\\zulham\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+        ],
+        "originalTargetFrameworks": [
+          "net8.0"
+        ],
+        "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "D:\\learning1\\dotNet_Microservices_Basics_Course\\packages": {},
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "net8.0": {
+            "targetAlias": "net8.0",
+            "projectReferences": {
+              "D:\\Learning1\\Projects\\invoice-system\\InvoiceSystem.Application\\InvoiceSystem.Application.csproj": {
+                "projectPath": "D:\\Learning1\\Projects\\invoice-system\\InvoiceSystem.Application\\InvoiceSystem.Application.csproj"
+              },
+              "D:\\Learning1\\Projects\\invoice-system\\InvoiceSystem.Domain\\InvoiceSystem.Domain.csproj": {
+                "projectPath": "D:\\Learning1\\Projects\\invoice-system\\InvoiceSystem.Domain\\InvoiceSystem.Domain.csproj"
+              }
+            }
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        },
+        "restoreAuditProperties": {
+          "enableAudit": "true",
+          "auditLevel": "low",
+          "auditMode": "direct"
+        },
+        "SdkAnalysisLevel": "9.0.300"
+      },
+      "frameworks": {
+        "net8.0": {
+          "targetAlias": "net8.0",
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48",
+            "net481"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": {
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.301/PortableRuntimeIdentifierGraph.json"
+        }
+      }
+    }
+  }
+}
