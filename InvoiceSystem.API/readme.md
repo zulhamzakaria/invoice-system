@@ -1,95 +1,93 @@
-﻿Complete Updated Summary — Invoice System with Approval Flow
-1. Project Setup & Architecture
+﻿# Complete Updated Summary — Invoice System with Approval Flow
 
-Use Clean Architecture with layered projects:
+## 1. Project Setup & Architecture
 
-Domain: Core business entities and rules, no dependencies on other layers.
+- Use **Clean Architecture** with layered projects:
+  - **Domain**: Core business entities and rules, no dependencies on other layers.
+  - **Application**: Business logic and orchestrations/use cases, depends on Domain only.
+  - **Infrastructure**: Data access, external services, implements interfaces, depends on Application + Domain.
+  - **API**: Web API exposing your endpoints, depends on Application + Infrastructure.
 
-Application: Business logic and orchestrations/use cases, depends on Domain only.
+- Seed realistic mock data in the database during development to ease testing.
 
-Infrastructure: Data access, external services, implements interfaces, depends on Application + Domain.
+---
 
-API: Web API exposing your endpoints, depends on Application + Infrastructure.
+## 2. Modeling Actors (Clerk, FO, FM)
 
-Seed realistic mock data in the database during development to ease testing.
+- Preferred to model them as separate classes inheriting from an abstract `Employee` base class, since their roles and behaviors differ significantly.
 
-2. Modeling Actors (Clerk, FO, FM)
+---
 
-Preferred to model them as separate classes inheriting from an abstract Employee base class, since their roles and behaviors differ significantly.
+## 3. Domain vs Application Responsibilities
 
-3. Domain vs Application Responsibilities
+### Domain Layer:
+- Contains entities (`Invoice`, `Employee`, etc.) and core business rules (e.g., invoice amount must be ≥ 0).
+- Enforces invariants and domain logic.
 
-Domain Layer:
+### Application Layer:
+- Orchestrates use cases (e.g., `SubmitInvoice`, `ApproveInvoice`).
+- Coordinates domain entities and persistence.
+- Implements approval workflows and routing logic.
 
-Contains entities (Invoice, Employee, etc.) and core business rules (e.g., invoice amount must be ≥ 0).
+---
 
-Enforces invariants and domain logic.
+## 4. Approval Logic with Chain of Responsibility (CoC)
 
-Application Layer:
+- CoC is the main pattern for approval workflows.
+- Approval requests flow along a chain of handlers (e.g., FO → FM → CFO).
+- Each handler checks if they have the authority (e.g., approval amount limit) to approve:
+  - If yes, they approve and the chain stops.
+  - If no, they pass the request to the next handler.
+- This allows dynamic, flexible routing of approvals without hardcoded workflows.
+- The chain finds the “best suitor” for approval at runtime.
 
-Orchestrates use cases (e.g., SubmitInvoice, ApproveInvoice).
+---
 
-Coordinates domain entities and persistence.
+## 5. Dynamic Routing of Approvals
 
-Implements approval workflows and routing logic.
+- The system can decide upfront who should receive the approval request based on amount thresholds or start the request at the start of the chain and let it flow.
+- You can combine upfront routing with CoC for efficiency and escalation.
 
-4. Approval Logic with Chain of Responsibility (CoC)
+---
 
-CoC is the main pattern for approval workflows.
+## 6. Handling Workload & Avoiding Bottlenecks
 
-Approval requests flow along a chain of handlers (e.g., FO → FM → CFO).
+- Since CoC starts approval at the first handler, that person can get overloaded.
+- To balance load, implement strategies such as:
+  - **Round Robin**: Distribute tasks evenly among multiple approvers at the same role.
+  - **FIFO**: Process tasks in arrival order.
+  - **Least Loaded**: Assign to the approver with the fewest pending tasks.
+  - **Skill or Attribute-Based Routing**: Route by department, expertise, region, etc.
+  - **Escalation and Skip Rules**: Skip overloaded approvers or escalate if needed.
 
-Each handler checks if they have the authority (e.g., approval amount limit) to approve:
+---
 
-If yes, they approve and the chain stops.
+## 7. Implementing Load Balancing Example
 
-If no, they pass the request to the next handler.
+- Round Robin can be implemented to cycle through multiple approvers to distribute workload fairly, e.g., picking the next FO to assign the task to.
 
-This allows dynamic, flexible routing of approvals without hardcoded workflows.
+---
 
-The chain finds the “best suitor” for approval at runtime.
+## 8. Why Not Strategy Pattern?
 
-5. Dynamic Routing of Approvals
+- Strategy encapsulates different algorithms you pick from at runtime, but in your case:
+  - The approval is a multi-step process involving multiple potential approvers, not just one fixed algorithm.
+  - CoC naturally models this “pass it down the line until someone can approve” logic.
+- Therefore, **CoC is a better fit** for your approval workflow than Strategy.
 
-The system can decide upfront who should receive the approval request based on amount thresholds or start the request at the start of the chain and let it flow.
+---
 
-You can combine upfront routing with CoC for efficiency and escalation.
+## 9. Summary of Key Concepts
 
-6. Handling Workload & Avoiding Bottlenecks
+| Concept                   | Description                                                      |
+|---------------------------|------------------------------------------------------------------|
+| Clean Architecture Layers | Domain → Application → Infrastructure → API                      |
+| Actor Modeling            | Separate classes inheriting from an abstract Employee base class |
+| Domain Responsibility     | Core entities and business rules                                 |
+| Application Responsibility| Workflow orchestration, use cases, approval routing              |
+| Approval Pattern          | Chain of Responsibility (CoC) for dynamic, multi-step approval   |
+| Workload Management       | Round robin, FIFO, least loaded, and routing strategies          |
 
-Since CoC starts approval at the first handler, that person can get overloaded.
+---
 
-To balance load, implement strategies such as:
-
-Round Robin: Distribute tasks evenly among multiple approvers at the same role.
-
-FIFO: Process tasks in arrival order.
-
-Least Loaded: Assign to the approver with the fewest pending tasks.
-
-Skill or Attribute-Based Routing: Route by department, expertise, region, etc.
-
-Escalation and Skip Rules: Skip overloaded approvers or escalate if needed.
-
-7. Implementing Load Balancing Example
-
-Round Robin can be implemented to cycle through multiple approvers to distribute workload fairly, e.g., picking the next FO to assign the task to.
-
-8. Why Not Strategy Pattern?
-
-Strategy encapsulates different algorithms you pick from at runtime, but in your case:
-
-The approval is a multi-step process involving multiple potential approvers, not just one fixed algorithm.
-
-CoC naturally models this “pass it down the line until someone can approve” logic.
-
-Therefore, CoC is a better fit for your approval workflow than Strategy.
-
-9. Summary of Key Concepts
-Concept	Description
-Clean Architecture Layers	Domain → Application → Infrastructure → API
-Actor Modeling	Separate classes inheriting from an abstract Employee base class
-Domain Responsibility	Core entities and business rules
-Application Responsibility	Workflow orchestration, use cases, approval routing
-Approval Pattern	Chain of Responsibility (CoC) for dynamic, multi-step approval
-Workload Management	Round robin, FIFO, least loaded, and routing strategies
+*End of summary.*
