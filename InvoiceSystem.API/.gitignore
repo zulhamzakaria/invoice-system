@@ -1,0 +1,11 @@
+﻿# Ignore local appsettings with secrets
+appsettings.Development.json
+
+# Ignore user-specific VS files (optional but recommended)
+.vs/
+*.user
+*.suo
+
+# Ignore build output folders (optional but recommended)
+bin/
+obj/
