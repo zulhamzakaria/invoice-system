@@ -40,3 +40,9 @@ D:\Learning1\Projects\invoice-system\InvoiceSystem.API\bin\Debug\net8.0\InvoiceS
 D:\Learning1\Projects\invoice-system\InvoiceSystem.API\bin\Debug\net8.0\InvoiceSystem.Application.pdb
 D:\Learning1\Projects\invoice-system\InvoiceSystem.API\bin\Debug\net8.0\InvoiceSystem.Infrastructure.pdb
 D:\Learning1\Projects\invoice-system\InvoiceSystem.API\bin\Debug\net8.0\InvoiceSystem.Domain.pdb
+D:\Learning1\Projects\invoice-system\InvoiceSystem.API\bin\Debug\net8.0\nuget.config
+D:\Learning1\Projects\invoice-system\InvoiceSystem.API\bin\Debug\net8.0\Microsoft.EntityFrameworkCore.dll
+D:\Learning1\Projects\invoice-system\InvoiceSystem.API\bin\Debug\net8.0\Microsoft.EntityFrameworkCore.Abstractions.dll
+D:\Learning1\Projects\invoice-system\InvoiceSystem.API\bin\Debug\net8.0\Microsoft.EntityFrameworkCore.Relational.dll
+D:\Learning1\Projects\invoice-system\InvoiceSystem.API\bin\Debug\net8.0\Npgsql.dll
+D:\Learning1\Projects\invoice-system\InvoiceSystem.API\bin\Debug\net8.0\Npgsql.EntityFrameworkCore.PostgreSQL.dll
