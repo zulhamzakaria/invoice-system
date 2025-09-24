@@ -1,6 +1,8 @@
-﻿namespace InvoiceSystem.Domain.Entities;
+﻿using InvoiceSystem.Domain.Interfaces;
 
-public class FO : Employee
+namespace InvoiceSystem.Domain.Entities;
+
+public class FO : Employee, IApprover
 {
     public decimal ApprovalLimit { get; private set; }
 
@@ -10,5 +12,5 @@ public class FO : Employee
         ApprovalLimit = approvalLimit;
     }
 
-    public bool CanApprove(decimal amount) => amount <= ApprovalLimit;
+    public bool canApprove(decimal amount) => amount <= ApprovalLimit;
 }
