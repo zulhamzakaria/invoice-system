@@ -45,3 +45,4 @@ D:\Learning1\Projects\invoice-system\InvoiceSystem.API\bin\Debug\net8.0\Microsof
 D:\Learning1\Projects\invoice-system\InvoiceSystem.API\bin\Debug\net8.0\Microsoft.EntityFrameworkCore.Relational.dll
 D:\Learning1\Projects\invoice-system\InvoiceSystem.API\bin\Debug\net8.0\Npgsql.dll
 D:\Learning1\Projects\invoice-system\InvoiceSystem.API\bin\Debug\net8.0\Npgsql.EntityFrameworkCore.PostgreSQL.dll
+D:\Learning1\Projects\invoice-system\InvoiceSystem.API\obj\Debug\net8.0\staticwebassets.upToDateCheck.txt
