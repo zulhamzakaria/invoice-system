@@ -19,16 +19,18 @@ public class Invoice
 
     private Invoice() { } // EF Core needs this
 
-    public Invoice(string invoiceNumber, Company company, Address billing, Address shipping, DateTime date, Employee createdBy)
+    public Invoice(string invoiceNumber, Company company, Address billingAddress, Address shippingAddress, DateTime invoiceDate, Employee createdBy)
     {
         if (string.IsNullOrWhiteSpace(invoiceNumber))
             throw new ArgumentException("Invoice number cannot be empty.");
+        if (invoiceDate.Date > DateTime.UtcNow.Date)
+            throw new ArgumentException("Invoice date cannot be in the future.", nameof(invoiceDate));
 
         InvoiceNumber = invoiceNumber;
         Company = company ?? throw new ArgumentNullException(nameof(company));
-        BillingAddress = billing ?? throw new ArgumentNullException(nameof(billing));
-        ShippingAddress = shipping ?? throw new ArgumentNullException(nameof(shipping));
-        InvoiceDate = date;
+        BillingAddress = billingAddress ?? throw new ArgumentNullException(nameof(billingAddress));
+        ShippingAddress = shippingAddress ?? throw new ArgumentNullException(nameof(shippingAddress));
+        InvoiceDate = invoiceDate;
         CreatedBy = createdBy ?? throw new ArgumentNullException(nameof(createdBy));
     }
 
@@ -56,6 +58,9 @@ public class Invoice
         if (Status != InvoiceStatus.PendingApproval)
             throw new InvalidOperationException("Only pending invoices can be approved.");
 
+        if (approver is null)
+            throw new ArgumentNullException(nameof(approver));
+
         if (TotalAmount > approvalLimit)
             throw new InvalidOperationException("Amount exceeds approver's limit.");
 
@@ -67,6 +72,8 @@ public class Invoice
     {
         if (Status != InvoiceStatus.PendingApproval)
             throw new InvalidOperationException("Only pending invoices can be rejected.");
+        if(approver is null)
+            throw new ArgumentNullException(nameof(approver));
 
         ApprovedBy = approver;
         Status = InvoiceStatus.Rejected;
@@ -77,7 +84,7 @@ public class Invoice
     {
         if (Status == InvoiceStatus.Approved || Status == InvoiceStatus.Rejected)
         {
-            throw new InvalidOperationException('Processed invoices cannot be voided.');
+            throw new InvalidOperationException("Processed invoices cannot be voided.");
         }
         Status = InvoiceStatus.Voided;
     }
