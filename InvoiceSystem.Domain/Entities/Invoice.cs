@@ -1,4 +1,5 @@
 ﻿using InvoiceSystem.Domain.Common;
+using InvoiceSystem.Domain.Interfaces;
 
 namespace InvoiceSystem.Domain.Entities;
 
@@ -61,8 +62,8 @@ public class Invoice:AuditableEntity
         if (approver is null)
             throw new ArgumentNullException(nameof(approver));
 
-        if (TotalAmount > approvalLimit)
-            throw new InvalidOperationException("Amount exceeds approver's limit.");
+        if (approver is not IApprover approverWithLimit || !approverWithLimit.canApprove(TotalAmount))
+            throw new InvalidOperationException("Approver cannot approve this invoice.");
 
         ApprovedBy = approver;
         Status = InvoiceStatus.Approved;
