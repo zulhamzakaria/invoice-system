@@ -83,7 +83,7 @@ public class Invoice:AuditableEntity
 
     public void Void(Employee user)
     {
-        if(user is not Clerk clerk)
+        if(user is not ICanVoidInvoice)
         {
             throw new DomainException("Only Clerk can void an invoice.");
         }
