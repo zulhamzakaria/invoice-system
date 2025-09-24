@@ -84,7 +84,7 @@ public class Invoice:AuditableEntity
     {
         if(user is not Clerk clerk)
         {
-
+            throw new DomainException("Only Clerk can void an invoice.");
         }
 
         if (Status == InvoiceStatus.Approved || Status == InvoiceStatus.Rejected)
