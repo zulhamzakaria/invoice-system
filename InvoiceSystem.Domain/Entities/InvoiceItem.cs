@@ -12,6 +12,7 @@ public class InvoiceItem
 
     public InvoiceItem(string description, int quantity, decimal unitPrice)
     {
+        if(string.IsNullOrWhiteSpace(description)) throw new ArgumentNullException("Invoice Item Description is required");
         if (quantity <= 0) throw new ArgumentException("Quantity must be greater than zero.");
         if (unitPrice < 0) throw new ArgumentException("Unit price cannot be negative.");
 
