@@ -71,6 +71,16 @@ public class Invoice
         ApprovedBy = approver;
         Status = InvoiceStatus.Rejected;
     }
+
+
+    public void Void(Employee user)
+    {
+        if (Status == InvoiceStatus.Approved || Status == InvoiceStatus.Rejected)
+        {
+            throw new InvalidOperationException('Processed invoices cannot be voided.');
+        }
+        Status = InvoiceStatus.Voided;
+    }
 }
 
 public enum InvoiceStatus
@@ -78,5 +88,6 @@ public enum InvoiceStatus
     Draft,
     PendingApproval,
     Approved,
-    Rejected
+    Rejected,
+    Voided
 }
