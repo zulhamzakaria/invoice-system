@@ -82,6 +82,11 @@ public class Invoice:AuditableEntity
 
     public void Void(Employee user)
     {
+        if(user is not Clerk clerk)
+        {
+
+        }
+
         if (Status == InvoiceStatus.Approved || Status == InvoiceStatus.Rejected)
         {
             throw new InvalidOperationException("Processed invoices cannot be voided.");
