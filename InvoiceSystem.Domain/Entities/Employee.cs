@@ -1,6 +1,8 @@
-﻿namespace InvoiceSystem.Domain.Entities;
+﻿using InvoiceSystem.Domain.Common;
 
-public abstract class Employee
+namespace InvoiceSystem.Domain.Entities;
+
+public abstract class Employee:AuditableEntity
 {
     public Guid Id { get; private set; } = Guid.NewGuid();
     public string Name { get; private set; }
