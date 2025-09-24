@@ -1,8 +1,8 @@
-﻿using System.Net;
+﻿using InvoiceSystem.Domain.Common;
 
 namespace InvoiceSystem.Domain.Entities;
 
-public class Invoice
+public class Invoice:AuditableEntity
 {
     public Guid Id { get; private set; } = Guid.NewGuid();
     public string InvoiceNumber { get; private set; }
