@@ -21,6 +21,7 @@ public class AppDbContext : DbContext
 
         ConfigureEmployees(modelBuilder);
         ConfigureInvoices(modelBuilder);
+        ConfigureCompanies(modelBuilder);
     }
 
     private void ConfigureEmployees(ModelBuilder modelBuilder)
@@ -62,6 +63,25 @@ public class AppDbContext : DbContext
                 a.Property(p => p.ZipCode).HasColumnName("ShippingZipCode");
                 a.Property(p => p.Country).HasColumnName("ShippingCountry");
             });
+    }
+
+    private void ConfigureCompanies(ModelBuilder modelBuilder)
+    {
+        modelBuilder.Entity<Company>(company =>
+        {
+            company.OwnsMany(c => c.Addresses, a =>
+            {
+                a.WithOwner().HasForeignKey("CompanyId"); // shadow FK
+                a.Property<int>("Id"); // shadow key for EF tracking
+                a.HasKey("Id"); // EF needs a PK, even for owned collections
+
+                a.Property(p => p.Street).IsRequired();
+                a.Property(p => p.City).IsRequired();
+                a.Property(p => p.State).IsRequired();
+                a.Property(p => p.ZipCode).IsRequired();
+                a.Property(p => p.Country).IsRequired();
+            });
+        });
     }
 
     public override int SaveChanges()
