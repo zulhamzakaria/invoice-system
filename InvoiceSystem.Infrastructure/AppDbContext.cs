@@ -42,6 +42,26 @@ public class AppDbContext : DbContext
             .HasMany(i => i.Items)
             .WithOne()
             .OnDelete(DeleteBehavior.Cascade); // cascade delete
+
+        modelBuilder.Entity<Invoice>()
+       .OwnsOne(i => i.BillingAddress, a =>
+       {
+           a.Property(p => p.Street).HasColumnName("BillingStreet");
+           a.Property(p => p.City).HasColumnName("BillingCity");
+           a.Property(p => p.State).HasColumnName("BillingState");
+           a.Property(p => p.ZipCode).HasColumnName("BillingZipCode");
+           a.Property(p => p.Country).HasColumnName("BillingCountry");
+       });
+
+        modelBuilder.Entity<Invoice>()
+            .OwnsOne(i => i.ShippingAddress, a =>
+            {
+                a.Property(p => p.Street).HasColumnName("ShippingStreet");
+                a.Property(p => p.City).HasColumnName("ShippingCity");
+                a.Property(p => p.State).HasColumnName("ShippingState");
+                a.Property(p => p.ZipCode).HasColumnName("ShippingZipCode");
+                a.Property(p => p.Country).HasColumnName("ShippingCountry");
+            });
     }
 
     public override int SaveChanges()
