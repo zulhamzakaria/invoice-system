@@ -80,6 +80,7 @@ public class AppDbContext : DbContext
                 a.Property(p => p.State).IsRequired();
                 a.Property(p => p.ZipCode).IsRequired();
                 a.Property(p => p.Country).IsRequired();
+                a.Property(p => p.Type).HasConversion<string>();
             });
         });
     }
