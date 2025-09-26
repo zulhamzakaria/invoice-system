@@ -21,6 +21,8 @@ public static class DataSeeder
         context.Companies.AddRange(company1, company2);
 
         // ---------- Employees ----------
+        if (context.Employees.Any()) return; // Already seeded
+
         var employees = new List<Employee>
         {
             new Clerk("Clara Clerk", "clerk@company.com"),
@@ -32,6 +34,7 @@ public static class DataSeeder
         context.Employees.AddRange(employees);
 
         // ---------- Invoices ----------
+        if (context.Invoices.Any()) return; // Already seeded
         var invoices = new List<Invoice>();
         var rnd = new Random();
         var companies = new[] { company1, company2 };
