@@ -19,6 +19,9 @@ builder.Services.AddDbContext<AppDbContext>(options =>
 
 var app = builder.Build();
 
+//calling data seeder
+DataSeeder.Seed(app.Services.GetRequiredService<AppDbContext>());
+
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
