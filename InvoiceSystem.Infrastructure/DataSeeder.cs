@@ -83,6 +83,6 @@ public static class DataSeeder
         }
 
         context.Invoices.AddRange(invoices);
-        context.SaveChanges();
+        //context.SaveChanges();
     }
 }
