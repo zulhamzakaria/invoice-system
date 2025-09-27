@@ -19,6 +19,7 @@ public static class DataSeeder
         company2.AddAddress(new Address("321 Market St", "CityB", "StateB", "20002", "CountryB", AddressType.Shipping));
 
         context.Companies.AddRange(company1, company2);
+        context.SaveChanges();
 
         // ---------- Employees ----------
         if (context.Employees.Any()) return; // Already seeded
@@ -32,6 +33,7 @@ public static class DataSeeder
             new FM("Mary FM", "fm@company.com")
         };
         context.Employees.AddRange(employees);
+        context.SaveChanges();
 
         // ---------- Invoices ----------
         if (context.Invoices.Any()) return; // Already seeded
@@ -81,7 +83,6 @@ public static class DataSeeder
         }
 
         context.Invoices.AddRange(invoices);
-
         context.SaveChanges();
     }
 }
