@@ -13,5 +13,5 @@ public sealed class Error
     }
 
     public static readonly Error None= new Error(string.Empty, string.Empty);
-   public static Error Validation(string code, string message) => new Error(code, message);
+    public static Error Validation(string code, string message) => new Error(code, message);
 }
