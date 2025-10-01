@@ -1,5 +1,6 @@
 ﻿using InvoiceSystem.Domain.Common;
 using InvoiceSystem.Domain.Interfaces;
+using InvoiceSystem.Domain.Errors;
 
 namespace InvoiceSystem.Domain.Entities;
 
@@ -38,7 +39,7 @@ public class Invoice:AuditableEntity
     public void AddItem(string description, int qty, decimal unitPrice)
     {
         if (Status != InvoiceStatus.Draft)
-            throw new InvalidOperationException("Cannot modify items once submitted.");
+            throw new DomainException("Cannot modify items once submitted.", InvoiceErrors.InvoiceItems.CannotModifyItems);
 
         Items.Add(new InvoiceItem(description, qty, unitPrice));
     }
@@ -46,10 +47,10 @@ public class Invoice:AuditableEntity
     public void SubmitForApproval()
     {
         if (Status != InvoiceStatus.Draft)
-            throw new InvalidOperationException("Only draft invoices can be submitted.");
+            throw new DomainException("Only draft invoices can be submitted for approval.", InvoiceErrors.Approval.InvalidStatus);
 
         if (!Items.Any())
-            throw new InvalidOperationException("Cannot submit an invoice without items.");
+            throw new DomainException("Cannot submit an invoice without items.", InvoiceErrors.InvoiceItems.NoInvoiceItem);
 
         Status = InvoiceStatus.PendingApproval;
     }
@@ -57,13 +58,13 @@ public class Invoice:AuditableEntity
     public void Approve(Employee approver, decimal approvalLimit)
     {
         if (Status != InvoiceStatus.PendingApproval)
-            throw new InvalidOperationException("Only pending invoices can be approved.");
+            throw new DomainException("Only pending invoices can be approved.", InvoiceErrors.Approval.InvalidStatus);
 
         if (approver is null)
-            throw new ArgumentNullException(nameof(approver));
+            throw new DomainException("An approver must be provided to approve the invoice.", InvoiceErrors.Approval.MissingApprover);
 
         if (approver is not IApprover approverWithLimit || !approverWithLimit.canApprove(TotalAmount))
-            throw new InvalidOperationException("Approver cannot approve this invoice.");
+            throw new DomainException("Approver cannot approve this invoice.", InvoiceErrors.Approval.LimitExceeded);
 
         ApprovedBy = approver;
         Status = InvoiceStatus.Approved;
@@ -72,9 +73,9 @@ public class Invoice:AuditableEntity
     public void Reject(Employee approver)
     {
         if (Status != InvoiceStatus.PendingApproval)
-            throw new InvalidOperationException("Only pending invoices can be rejected.");
+            throw new DomainException("Only pending invoices can be rejected.", InvoiceErrors.Approval.InvalidStatus);
         if(approver is null)
-            throw new ArgumentNullException(nameof(approver));
+            throw new DomainException("An approver must be provided to reject the invoice.", InvoiceErrors.Approval.MissingApprover);
 
         ApprovedBy = approver;
         Status = InvoiceStatus.Rejected;
@@ -85,12 +86,12 @@ public class Invoice:AuditableEntity
     {
         if(user is not ICanVoidInvoice)
         {
-            throw new DomainException("Only Clerk can void an invoice.", "invalid-action");
+            throw new DomainException("Only Clerk can void an invoice.", InvoiceErrors.Voiding.InvalidRole);
         }
 
         if (Status == InvoiceStatus.Approved || Status == InvoiceStatus.Rejected)
         {
-            throw new InvalidOperationException("Processed invoices cannot be voided.");
+            throw new DomainException("Processed invoices cannot be voided.", InvoiceErrors.Voiding.Processed);
         }
         Status = InvoiceStatus.Voided;
     }
