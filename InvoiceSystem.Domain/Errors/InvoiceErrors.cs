@@ -2,6 +2,15 @@
 
 public static class InvoiceErrors
 {
+    public static class Creation
+    {
+        public const string MissingInvoiceNo = "INV.MISSING_INVOICE_NO";
+        public const string MissingCompany = "INV.MISSING_COMPANY";
+        public const string MissingBillingAddress = "INV.MISSING_BILLING_ADDRESS";
+        public const string MissingShippingAddress = "INV.MISSING_SHIPPING_ADDRESS";
+        public const string MissingCreatedBy = "INV.MISSING_CREATED_BY";
+        public const string DateInFuture = "INV.DATE_IN_FUTURE";
+    }
     public static class Voiding
     {
         public const string Processed = "INV.INVOICE_PROCESSED_ALREADY";
@@ -14,7 +23,6 @@ public static class InvoiceErrors
         public const string LimitExceeded = "INV.APPROVAL_LIMIT_EXCEEDED";
         public const string MissingApprover = "INV.NO_APPROVER_PROVIDED";
     }
-
     public static class  InvoiceItems
     {
         public const string NoInvoiceItem = "INV.NO_INVOICE_ITEMS";

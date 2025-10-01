@@ -23,17 +23,34 @@ public class Invoice:AuditableEntity
 
     public Invoice(string invoiceNumber, Company company, Address billingAddress, Address shippingAddress, DateTime invoiceDate, Employee createdBy)
     {
-        if (string.IsNullOrWhiteSpace(invoiceNumber))
-            throw new ArgumentException("Invoice number cannot be empty.");
-        if (invoiceDate.Date > DateTime.UtcNow.Date)
-            throw new ArgumentException("Invoice date cannot be in the future.", nameof(invoiceDate));
-
         InvoiceNumber = invoiceNumber;
-        Company = company ?? throw new ArgumentNullException(nameof(company));
-        BillingAddress = billingAddress ?? throw new ArgumentNullException(nameof(billingAddress));
-        ShippingAddress = shippingAddress ?? throw new ArgumentNullException(nameof(shippingAddress));
+        Company = company ;
+        BillingAddress = billingAddress;
+        ShippingAddress = shippingAddress;
         InvoiceDate = invoiceDate;
-        CreatedBy = createdBy ?? throw new ArgumentNullException(nameof(createdBy));
+        CreatedBy = createdBy;
+    }
+
+
+    public static Result<Invoice> Create(string invoiceNumber, Company company, Address billingAddress, Address shippingAddress, DateTime invoiceDate, Employee createdBy)
+    {
+        if (string.IsNullOrEmpty(invoiceNumber))
+            return Result<Invoice>.Failure(Error.Validation(InvoiceErrors.Creation.MissingInvoiceNo,"Invoice Number is required."));
+        if (invoiceDate.Date > DateTime.UtcNow.Date)
+            return Result<Invoice>.Failure(Error.Validation(InvoiceErrors.Creation.DateInFuture, "Invoice Date shouldn't be in future."));
+        if (company is null)
+            return Result<Invoice>.Failure(Error.Validation(InvoiceErrors.Creation.MissingCompany, "Company is required"));
+        if (createdBy is null)
+            return Result<Invoice>.Failure(Error.Validation(InvoiceErrors.Creation.MissingCreatedBy, "Clerk is required"));
+        if (shippingAddress is null)
+            return Result<Invoice>.Failure(Error.Validation(InvoiceErrors.Creation.MissingShippingAddress, "Shippping Address is required"));
+         if (billingAddress is null)
+            return Result<Invoice>.Failure(Error.Validation(InvoiceErrors.Creation.MissingBillingAddress, "Billing Address is required"));
+
+        var invoice = new Invoice(invoiceNumber, company, billingAddress,
+                                 shippingAddress, invoiceDate, createdBy);
+
+        return Result<Invoice>.Success(invoice);
     }
 
     public void AddItem(string description, int qty, decimal unitPrice)
