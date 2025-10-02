@@ -33,28 +33,40 @@ public class Address : IEquatable<Address>
 
     public static Result<Address> Create(string street, string city, string state, string zipCode, string country, AddressType type)
     {
-        if (string.IsNullOrWhiteSpace(street))
-            return Result<Address>.Failure(Error.Validation(AddressErrors.Creation.MissingStreet, "Street is required."));
-        if (string.IsNullOrWhiteSpace(city))
-            return Result<Address>.Failure(Error.Validation(AddressErrors.Creation.MissingCity, "City is required."));
-        if (string.IsNullOrWhiteSpace(state))
-            return Result<Address>.Failure(Error.Validation(AddressErrors.Creation.MissingState, "State is required"));
-        if (string.IsNullOrWhiteSpace(zipCode))
-            return Result<Address>.Failure(Error.Validation(AddressErrors.Creation.MissingZipcode, "Zipcode is required"));
-        if (string.IsNullOrWhiteSpace(country))
-            return Result<Address>.Failure(Error.Validation(AddressErrors.Creation.MissingCountry, "Country is required"));
-        if (street.Trim().Length < MinLength || street.Trim().Length > MaxStreetLength)
-            return Result<Address>.Failure(Error.Validation(AddressErrors.Creation.StreetLengthViolation, $"Street length must be between {MinLength} and {MaxStreetLength} characters"));
-        if (city.Trim().Length < MinLength || city.Trim().Length > MaxCityLength)
-            return Result<Address>.Failure(Error.Validation(AddressErrors.Creation.CityLengthViolation, $"City length must be between {MinLength} and {MaxStreetLength} characters"));
-        if (state.Trim().Length < MinLength || state.Trim().Length > MaxCityLength)
-            return Result<Address>.Failure(Error.Validation(AddressErrors.Creation.StateLengthViolation, $"State length must be between {MinLength} and {MaxStreetLength} characters"));
-        if (zipCode.Trim().Length < MinLength || zipCode.Trim().Length > MaxCityLength)
-            return Result<Address>.Failure(Error.Validation(AddressErrors.Creation.ZipcodeLengthViolation, $"Zipcode length must be between {MinLength} and {MaxStreetLength} characters"));
-        if (country.Trim().Length < MinLength || country.Trim().Length > MaxCityLength)
-            return Result<Address>.Failure(Error.Validation(AddressErrors.Creation.CountryLengthViolation, $"Country length must be between {MinLength} and {MaxStreetLength} characters"));
+
+        var errors = new List<Error>();
+
+        string trimmedStreet = street?.Trim() ?? string.Empty;
+        string trimmedCity = city?.Trim() ?? string.Empty;
+        string trimmedState = state?.Trim() ?? string.Empty;
+        string trimmedZipcode = zipCode?.Trim() ?? string.Empty;
+        string trimmedCountry = country?.Trim() ?? string.Empty;
+
+        if (string.IsNullOrWhiteSpace(trimmedStreet))
+            errors.Add(Error.Validation(AddressErrors.Creation.MissingStreet, "Street is required."));
+        if (string.IsNullOrWhiteSpace(trimmedCity))
+            errors.Add(Error.Validation(AddressErrors.Creation.MissingCity, "City is required."));
+        if (string.IsNullOrWhiteSpace(trimmedState))
+            errors.Add(Error.Validation(AddressErrors.Creation.MissingState, "State is required"));
+        if (string.IsNullOrWhiteSpace(trimmedZipcode))
+            errors.Add(Error.Validation(AddressErrors.Creation.MissingZipcode, "Zipcode is required"));
+        if (string.IsNullOrWhiteSpace(trimmedCountry))
+            errors.Add(Error.Validation(AddressErrors.Creation.MissingCountry, "Country is required"));
+        if (trimmedStreet.Length > 0 && (trimmedStreet.Length < MinLength || trimmedStreet.Length > MaxStreetLength))
+            errors.Add(Error.Validation(AddressErrors.Creation.StreetLengthViolation, $"Street length must be between {MinLength} and {MaxStreetLength} characters"));
+        if (trimmedCity.Length > 0 && (trimmedCity.Length < MinLength || trimmedCity.Length > MaxCityLength))
+            errors.Add(Error.Validation(AddressErrors.Creation.CityLengthViolation, $"City length must be between {MinLength} and {MaxStreetLength} characters"));
+        if (trimmedState.Length > 0 && (trimmedState.Length < MinLength || trimmedState.Length > MaxCityLength))
+            errors.Add(Error.Validation(AddressErrors.Creation.StateLengthViolation, $"State length must be between {MinLength} and {MaxStreetLength} characters"));
+        if (trimmedZipcode.Length > 0 && (trimmedZipcode.Length < MinLength || trimmedZipcode.Length > MaxCityLength))
+            errors.Add(Error.Validation(AddressErrors.Creation.ZipcodeLengthViolation, $"Zipcode length must be between {MinLength} and {MaxZipCodeLength} characters"));
+        if (trimmedCountry.Length > 0 && (trimmedCountry.Length < MinLength || trimmedCountry.Length > MaxCityLength))
+            errors.Add(Error.Validation(AddressErrors.Creation.CountryLengthViolation, $"Country length must be between {MinLength} and {MaxCountryLength} characters"));
         if (!Enum.IsDefined(typeof(AddressType), type))
-            return Result<Address>.Failure(Error.Validation(AddressErrors.Creation.UndefinedType, "Invalid Address Type"));
+            errors.Add(Error.Validation(AddressErrors.Creation.UndefinedType, "Invalid Address Type"));
+
+        if (errors.Any())
+            return Result<Address>.Failure(errors);
 
         var address = new Address(street, city, state, zipCode, country, type);
         return Result<Address>.Success(address);
