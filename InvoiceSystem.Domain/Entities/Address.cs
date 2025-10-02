@@ -1,4 +1,6 @@
-﻿namespace InvoiceSystem.Domain.Entities;
+﻿using InvoiceSystem.Domain.Common;
+
+namespace InvoiceSystem.Domain.Entities;
 
 public class Address : IEquatable<Address>
 {
@@ -13,12 +15,18 @@ public class Address : IEquatable<Address>
 
     public Address(string street, string city, string state, string zipCode, string country, AddressType type)
     {
-        Street = street ?? throw new ArgumentNullException(nameof(street));
-        City = city ?? throw new ArgumentNullException(nameof(city));
-        State = state ?? throw new ArgumentNullException(nameof(state));
-        ZipCode = zipCode ?? throw new ArgumentNullException(nameof(zipCode));
-        Country = country ?? throw new ArgumentNullException(nameof(country));
+        Street = street;
+        City = city;
+        State = state;
+        ZipCode = zipCode;
+        Country = country;
         Type = type;
+    }
+
+    public static Result<Address> Create (string street, string city, string state, string zipCode, string country, AddressType type)
+    {
+        if (string.IsNullOrWhiteSpace(street))
+            return Result<Address>.Failure(Error.Validation("", ""));
     }
 
     public override bool Equals(object? obj)
