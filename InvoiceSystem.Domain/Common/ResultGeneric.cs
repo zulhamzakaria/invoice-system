@@ -9,16 +9,18 @@ public sealed class Result<TValue> : Result
         ? _value
         : throw new InvalidOperationException("Cannot access value of a failed result.");
 
-    private Result(TValue value, bool isSuccess, Error error)
-        : base(isSuccess, error)
+    private Result(TValue value, bool isSuccess, IReadOnlyList< Error> errors)
+        : base(isSuccess, errors)
     {
         _value = value;
     }
 
-    public static Result<TValue> Success(TValue value) => new Result<TValue>(value, true, Error.None);
+    public static Result<TValue> Success(TValue value) => new Result<TValue>(value, true, Array.Empty<Error>());
 
     // Delegates to the base failure constructor, passing default for the value.
-    public static new Result<TValue> Failure(Error error) => new Result<TValue>(default!, false, error);
+    public static new Result<TValue> Failure(Error error) => new Result<TValue>(default!, false, new List<Error> { error});
+
+    public static new Result<TValue> Failure(IReadOnlyList<Error> errors) => new Result<TValue>(default!, false, errors);
 
     // Allows seamless conversion from the non-generic Result to the generic Result<T>.
     public static Result<TValue> FromResult(Result result)
