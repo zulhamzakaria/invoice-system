@@ -27,6 +27,6 @@ public sealed class Result<TValue> : Result
     {
         return result.IsSuccess
             ? Success(default!) // If successful, returns a Result<T> with the default value
-            : Failure(result.Error);
+            : Failure(result.Errors.ToList());
     }
 }
