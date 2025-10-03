@@ -1,5 +1,6 @@
 ﻿using InvoiceSystem.Domain.Common;
 using InvoiceSystem.Domain.Errors;
+using static InvoiceSystem.Domain.Entities.Address;
 
 namespace InvoiceSystem.Domain.Entities;
 
@@ -10,37 +11,51 @@ public class Company : Entity
     private const int MaxCompanyNameLength = 50;
     private const int MaxRegistrationNoLength = 10;
 
-    public Guid Id { get; private set; } = Guid.NewGuid();
     public string Name { get; private set; }
     public string RegistrationNumber { get; private set; }
-    public List<Address> Addresses { get; private set; } = new();
+    public IReadOnlyList<Address> Addresses { get; private set; }
 
     private Company() { } // For EF Core
 
-    public Company(string name, string registrationNumber)
+    private Company(string name, string registrationNumber, IReadOnlyList<Address> addresses) : base()
     {
-        Name = name.Trim();
-        RegistrationNumber = registrationNumber.Trim();
+        Name = name;
+        RegistrationNumber = registrationNumber;
+        Addresses = addresses;
     }
 
-    public static Result<Company> Create(string name, string registrationNumber)
+    public static Result<Company> Create(string name, string registrationNumber, IReadOnlyList<Address> addresses)
     {
         var errors = new List<Error>();
         string trimmedName = name.Trim();
         string trimmedRegistrationNumber = registrationNumber.Trim();
 
         if (string.IsNullOrWhiteSpace(trimmedName))
-            errors.Add(Error.Validation(CompanyErrors.Creation.MissingName,"Company Name is required"));
+            errors.Add(Error.Validation(CompanyErrors.Creation.MissingName, "Company Name is required"));
         if (string.IsNullOrWhiteSpace(trimmedRegistrationNumber))
             errors.Add(Error.Validation(CompanyErrors.Creation.MissingRegNo, "Company Registration No is required"));
+        if (!string.IsNullOrWhiteSpace(trimmedName) && trimmedName.Length > MaxCompanyNameLength)
+            errors.Add(Error.Validation(CompanyErrors.Creation.NameLengthViolation, $"Name length must be between {MinLength} and {MaxCompanyNameLength}"));
+        if (!string.IsNullOrWhiteSpace(registrationNumber) && registrationNumber.Length > MaxRegistrationNoLength)
+            errors.Add(Error.Validation(CompanyErrors.Creation.RegistrationNoViolation, $"Registration No length must be between {MinLength} and {MaxRegistrationNoLength}"));
+        if (addresses == null || !addresses.Any())
+        {
+            errors.Add(Error.Validation(CompanyErrors.Creation.MissingAddresses, "No Addresses (Billing nor Shipping) provided."));
+        }
+        else
+        {
+            if (!addresses.Any(a => a.Type == AddressType.Billing))
+            {
+                errors.Add(Error.Validation(CompanyErrors.Creation.MissingBillingAddress, "A Billing Address is required."));
+            }
+            if (!addresses.Any(a => a.Type == AddressType.Shipping))
+            {
+                errors.Add(Error.Validation(CompanyErrors.Creation.MissingShippingAddress, "A Shipping Address is required."));
+            }
+        }
         if (errors.Any())
             return Result<Company>.Failure(errors);
-        var company = new Company(name, registrationNumber);
+        var company = new Company(trimmedName, trimmedRegistrationNumber, addresses);
         return Result<Company>.Success(company);
-    }
-
-    public void AddAddress(Address address)
-    {
-        Addresses.Add(address);
     }
 }
