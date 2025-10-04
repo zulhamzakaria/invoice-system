@@ -1,9 +1,15 @@
 ﻿using InvoiceSystem.Domain.Common;
+using InvoiceSystem.Domain.Errors;
 
 namespace InvoiceSystem.Domain.Entities;
 
-public abstract class Employee:AuditableEntity
+public abstract class Employee : AuditableEntity
 {
+
+    private const int MinLength = 1;
+    private const int MaxNameLength = 100;
+    private const int MaxEmailLength = 100;
+
     public Guid Id { get; private set; } = Guid.NewGuid();
     public string Name { get; private set; }
     public string Email { get; private set; }
@@ -13,8 +19,21 @@ public abstract class Employee:AuditableEntity
     protected static Result<Employee> CreateBase(string name, string email)
     {
         var errors = new List<Error>();
-        if(string.IsNullOrEmpty(name)) 
-            errors.Add(Error.Validation(Empl))
+        var trimmedName = name.Trim();
+        var trimmedEmail = email.Trim();
+
+        if (string.IsNullOrEmpty(trimmedName))
+            errors.Add(Error.Validation(EmployeeErrors.Creation.MissingName, "Name is required"));
+        if (string.IsNullOrEmpty(trimmedEmail))
+            errors.Add(Error.Validation(EmployeeErrors.Creation.MissingEmail, "Email is required"));
+        if (!string.IsNullOrEmpty(trimmedName) && trimmedName.Length > MaxNameLength)
+            errors.Add(Error.Validation(EmployeeErrors.Creation.NameLengthViolation, $"Street length must be between {MinLength} and {MaxNameLength} characters"));
+        if (!string.IsNullOrEmpty(trimmedEmail) && trimmedEmail.Length > MaxEmailLength)
+            errors.Add(Error.Validation(EmployeeErrors.Creation.EmailLengthViolation, $"Street length must be between {MinLength} and {MaxEmailLength} characters"));
+
+        if (errors.Any())
+            return Result<Employee>.Failure(errors);
+        return Result<Employee>.Success(null);
     }
 
     protected Employee(string name, string email)
