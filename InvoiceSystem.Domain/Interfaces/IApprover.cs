@@ -2,7 +2,7 @@
 
 public interface IApprover
 {
-    bool canApprove(decimal amount);
-    bool isLimitlessApprover { get; }
-    decimal maxApprovalAmount { get; }
+    bool CanApprove(decimal amount);
+    bool IsLimitlessApprover { get; }
+    decimal MaxApprovalAmount { get; }
 }

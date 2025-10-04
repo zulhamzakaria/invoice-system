@@ -6,9 +6,9 @@ public class FM : Employee, IApprover
 {
     public decimal ApprovalLimit { get; private set; }
 
-    public bool isLimitlessApprover => true;
+    public bool IsLimitlessApprover => true;
 
-    public decimal maxApprovalAmount => decimal.MaxValue;
+    public decimal MaxApprovalAmount => decimal.MaxValue;
 
     private FM() { } // For EF Core
 
@@ -18,9 +18,9 @@ public class FM : Employee, IApprover
         ApprovalLimit = approvalLimit;
     }
 
-    public bool canApprove(decimal amount) { 
-        if(isLimitlessApprover)
+    public bool CanApprove(decimal amount) { 
+        if(IsLimitlessApprover)
             return true;
-        return amount <= maxApprovalAmount; 
+        return amount <= MaxApprovalAmount; 
     }
 }

@@ -6,8 +6,8 @@ namespace InvoiceSystem.Domain.Entities;
 
 public class FO : Employee, IApprover
 {
-    public decimal ApprovalLimit { get; private set; }
-
+    public decimal MaxApprovalAmount { get; private set; }
+    public bool IsLimitlessApprover => false;
     public static Result<FO> Create(string name, string email, decimal approvalLimit)
     {
         var baseResult = CreateBase(name, email);
@@ -15,7 +15,7 @@ public class FO : Employee, IApprover
 
         if (approvalLimit < 0)
         {
-            errors.Add(Error.Validation(EmployeeErrors.Creation.MissingFOApprovalLimit, "Approval Limit is required"));
+            errors.Add(Error.Validation(EmployeeErrors.Creation.NegativeFOApprovalLimit, "Approval Limit cannot be in negative"));
         }
 
         if (errors.Any())
@@ -28,8 +28,8 @@ public class FO : Employee, IApprover
     private FO() { } // For EF Core
     public FO(string name, string email, decimal approvalLimit) : base(name, email)
     {
-        ApprovalLimit = approvalLimit;
+        MaxApprovalAmount = approvalLimit;
     }
 
-    public bool canApprove(decimal amount) => amount <= ApprovalLimit;
+    public bool CanApprove(decimal amount) => amount <= MaxApprovalAmount;
 }

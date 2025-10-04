@@ -80,7 +80,7 @@ public class Invoice:AuditableEntity
         if (approver is null)
             throw new DomainException("An approver must be provided to approve the invoice.", InvoiceErrors.Approval.MissingApprover);
 
-        if (approver is not IApprover approverWithLimit || !approverWithLimit.canApprove(TotalAmount))
+        if (approver is not IApprover approverWithLimit || !approverWithLimit.CanApprove(TotalAmount))
             throw new DomainException("Approver cannot approve this invoice.", InvoiceErrors.Approval.LimitExceeded);
 
         ApprovedBy = approver;
