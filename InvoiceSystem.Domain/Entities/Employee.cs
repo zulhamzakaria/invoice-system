@@ -10,6 +10,13 @@ public abstract class Employee:AuditableEntity
 
     protected Employee() { } // For EF Core
 
+    protected static Result<Employee> CreateBase(string name, string email)
+    {
+        var errors = new List<Error>();
+        if(string.IsNullOrEmpty(name)) 
+            errors.Add(Error.Validation(Empl))
+    }
+
     protected Employee(string name, string email)
     {
         Name = name;
