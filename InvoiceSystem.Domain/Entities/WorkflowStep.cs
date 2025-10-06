@@ -65,15 +65,26 @@ public class WorkflowStep
         }
 
         // Check 3: Actor Invariant (Who can act?)
-        bool isManualAction =
-            actionType == WorkflowStepType.Approval ||
-            actionType == WorkflowStepType.Rejection ||
-            actionType == WorkflowStepType.Escalation;
+        bool isManualAction = actionType == WorkflowStepType.Approval ||
+                              actionType == WorkflowStepType.Rejection ||
+                              actionType == WorkflowStepType.Delegation ||
+                              actionType == WorkflowStepType.Recall ||
+                              actionType == WorkflowStepType.Escalation;
 
         if (isManualAction && approverId == null)
         {
             errors.Add(Error.Validation(WorkflowStepErrors.Creation.MissingApprover,
                 $"Action type {actionType} requires a valid Approver ID."));
+        }
+
+        bool isSystemAction = actionType == WorkflowStepType.Routing ||
+                              actionType == WorkflowStepType.AutoApproval ||
+                              actionType == WorkflowStepType.PaymentProcessing;
+
+        if (isSystemAction && approverId.HasValue)
+        {
+            errors.Add(Error.Validation(WorkflowStepErrors.Creation.UnexpectedApprover,
+                $"Action type {actionType} must not be tied to a specific human Approver ID."));
         }
 
         // Check 4: Reason/Audit Invariant
