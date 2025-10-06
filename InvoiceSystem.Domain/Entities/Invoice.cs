@@ -1,6 +1,7 @@
 ﻿using InvoiceSystem.Domain.Common;
 using InvoiceSystem.Domain.Interfaces;
 using InvoiceSystem.Domain.Errors;
+using InvoiceSystem.Domain.Enums;
 
 namespace InvoiceSystem.Domain.Entities;
 
@@ -112,13 +113,4 @@ public class Invoice:AuditableEntity
         }
         Status = InvoiceStatus.Voided;
     }
-}
-
-public enum InvoiceStatus
-{
-    Draft,
-    PendingApproval,
-    Approved,
-    Rejected,
-    Voided
 }
