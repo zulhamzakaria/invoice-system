@@ -18,6 +18,7 @@ public class WorkflowStep
     public string Reason { get; }
     public DateTimeOffset Timestamp { get; }
 
+    private WorkflowStep() { } //For EF Core
     // Private Constructor (Enforcing Validity)
     private WorkflowStep(
         Guid id,
