@@ -1,0 +1,36 @@
+﻿using InvoiceSystem.Domain.Entities;
+using InvoiceSystem.Domain.Repositories;
+using Microsoft.EntityFrameworkCore;
+
+namespace InvoiceSystem.Infrastructure.Repositories;
+
+public class WorkflowStepRepository : IWorkflowStepRepository
+{
+    private readonly AppDbContext _context;
+
+    public WorkflowStepRepository(AppDbContext context)
+    {
+        _context = context;
+    }
+    public async Task AddAsync(WorkflowStep workflowStep)
+    {
+        await _context.WorkflowSteps.AddAsync(workflowStep);
+        await _context.SaveChangesAsync();
+    }
+
+    public async Task<IReadOnlyList<WorkflowStep>> GetAllAsync()
+    {
+        return await _context.WorkflowSteps.ToListAsync();
+    }
+
+    public async Task<WorkflowStep?> GetByIdAsync(Guid id)
+    {
+        return await _context.WorkflowSteps.FindAsync(id);
+    }
+
+    public async Task UpdateAsync(WorkflowStep workflowStep)
+    {
+         _context.WorkflowSteps.Update(workflowStep);
+        await _context.SaveChangesAsync();
+    }
+}
