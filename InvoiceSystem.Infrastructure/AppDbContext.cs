@@ -13,6 +13,8 @@ public class AppDbContext : DbContext
     public DbSet<Invoice> Invoices { get; set; }
     public DbSet<InvoiceItem> InvoiceItems { get; set; }
 
+    public DbSet<WorkflowStep> WorkflowSteps { get; set; }
+
     public AppDbContext(DbContextOptions<AppDbContext> options) : base(options) { }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -22,6 +24,34 @@ public class AppDbContext : DbContext
         ConfigureEmployees(modelBuilder);
         ConfigureInvoices(modelBuilder);
         ConfigureCompanies(modelBuilder);
+        ConfigureWorkflowSteps(modelBuilder);    
+    }
+
+    private void ConfigureWorkflowSteps(ModelBuilder modelBuilder)
+    {
+        modelBuilder.Entity<WorkflowStep>(step =>
+        {
+            step.HasKey(wfs => wfs.Id);
+
+            step.Property(wfs => wfs.ActionType).HasConversion<string>().IsRequired();
+            step.Property(wfs => wfs.StatusBefore).HasConversion<string>().IsRequired();
+            step.Property(wfs => wfs.StatusAfter).HasConversion<string>().IsRequired();
+
+            step.Property(wfs => wfs.Reason).IsRequired().HasMaxLength(500);
+
+            step.Property(wfs => wfs.Timestamp).IsRequired();
+
+            step.HasOne<Invoice>()
+            .WithMany()
+            .HasForeignKey(wfs => wfs.InvoiceId)
+            .IsRequired()
+            .OnDelete(DeleteBehavior.Cascade);
+
+            step.HasIndex(wfs => wfs.InvoiceId);
+
+            step.HasIndex(wfs => new { wfs.InvoiceId, wfs.Timestamp }).IsUnique(false);
+        });
+        modelBuilder.Entity<Invoice>().HasIndex(i => i.InvoiceNumber).IsUnique();
     }
 
     private void ConfigureEmployees(ModelBuilder modelBuilder)
