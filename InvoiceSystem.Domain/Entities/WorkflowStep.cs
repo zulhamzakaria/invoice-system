@@ -6,6 +6,8 @@ namespace InvoiceSystem.Domain.Entities;
 
 public class WorkflowStep
 {
+    private const int MaxReasonlength = 500;
+
     // Properties are read-only or use private setters to enforce immutability
     public Guid Id { get; }
     public Guid InvoiceId { get; }
@@ -47,6 +49,7 @@ public class WorkflowStep
         string reason)
     {
         // --- 1. Centralized Invariant and Validation Checks ---
+        string trimmedReason = reason?.Trim() ?? string.Empty;
         var errors = new List<Error>();
 
         // Check 1: Mandatory Fields
@@ -54,6 +57,8 @@ public class WorkflowStep
         {
             errors.Add(Error.Validation(WorkflowStepErrors.Creation.InvalidInvoiceId, "Invoice ID cannot be empty."));
         }
+
+
 
         // Check 2: Logical Invariant (Must be a change)
         if (statusBefore == statusAfter && actionType != WorkflowStepType.Routing)
@@ -93,7 +98,10 @@ public class WorkflowStep
             errors.Add(Error.Validation(WorkflowStepErrors.Creation.MissingReason,
                "An audit reason is required for every workflow step."));
         }
-
+        if (trimmedReason.Length > 0 && trimmedReason.Length > MaxReasonlength)
+        {
+            errors.Add(Error.Validation(WorkflowStepErrors.Creation.ReasonLengthViolation, "Reason must be lesser than 500 characters"));
+        }
 
         // --- 2. Return Failure or Success ---
         if (errors.Count > 0)

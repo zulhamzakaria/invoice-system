@@ -9,5 +9,6 @@ public class WorkflowStepErrors
         public const string MissingApprover = "WFS.NO_APPROVER_PROVIDED";
         public const string UnexpectedApprover = "WFS.MUST_NOT_BE_HUMAN_APPROVER";
         public const string MissingReason = "WFS.NO_REASON_PROVIDED";
+        public const string ReasonLengthViolation = "WFS.REASON_LENGTH_INVALID";
     }
 }
