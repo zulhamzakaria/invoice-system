@@ -5,7 +5,7 @@ using InvoiceSystem.Domain.Enums;
 
 namespace InvoiceSystem.Domain.Entities;
 
-public class Invoice:AuditableEntity
+public class Invoice : AuditableEntity
 {
     public Guid Id { get; private set; } = Guid.NewGuid();
     public string InvoiceNumber { get; private set; }
@@ -25,7 +25,7 @@ public class Invoice:AuditableEntity
     public Invoice(string invoiceNumber, Company company, Address billingAddress, Address shippingAddress, DateTime invoiceDate, Employee createdBy)
     {
         InvoiceNumber = invoiceNumber;
-        Company = company ;
+        Company = company;
         BillingAddress = billingAddress;
         ShippingAddress = shippingAddress;
         InvoiceDate = invoiceDate;
@@ -36,7 +36,7 @@ public class Invoice:AuditableEntity
     public static Result<Invoice> Create(string invoiceNumber, Company company, Address billingAddress, Address shippingAddress, DateTime invoiceDate, Employee createdBy)
     {
         if (string.IsNullOrEmpty(invoiceNumber))
-            return Result<Invoice>.Failure(Error.Validation(InvoiceErrors.Creation.MissingInvoiceNo,"Invoice Number is required."));
+            return Result<Invoice>.Failure(Error.Validation(InvoiceErrors.Creation.MissingInvoiceNo, "Invoice Number is required."));
         if (invoiceDate.Date > DateTime.UtcNow.Date)
             return Result<Invoice>.Failure(Error.Validation(InvoiceErrors.Creation.DateInFuture, "Invoice Date shouldn't be in future."));
         if (company is null)
@@ -45,7 +45,7 @@ public class Invoice:AuditableEntity
             return Result<Invoice>.Failure(Error.Validation(InvoiceErrors.Creation.MissingCreatedBy, "Clerk is required"));
         if (shippingAddress is null)
             return Result<Invoice>.Failure(Error.Validation(InvoiceErrors.Creation.MissingShippingAddress, "Shippping Address is required"));
-         if (billingAddress is null)
+        if (billingAddress is null)
             return Result<Invoice>.Failure(Error.Validation(InvoiceErrors.Creation.MissingBillingAddress, "Billing Address is required"));
 
         var invoice = new Invoice(invoiceNumber, company, billingAddress,
@@ -59,7 +59,17 @@ public class Invoice:AuditableEntity
         if (Status != InvoiceStatus.Draft)
             throw new DomainException("Cannot modify items once submitted.", InvoiceErrors.InvoiceItems.CannotModifyItems);
 
-        Items.Add(new InvoiceItem(description, qty, unitPrice));
+        var addedItem = InvoiceItem.Create(description, qty, unitPrice);
+
+        if (addedItem.IsFailure)
+        {
+            throw new DomainException(
+         "Invoice item validation failed.",
+        InvoiceErrors.Creation.
+     );
+        }
+
+        Items.Add(addedItem.Value);
     }
 
     public void SubmitForApproval()
@@ -92,7 +102,7 @@ public class Invoice:AuditableEntity
     {
         if (Status != InvoiceStatus.PendingApproval)
             throw new DomainException("Only pending invoices can be rejected.", InvoiceErrors.Approval.InvalidStatus);
-        if(approver is null)
+        if (approver is null)
             throw new DomainException("An approver must be provided to reject the invoice.", InvoiceErrors.Approval.MissingApprover);
 
         ApprovedBy = approver;
@@ -102,7 +112,7 @@ public class Invoice:AuditableEntity
 
     public void Void(Employee user)
     {
-        if(user is not ICanVoidInvoice)
+        if (user is not ICanVoidInvoice)
         {
             throw new DomainException("Only Clerk can void an invoice.", InvoiceErrors.Voiding.InvalidRole);
         }
