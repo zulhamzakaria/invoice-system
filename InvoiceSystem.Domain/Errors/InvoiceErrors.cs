@@ -10,6 +10,8 @@ public static class InvoiceErrors
         public const string MissingShippingAddress = "INV.MISSING_SHIPPING_ADDRESS";
         public const string MissingCreatedBy = "INV.MISSING_CREATED_BY";
         public const string DateInFuture = "INV.DATE_IN_FUTURE";
+        public const string InvalidInvoiceItems = "INV.ITEM_VALIDATION_FAILED";
+        public const string InvoiceNoLengthViolation = "INV.INVOICE_NO_LENGTH_INVALID";      
     }
     public static class Voiding
     {

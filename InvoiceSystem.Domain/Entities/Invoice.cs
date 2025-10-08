@@ -7,6 +7,10 @@ namespace InvoiceSystem.Domain.Entities;
 
 public class Invoice : AuditableEntity
 {
+
+    private const int MinInvoiceNoLength = 1;
+    private const int MaxInvoiceNoLength = 50;
+
     public Guid Id { get; private set; } = Guid.NewGuid();
     public string InvoiceNumber { get; private set; }
     public Company Company { get; private set; }
@@ -35,18 +39,26 @@ public class Invoice : AuditableEntity
 
     public static Result<Invoice> Create(string invoiceNumber, Company company, Address billingAddress, Address shippingAddress, DateTime invoiceDate, Employee createdBy)
     {
-        if (string.IsNullOrEmpty(invoiceNumber))
-            return Result<Invoice>.Failure(Error.Validation(InvoiceErrors.Creation.MissingInvoiceNo, "Invoice Number is required."));
+        var trimmedInvoiceNo = invoiceNumber?.Trim() ?? string.Empty;
+        var errors = new List<Error>();
+
+        if (string.IsNullOrWhiteSpace(trimmedInvoiceNo))
+            errors.Add(Error.Validation(InvoiceErrors.Creation.MissingInvoiceNo, "Invoice Number is required."));
+        if (trimmedInvoiceNo.Length < MinInvoiceNoLength && trimmedInvoiceNo.Length > MaxInvoiceNoLength)
+            errors.Add(Error.Validation(InvoiceErrors.Creation.InvoiceNoLengthViolation, $"Invoice Number length must be between {MinInvoiceNoLength} and {MaxInvoiceNoLength}"));
         if (invoiceDate.Date > DateTime.UtcNow.Date)
-            return Result<Invoice>.Failure(Error.Validation(InvoiceErrors.Creation.DateInFuture, "Invoice Date shouldn't be in future."));
+            errors.Add(Error.Validation(InvoiceErrors.Creation.DateInFuture, "Invoice Date shouldn't be in future."));
         if (company is null)
-            return Result<Invoice>.Failure(Error.Validation(InvoiceErrors.Creation.MissingCompany, "Company is required"));
+            errors.Add(Error.Validation(InvoiceErrors.Creation.MissingCompany, "Company is required"));
         if (createdBy is null)
-            return Result<Invoice>.Failure(Error.Validation(InvoiceErrors.Creation.MissingCreatedBy, "Clerk is required"));
+            errors.Add(Error.Validation(InvoiceErrors.Creation.MissingCreatedBy, "Clerk is required"));
         if (shippingAddress is null)
-            return Result<Invoice>.Failure(Error.Validation(InvoiceErrors.Creation.MissingShippingAddress, "Shippping Address is required"));
+            errors.Add(Error.Validation(InvoiceErrors.Creation.MissingShippingAddress, "Shippping Address is required"));
         if (billingAddress is null)
-            return Result<Invoice>.Failure(Error.Validation(InvoiceErrors.Creation.MissingBillingAddress, "Billing Address is required"));
+            errors.Add(Error.Validation(InvoiceErrors.Creation.MissingBillingAddress, "Billing Address is required"));
+
+        if (errors.Any())
+            return Result<Invoice>.Failure(errors);
 
         var invoice = new Invoice(invoiceNumber, company, billingAddress,
                                  shippingAddress, invoiceDate, createdBy);
@@ -63,10 +75,7 @@ public class Invoice : AuditableEntity
 
         if (addedItem.IsFailure)
         {
-            throw new DomainException(
-         "Invoice item validation failed.",
-        InvoiceErrors.Creation.
-     );
+            throw new DomainException("Invoice item validation failed.", InvoiceErrors.Creation.InvalidInvoiceItems);
         }
 
         Items.Add(addedItem.Value);
