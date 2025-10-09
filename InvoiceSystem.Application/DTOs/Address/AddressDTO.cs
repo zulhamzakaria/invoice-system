@@ -1,3 +1,10 @@
-﻿namespace InvoiceSystem.Application.DTOs.Address;
+﻿using System.ComponentModel.DataAnnotations;
 
-public record AddressDTO(string Street, string Zipcode, string City, string State, string Country);
+namespace InvoiceSystem.Application.DTOs.Address;
+
+public record AddressDTO(string Street,
+                            string Zipcode,
+                            string City,
+                            string State,
+                            string Country,
+                            string AddressType);

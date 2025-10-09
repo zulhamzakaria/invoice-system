@@ -10,6 +10,7 @@ public class Address : IEquatable<Address>
     private const int MinLength = 1;
     private const int MaxStreetLength = 200;
     private const int MaxCityLength = 100;
+    private const int MaxStateLength = 100;
     private const int MaxZipCodeLength = 10;
     private const int MaxCountryLength = 50;
 
@@ -56,12 +57,12 @@ public class Address : IEquatable<Address>
         if (trimmedStreet.Length > 0 && (trimmedStreet.Length < MinLength || trimmedStreet.Length > MaxStreetLength))
             errors.Add(Error.Validation(AddressErrors.Creation.StreetLengthViolation, $"Street length must be between {MinLength} and {MaxStreetLength} characters"));
         if (trimmedCity.Length > 0 && (trimmedCity.Length < MinLength || trimmedCity.Length > MaxCityLength))
-            errors.Add(Error.Validation(AddressErrors.Creation.CityLengthViolation, $"City length must be between {MinLength} and {MaxStreetLength} characters"));
-        if (trimmedState.Length > 0 && (trimmedState.Length < MinLength || trimmedState.Length > MaxCityLength))
-            errors.Add(Error.Validation(AddressErrors.Creation.StateLengthViolation, $"State length must be between {MinLength} and {MaxStreetLength} characters"));
-        if (trimmedZipcode.Length > 0 && (trimmedZipcode.Length < MinLength || trimmedZipcode.Length > MaxCityLength))
+            errors.Add(Error.Validation(AddressErrors.Creation.CityLengthViolation, $"City length must be between {MinLength} and {MaxCityLength} characters"));
+        if (trimmedState.Length > 0 && (trimmedState.Length < MinLength || trimmedState.Length > MaxStateLength))
+            errors.Add(Error.Validation(AddressErrors.Creation.StateLengthViolation, $"State length must be between {MinLength} and {MaxStateLength} characters"));
+        if (trimmedZipcode.Length > 0 && (trimmedZipcode.Length < MinLength || trimmedZipcode.Length > MaxZipCodeLength))
             errors.Add(Error.Validation(AddressErrors.Creation.ZipcodeLengthViolation, $"Zipcode length must be between {MinLength} and {MaxZipCodeLength} characters"));
-        if (trimmedCountry.Length > 0 && (trimmedCountry.Length < MinLength || trimmedCountry.Length > MaxCityLength))
+        if (trimmedCountry.Length > 0 && (trimmedCountry.Length < MinLength || trimmedCountry.Length > MaxCountryLength))
             errors.Add(Error.Validation(AddressErrors.Creation.CountryLengthViolation, $"Country length must be between {MinLength} and {MaxCountryLength} characters"));
         if (!Enum.IsDefined(typeof(AddressType), type))
             errors.Add(Error.Validation(AddressErrors.Creation.UndefinedType, "Invalid Address Type"));
