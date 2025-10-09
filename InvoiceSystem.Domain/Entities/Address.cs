@@ -92,11 +92,4 @@ public class Address : IEquatable<Address>
     {
         return HashCode.Combine(Street, City, State, ZipCode, Country, Type);
     }
-
-    public enum AddressType
-    {
-        HQ,
-        Billing,
-        Shipping
-    }
 }
