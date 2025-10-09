@@ -1,4 +1,5 @@
 ﻿using InvoiceSystem.Domain.Common;
+using InvoiceSystem.Domain.Enums;
 using InvoiceSystem.Domain.Errors;
 using static InvoiceSystem.Domain.Entities.Address;
 
