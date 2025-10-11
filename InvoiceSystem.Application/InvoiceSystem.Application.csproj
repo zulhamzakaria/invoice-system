@@ -10,4 +10,8 @@
     <ProjectReference Include="..\InvoiceSystem.Domain\InvoiceSystem.Domain.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="DTOs\InvoiceItem\" />
+  </ItemGroup>
+
 </Project>
