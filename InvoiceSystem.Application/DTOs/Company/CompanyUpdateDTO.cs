@@ -8,6 +8,6 @@ public record CompanyUpdateDTO(
        string? Name,
        [property:  StringLength(10, MinimumLength = 1)]
        string? RegistrationNumber,
-       AddressDTO ShippingAddress,
-       AddressDTO BillingAddress
+       AddressUpdateDTO? ShippingAddress,
+       AddressUpdateDTO BillingAddress
     );
