@@ -1,13 +1,18 @@
-﻿using InvoiceSystem.Domain.Entities;
+﻿using InvoiceSystem.Application.DTOs.Address;
+using InvoiceSystem.Application.DTOs.Company;
+using InvoiceSystem.Domain.Entities;
 
 namespace InvoiceSystem.Application.DTOs.Invoice;
 
-public record InvoiceDetailsDTO (Guid Id, 
-                                string InvoiceNo, 
-                                Company Company, 
-                                Address BillingAddress, 
-                                Address ShippingAddress, 
-                                DateTime InvoiceDate, 
+public record InvoiceDetailsDTO(Guid Id,
+                                string InvoiceNo,
+                                DateTime InvoiceDate,
+
                                 decimal InvoiceAmount,
-                                string Status,
+                                string Status, 
+                                
+                                CompanySummaryDTO Company,
+                                AddressDTO BillingAddress,
+                                AddressDTO ShippingAddress,
+
                                 List<InvoiceItem> InvoiceItems);
