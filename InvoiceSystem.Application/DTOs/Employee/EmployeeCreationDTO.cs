@@ -1,8 +1,5 @@
-﻿
-
-using InvoiceSystem.Domain.Enums;
+﻿using InvoiceSystem.Domain.Enums;
 using System.ComponentModel.DataAnnotations;
-using System.Text.Json.Serialization;
 
 namespace InvoiceSystem.Application.DTOs.Employee;
 
@@ -14,6 +11,6 @@ public record EmployeeCreationDTO(
     ///summary
     ///Valid EmployeeType: Clerk, FO, FM
     /// </summary>
-    [property:Required, JsonConverter(typeof(JsonStringEnumConverter<EmployeeType>))]
+    [property:Required]
     EmployeeType EmployeeRole
     );
