@@ -1,6 +1,6 @@
 ﻿namespace InvoiceSystem.Application.DTOs.WorkflowSteps;
 
-public record WorkflowStepsDetailsDTO(
+public record WorkflowstepsDetailsDTO(
     Guid Id,
     Guid InvoiceId,
     string StatusBefore,
