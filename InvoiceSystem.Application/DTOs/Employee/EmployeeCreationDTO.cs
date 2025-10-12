@@ -12,5 +12,7 @@ public record EmployeeCreationDTO(
     ///Valid EmployeeType: Clerk, FO, FM
     /// </summary>
     [property:Required]
-    EmployeeType EmployeeRole
+    EmployeeType EmployeeRole,
+    [property: Range(0.0001, (double)decimal.MaxValue)]
+    decimal? ApprovalLimit
     );
