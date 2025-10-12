@@ -1,6 +1,6 @@
 ﻿using InvoiceSystem.Application.DTOs.Address;
 using InvoiceSystem.Application.DTOs.Company;
-using InvoiceSystem.Domain.Entities;
+using InvoiceSystem.Application.DTOs.InvoiceItem;
 
 namespace InvoiceSystem.Application.DTOs.Invoice;
 
@@ -16,4 +16,4 @@ public record InvoiceDetailsDTO(
     AddressDTO BillingAddress,
     AddressDTO ShippingAddress,
 
-    List<InvoiceItem> InvoiceItems);
+    List<InvoiceItemDTO> InvoiceItems);
