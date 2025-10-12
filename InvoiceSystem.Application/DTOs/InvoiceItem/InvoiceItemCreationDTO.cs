@@ -2,7 +2,7 @@
 
 namespace InvoiceSystem.Application.DTOs.InvoiceItem;
 
-public record InvoiceItemCreation(
+public record InvoiceItemCreationDTO(
     [property: Required, StringLength(500, MinimumLength =1)]
     string Description,
     [property: Required, Range(0, int.MaxValue)]
