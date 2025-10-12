@@ -4,15 +4,16 @@ using InvoiceSystem.Domain.Entities;
 
 namespace InvoiceSystem.Application.DTOs.Invoice;
 
-public record InvoiceDetailsDTO(Guid Id,
-                                string InvoiceNo,
-                                DateTime InvoiceDate,
+public record InvoiceDetailsDTO(
+    Guid Id,
+    string InvoiceNo,
+    DateTime InvoiceDate,
 
-                                decimal InvoiceAmount,
-                                string Status, 
+    decimal InvoiceAmount,
+    string Status, 
                                 
-                                CompanySummaryDTO Company,
-                                AddressDTO BillingAddress,
-                                AddressDTO ShippingAddress,
+    CompanySummaryDTO Company,
+    AddressDTO BillingAddress,
+    AddressDTO ShippingAddress,
 
-                                List<InvoiceItem> InvoiceItems);
+    List<InvoiceItem> InvoiceItems);
