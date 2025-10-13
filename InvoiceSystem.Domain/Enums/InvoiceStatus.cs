@@ -6,5 +6,6 @@ public enum InvoiceStatus
     PendingApproval,
     Approved,
     Rejected,
-    Voided
+    Voided,
+    Paid
 }
