@@ -37,7 +37,7 @@ public class WorkflowstepMapper
             entity.ActionType.ToString(),
             entity.ApproverId,
             entity.Reason,
-            entity.Timestamp // The recorded time is passed back to the client
+            entity.Timestamp 
         );
     }
 }
