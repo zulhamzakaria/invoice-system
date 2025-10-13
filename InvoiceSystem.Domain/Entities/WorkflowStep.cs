@@ -37,7 +37,6 @@ public class WorkflowStep
         ActionType = actionType;
         ApproverId = approverId;
         Reason = reason;
-        Timestamp = timestamp;
     }
 
     // The Static Factory Method (Making the Entity Rich)
@@ -47,8 +46,7 @@ public class WorkflowStep
         InvoiceStatus statusAfter,
         WorkflowStepType actionType,
         Guid? approverId,
-        string reason,
-        DateTimeOffset timestamp)
+        string reason)
     {
         // --- 1. Centralized Invariant and Validation Checks ---
         string trimmedReason = reason?.Trim() ?? string.Empty;
@@ -119,7 +117,7 @@ public class WorkflowStep
             statusAfter,
             actionType,
             approverId,
-            reason, timestamp);
+            reason);
 
         return Result<WorkflowStep>.Success(newStep);
     }
