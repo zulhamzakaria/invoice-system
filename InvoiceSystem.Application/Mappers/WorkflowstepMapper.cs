@@ -3,7 +3,7 @@ using InvoiceSystem.Domain.Common;
 using InvoiceSystem.Domain.Entities;
 using InvoiceSystem.Domain.Enums;
 
-namespace InvoiceSystem.Application.Mapper;
+namespace InvoiceSystem.Application.Mappers;
 
 public class WorkflowstepMapper
 {
