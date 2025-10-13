@@ -46,23 +46,38 @@ public class WorkflowstepService : IWorkflowstepService
         }
         var newStep = stepResult.Value;
         await _workflowStepRepository.AddAsync(newStep);
-        
+        await _workflowStepRepository.SaveChanges();
+        return Result<WorkflowstepsDetailsDTO>.Success(WorkflowstepMapper.ToDetailsDTO(newStep));
     }
 
     private InvoiceStatus DeterminNextStatus(InvoiceStatus currentStatus, WorkflowStepType stepType) {
 
-        switch (stepType)
+        //switch (stepType)
+        //{
+        //    case WorkflowStepType.Approval:
+        //        return InvoiceStatus.Approved;
+        //    case WorkflowStepType.Rejection:
+        //        return InvoiceStatus.Rejected;
+        //    case WorkflowStepType.Routing:
+        //        return currentStatus;
+        //    case WorkflowStepType.PaymentProcessing:
+        //        return InvoiceStatus.Paid;
+        //     default: return currentStatus;
+        //}
+        return (currentStatus,  stepType) switch
         {
-            case WorkflowStepType.Approval:
-                return InvoiceStatus.Approved;
-            case WorkflowStepType.Rejection:
-                return InvoiceStatus.Rejected;
-            case WorkflowStepType.Routing:
-                return currentStatus;
-            case WorkflowStepType.PaymentProcessing:
-                return InvoiceStatus.Paid;
-             default: return currentStatus;
-        }
+            (InvoiceStatus.PendingApproval, WorkflowStepType.Approval) => InvoiceStatus.Approved,
+            (InvoiceStatus.PendingApproval, WorkflowStepType.AutoApproval) => InvoiceStatus.Approved,
+
+            (_, WorkflowStepType.Rejection) => InvoiceStatus.Rejected,
+
+            (InvoiceStatus.PendingApproval, WorkflowStepType.Routing) => InvoiceStatus.PendingApproval,
+            (InvoiceStatus.Approved, WorkflowStepType.PaymentProcessing) => InvoiceStatus.Paid,
+
+            (_, WorkflowStepType.Recall) => InvoiceStatus.Draft,
+            (_, WorkflowStepType.Delegation) => currentStatus,
+            (_, WorkflowStepType.Escalation) => currentStatus,
+        };
     }
 
 }
