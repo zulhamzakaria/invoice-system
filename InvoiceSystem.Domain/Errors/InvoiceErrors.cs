@@ -1,4 +1,6 @@
-﻿namespace InvoiceSystem.Domain.Errors;
+﻿using System.Security.Cryptography.X509Certificates;
+
+namespace InvoiceSystem.Domain.Errors;
 
 public static class InvoiceErrors
 {
@@ -28,6 +30,11 @@ public static class InvoiceErrors
     public static class  InvoiceItems
     {
         public const string NoInvoiceItem = "INV.NO_INVOICE_ITEMS";
-        public const string CannotModifyItems = "INV.CANNOT_MODIFY_ITEMS"
-;    }
+        public const string CannotModifyItems = "INV.CANNOT_MODIFY_ITEMS";   
+    }
+
+    public static class Service
+    {
+        public const string InvoiceNotFound = "INV.NO_INVOICE_FOUND";
+    }
 }

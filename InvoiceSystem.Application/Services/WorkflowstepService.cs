@@ -20,7 +20,7 @@ public class WorkflowstepService : IWorkflowstepService
         var invoice  = await _invoiceRepository.GetByIdAsync(dto.InvoiceId);
         if (invoice == null)
         {
-            var errors = new List<Error> {}
+            var errors = new List<Error> {Error.Validation('')}
         }
     }
 }
