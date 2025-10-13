@@ -27,7 +27,8 @@ public class WorkflowStep
         InvoiceStatus statusAfter,
         WorkflowStepType actionType,
         Guid? approverId,
-        string reason)
+        string reason,
+        DateTimeOffset timestamp)
     {
         // Assignment to read-only properties is allowed here
         Id = id;
@@ -37,6 +38,7 @@ public class WorkflowStep
         ActionType = actionType;
         ApproverId = approverId;
         Reason = reason;
+        Timestamp = timestamp;
     }
 
     // The Static Factory Method (Making the Entity Rich)
@@ -46,7 +48,8 @@ public class WorkflowStep
         InvoiceStatus statusAfter,
         WorkflowStepType actionType,
         Guid? approverId,
-        string reason)
+        string reason,
+        DateTimeOffset timestamp)
     {
         // --- 1. Centralized Invariant and Validation Checks ---
         string trimmedReason = reason?.Trim() ?? string.Empty;
@@ -93,7 +96,7 @@ public class WorkflowStep
         }
 
         // Check 4: Reason/Audit Invariant
-        if (string.IsNullOrWhiteSpace(reason))
+        if (string.IsNullOrEmpty(trimmedReason))
         {
             errors.Add(Error.Validation(WorkflowStepErrors.Creation.MissingReason,
                "An audit reason is required for every workflow step."));
@@ -117,7 +120,8 @@ public class WorkflowStep
             statusAfter,
             actionType,
             approverId,
-            reason);
+            trimmedReason,
+            timestamp);
 
         return Result<WorkflowStep>.Success(newStep);
     }
