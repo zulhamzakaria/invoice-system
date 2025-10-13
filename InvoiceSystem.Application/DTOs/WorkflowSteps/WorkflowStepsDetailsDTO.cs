@@ -6,7 +6,7 @@ public record WorkflowstepsDetailsDTO(
     string StatusBefore,
     string StatusAfter,
     string ActionType,
-    Guid ApproverId,
+    Guid? ApproverId,
     string Reason,
     DateTimeOffset Timestamp
     );
