@@ -27,7 +27,7 @@ public class WorkflowStep
         InvoiceStatus statusAfter,
         WorkflowStepType actionType,
         Guid? approverId,
-        string reason)
+        string reason, DateTimeOffset timestamp)
     {
         // Assignment to read-only properties is allowed here
         Id = id;
@@ -37,7 +37,7 @@ public class WorkflowStep
         ActionType = actionType;
         ApproverId = approverId;
         Reason = reason;
-        Timestamp = DateTimeOffset.UtcNow;
+        Timestamp = timestamp;
     }
 
     // The Static Factory Method (Making the Entity Rich)
@@ -47,7 +47,8 @@ public class WorkflowStep
         InvoiceStatus statusAfter,
         WorkflowStepType actionType,
         Guid? approverId,
-        string reason)
+        string reason,
+        DateTimeOffset timestamp)
     {
         // --- 1. Centralized Invariant and Validation Checks ---
         string trimmedReason = reason?.Trim() ?? string.Empty;
