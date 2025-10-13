@@ -13,8 +13,7 @@ public class WorkflowstepMapper
             dto.StatusAfter,
             dto.ActionType,
             dto.ApproverId,
-            dto.Reason
+            dto.Reason   
             );
-       
     }
 }

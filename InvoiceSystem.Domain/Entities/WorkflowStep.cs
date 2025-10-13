@@ -16,7 +16,7 @@ public class WorkflowStep
     public WorkflowStepType ActionType { get; } // Renamed from StepType to ActionType for clarity
     public Guid? ApproverId { get; } // Nullable, as the system can perform actions (Routing)
     public string Reason { get; }
-    public DateTimeOffset Timestamp { get; }
+    public DateTimeOffset Timestamp { get; init; }
 
     private WorkflowStep() { } //For EF Core
     // Private Constructor (Enforcing Validity)
