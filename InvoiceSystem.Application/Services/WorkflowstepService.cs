@@ -1,4 +1,5 @@
 ﻿using InvoiceSystem.Application.DTOs.WorkflowSteps;
+using InvoiceSystem.Application.Mappers;
 using InvoiceSystem.Application.Services.Interfaces;
 using InvoiceSystem.Domain.Common;
 using InvoiceSystem.Domain.Enums;
@@ -26,7 +27,26 @@ public class WorkflowstepService : IWorkflowstepService
             return Result<WorkflowstepsDetailsDTO>.Failure(errors);
         }
         var statusBefore = invoice.Status;
+        var statusAfter = DeterminNextStatus(invoice.Status, dto.ActionType);
         var timestamp = DateTimeOffset.UtcNow;
+
+        var stepResult = WorkflowstepMapper.ToEntity(
+            dto.InvoiceId,
+            statusBefore,
+            statusAfter,
+            dto.ActionType,
+            dto.ApproverId,
+            dto.Reason,
+            timestamp
+            );
+
+        if (stepResult.IsFailure)
+        {
+            return Result<WorkflowstepsDetailsDTO>.Failure(stepResult.Errors);        
+        }
+        var newStep = stepResult.Value;
+        await _workflowStepRepository.AddAsync(newStep);
+        
     }
 
     private InvoiceStatus DeterminNextStatus(InvoiceStatus currentStatus, WorkflowStepType stepType) {

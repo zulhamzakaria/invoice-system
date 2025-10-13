@@ -15,7 +15,6 @@ public class WorkflowStepRepository : IWorkflowStepRepository
     public async Task AddAsync(WorkflowStep workflowStep)
     {
         await _context.WorkflowSteps.AddAsync(workflowStep);
-        await _context.SaveChangesAsync();
     }
 
     public async Task<IReadOnlyList<WorkflowStep>> GetAllAsync()
@@ -28,9 +27,15 @@ public class WorkflowStepRepository : IWorkflowStepRepository
         return await _context.WorkflowSteps.FindAsync(id);
     }
 
+    public async Task<int> SaveChanges(CancellationToken cancellationToken = default)
+    {
+        return await _context.SaveChangesAsync(cancellationToken);
+
+    }
+
     public async Task UpdateAsync(WorkflowStep workflowStep)
     {
          _context.WorkflowSteps.Update(workflowStep);
-        await _context.SaveChangesAsync();
+        //await _context.SaveChangesAsync();
     }
 }

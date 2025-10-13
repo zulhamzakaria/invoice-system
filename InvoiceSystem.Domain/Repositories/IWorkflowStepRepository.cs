@@ -8,5 +8,6 @@ public interface IWorkflowStepRepository
     Task<IReadOnlyList<WorkflowStep>> GetAllAsync();
     Task AddAsync(WorkflowStep workflowStep);
     Task UpdateAsync(WorkflowStep workflowStep);
+    Task<int> SaveChanges(CancellationToken cancellationToken = default);
 }
 
