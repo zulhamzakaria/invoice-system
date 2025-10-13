@@ -119,7 +119,7 @@ public class WorkflowStep
             statusAfter,
             actionType,
             approverId,
-            reason);
+            reason, timestamp);
 
         return Result<WorkflowStep>.Success(newStep);
     }
