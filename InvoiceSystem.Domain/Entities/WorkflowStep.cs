@@ -27,7 +27,7 @@ public class WorkflowStep
         InvoiceStatus statusAfter,
         WorkflowStepType actionType,
         Guid? approverId,
-        string reason, DateTimeOffset timestamp)
+        string reason)
     {
         // Assignment to read-only properties is allowed here
         Id = id;
