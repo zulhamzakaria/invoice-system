@@ -46,7 +46,7 @@ public class WorkflowstepService : IWorkflowstepService
         }
         var newStep = stepResult.Value;
         await _workflowStepRepository.AddAsync(newStep);
-        await _workflowStepRepository.SaveChanges();
+        await _workflowStepRepository.SaveChangesAsync();
         return Result<WorkflowstepsDetailsDTO>.Success(WorkflowstepMapper.ToDetailsDTO(newStep));
     }
 

@@ -27,15 +27,15 @@ public class WorkflowStepRepository : IWorkflowStepRepository
         return await _context.WorkflowSteps.FindAsync(id);
     }
 
-    public async Task<int> SaveChanges(CancellationToken cancellationToken = default)
+    public async Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
     {
         return await _context.SaveChangesAsync(cancellationToken);
 
     }
 
-    public async Task UpdateAsync(WorkflowStep workflowStep)
-    {
-         _context.WorkflowSteps.Update(workflowStep);
-        //await _context.SaveChangesAsync();
-    }
+    //public async Task UpdateAsync(WorkflowStep workflowStep)
+    //{
+    //     _context.WorkflowSteps.Update(workflowStep);
+    //    //await _context.SaveChangesAsync();
+    //}
 }

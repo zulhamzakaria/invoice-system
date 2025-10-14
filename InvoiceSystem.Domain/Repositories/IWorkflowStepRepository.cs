@@ -7,7 +7,7 @@ public interface IWorkflowStepRepository
     Task<WorkflowStep?> GetByIdAsync(Guid id);
     Task<IReadOnlyList<WorkflowStep>> GetAllAsync();
     Task AddAsync(WorkflowStep workflowStep);
-    Task UpdateAsync(WorkflowStep workflowStep);
-    Task<int> SaveChanges(CancellationToken cancellationToken = default);
+    //Task UpdateAsync(WorkflowStep workflowStep);
+    Task<int> SaveChangesAsync(CancellationToken cancellationToken = default);
 }
 
