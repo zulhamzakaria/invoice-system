@@ -1,4 +1,8 @@
+using InvoiceSystem.Application.Services;
+using InvoiceSystem.Application.Services.Interfaces;
+using InvoiceSystem.Domain.Repositories;
 using InvoiceSystem.Infrastructure;
+using InvoiceSystem.Infrastructure.Repositories;
 using Microsoft.EntityFrameworkCore;
 using System.Text.Json.Serialization;
 
@@ -20,6 +24,9 @@ builder.Services.AddDbContext<AppDbContext>(options =>
     )
 );
 
+builder.Services.AddScoped<IWorkflowstepService, WorkflowstepService>();
+builder.Services.AddScoped<IInvoiceRepository, InvoiceRepository>();
+builder.Services.AddScoped<IWorkflowStepRepository, WorkflowStepRepository>();
 
 var app = builder.Build();
 
