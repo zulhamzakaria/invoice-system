@@ -1,3 +1,4 @@
+using InvoiceSystem.API.Endpoints;
 using InvoiceSystem.Application.Services;
 using InvoiceSystem.Application.Services.Interfaces;
 using InvoiceSystem.Domain.Repositories;
@@ -44,8 +45,10 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
-
 app.UseAuthorization();
+
+//Minimal API extensions
+app.MapWorkflowstepEndpoints();
 
 app.MapControllers();
 

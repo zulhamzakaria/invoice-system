@@ -2,16 +2,15 @@
 using InvoiceSystem.Application.DTOs.WorkflowSteps;
 using InvoiceSystem.Application.Services.Interfaces;
 using System.Net.Mime;
-using Microsoft.AspNetCore.Builder;
 
 namespace InvoiceSystem.API.Endpoints;
 
 public static class WorkflowstepEndpoints
 {
 
-    public static void MapWorkflowstepEndpoints(this IEndpointRouteBuilder builder)
+    public static void MapWorkflowstepEndpoints(this IEndpointRouteBuilder app)
     {
-        var group = builder.MapGroup("api/workflowsteps").WithTags("Workflow Steps");
+        var group = app.MapGroup("api/workflowsteps").WithTags("Workflow Steps");
         group.MapPost("/", CreateWorkflowStep)
            .WithName("CreateWorkflowStep")
            .Produces<WorkflowstepsDetailsDTO>(StatusCodes.Status201Created, MediaTypeNames.Application.Json)
