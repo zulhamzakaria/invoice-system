@@ -1,8 +1,8 @@
-﻿using InvoiceSystem.Application.DTOs.WorkflowSteps;
+﻿using InvoiceSystem.API.Models;
+using InvoiceSystem.Application.DTOs.WorkflowSteps;
 using InvoiceSystem.Application.Services.Interfaces;
-using InvoiceSystem.Domain.Common;
 using System.Net.Mime;
-using System.Threading.Tasks;
+using Microsoft.AspNetCore.Builder;
 
 namespace InvoiceSystem.API.Endpoints;
 
@@ -32,7 +32,7 @@ public static class WorkflowstepEndpoints
         var result = await service.CreateWorkflowstepAsync(dto);
         if (result.IsSuccess) { return Results.Created($"/api/workflowsteps/{result.Value.Id}", result.Value); }
 
-        return Results.BadRequest();
+        return Results.BadRequest(new ErrorResponse(result.Errors));
 
     }
 
