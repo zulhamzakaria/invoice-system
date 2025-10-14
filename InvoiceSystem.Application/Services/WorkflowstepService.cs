@@ -51,19 +51,6 @@ public class WorkflowstepService : IWorkflowstepService
     }
 
     private InvoiceStatus DeterminNextStatus(InvoiceStatus currentStatus, WorkflowStepType stepType) {
-
-        //switch (stepType)
-        //{
-        //    case WorkflowStepType.Approval:
-        //        return InvoiceStatus.Approved;
-        //    case WorkflowStepType.Rejection:
-        //        return InvoiceStatus.Rejected;
-        //    case WorkflowStepType.Routing:
-        //        return currentStatus;
-        //    case WorkflowStepType.PaymentProcessing:
-        //        return InvoiceStatus.Paid;
-        //     default: return currentStatus;
-        //}
         return (currentStatus,  stepType) switch
         {
             (InvoiceStatus.PendingApproval, WorkflowStepType.Approval) => InvoiceStatus.Approved,
@@ -77,6 +64,8 @@ public class WorkflowstepService : IWorkflowstepService
             (_, WorkflowStepType.Recall) => InvoiceStatus.Draft,
             (_, WorkflowStepType.Delegation) => currentStatus,
             (_, WorkflowStepType.Escalation) => currentStatus,
+
+            _ => currentStatus
         };
     }
 
