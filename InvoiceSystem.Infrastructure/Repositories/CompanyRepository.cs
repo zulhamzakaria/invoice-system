@@ -40,4 +40,9 @@ public class CompanyRepository : ICompanyRepository
         _context.Companies.Remove(company);
         await _context.SaveChangesAsync();
     }
+
+    public async Task<bool> ExistsByRegistrationNumberAsync(string registrationNumber)
+    {
+        return await _context.Companies.AnyAsync(company => company.RegistrationNumber == registrationNumber);
+    }
 }
