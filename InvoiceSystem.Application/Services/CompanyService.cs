@@ -1,7 +1,9 @@
-﻿using InvoiceSystem.Application.DTOs.Company;
+﻿using InvoiceSystem.Application.DTOs.Address;
+using InvoiceSystem.Application.DTOs.Company;
 using InvoiceSystem.Application.Services.Interfaces;
 using InvoiceSystem.Domain.Common;
 using InvoiceSystem.Domain.Entities;
+using InvoiceSystem.Domain.Enums;
 using InvoiceSystem.Domain.Errors;
 using InvoiceSystem.Domain.Repositories;
 using System.Runtime.CompilerServices;
@@ -21,22 +23,43 @@ public class CompanyService : ICompanyService
         var company = await _companyRepository.ExistsByRegistrationNumberAsync(dto.RegistrationNumber);
         if (company)
         {
-            var errors = new List<Error> { Error.Validation(CompanyErrors.Service.CompanyExists, "A company record with the provided unique identifiers already exists") };
+            var error = new List<Error> { Error.Validation(CompanyErrors.Service.CompanyExists, "A company record with the provided unique identifiers already exists") };
+            return Result<CompanyDetailsDTO>.Failure(error);
         }
-
-        var billingAddress = Address.Create(
-            dto.BillingAddress.Street,
-            dto.BillingAddress.City,
-            dto.BillingAddress.Zipcode,
-            dto.BillingAddress.State,
-            dto.BillingAddress.Country,
-            Enum.TryParse(dto.BillingAddress.AddressType)
-            )
+        var validateBillingAddress = ValidateAndCreateAddress(dto.BillingAddress);
+        var validateShippingAddress = ValidateAndCreateAddress(dto.ShippingAddress);
+        var errors = new List<Error>();
+        if (validateBillingAddress.IsFailure) errors.AddRange(validateBillingAddress.Errors);
+        if (validateShippingAddress.IsFailure) errors.AddRange(validateShippingAddress.Errors);
+        if (errors.Any())
+        {
+            return Result<CompanyDetailsDTO>.Failure(errors);
+        }
+        var createdCompany = Company.Create(dto.Name, dto.RegistrationNumber,)
 
     }
 
-    private Result<TEnum> TryConvertStringToEnum<TEnum>(
-        string inputValue, string errorCode, string fieldName, string expectedValues) where TEnum : struct
+
+    private Result<Address> ValidateAndCreateAddress(AddressDTO dto)
+    {
+        var validateEnum = TryConvertStringToEnum<AddressType>(dto.AddressType, CompanyErrors.Service.InvalidAddressType, "Address Type", "Billing or Shipping");
+        if (validateEnum.IsFailure)
+        {
+            return Result<Address>.Failure(validateEnum.Errors);
+        }
+
+        return Address.Create(
+            dto.Street,
+            dto.City,
+            dto.State,
+            dto.Zipcode,
+            dto.Country,
+           validateEnum.Value
+            );
+    }
+
+    private Result<TEnum> TryConvertStringToEnum<TEnum>(string inputValue, string errorCode, string fieldName, string expectedValues)
+        where TEnum : struct
     {
         if (!Enum.TryParse<TEnum>(inputValue, true, out TEnum result))
         {

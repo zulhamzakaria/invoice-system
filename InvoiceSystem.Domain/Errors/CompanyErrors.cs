@@ -15,5 +15,6 @@ public static class CompanyErrors
     public static class Service
     {
         public const string CompanyExists = "COM.SIMILAR_REGISTRATION_NO_EXISTED";
+        public const string InvalidAddressType = "COM.ADDRESS_TYPE_UNDEFINED";
     }
 }
