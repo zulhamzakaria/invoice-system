@@ -25,7 +25,7 @@ public class Company : Entity
         Addresses = addresses;
     }
 
-    public static Result<Company> Create(string name, string registrationNumber, IReadOnlyList<Address> addresses)
+    public static Result<Company> Create(string name, string registrationNumber, Address billingAddress, Address shippingAddress)
     {
         var errors = new List<Error>();
         string trimmedName = name.Trim();
@@ -39,23 +39,26 @@ public class Company : Entity
             errors.Add(Error.Validation(CompanyErrors.Creation.NameLengthViolation, $"Name length must be between {MinLength} and {MaxCompanyNameLength}"));
         if (!string.IsNullOrWhiteSpace(registrationNumber) && registrationNumber.Length > MaxRegistrationNoLength)
             errors.Add(Error.Validation(CompanyErrors.Creation.RegistrationNoViolation, $"Registration No length must be between {MinLength} and {MaxRegistrationNoLength}"));
-        if (addresses == null || !addresses.Any())
+        if (billingAddress is null)
         {
-            errors.Add(Error.Validation(CompanyErrors.Creation.MissingAddresses, "No Addresses (Billing nor Shipping) provided."));
+            errors.Add(Error.Validation(CompanyErrors.Creation.MissingBillingAddress, "A Billing Address is required"));
         }
-        else
+        if (shippingAddress is null)
         {
-            if (!addresses.Any(a => a.Type == AddressType.Billing))
-            {
-                errors.Add(Error.Validation(CompanyErrors.Creation.MissingBillingAddress, "A Billing Address is required."));
-            }
-            if (!addresses.Any(a => a.Type == AddressType.Shipping))
-            {
-                errors.Add(Error.Validation(CompanyErrors.Creation.MissingShippingAddress, "A Shipping Address is required."));
-            }
+            errors.Add(Error.Validation(CompanyErrors.Creation.MissingShippingAddress, "A Shipping Address is required"));
         }
+        if (billingAddress != null && billingAddress.Type != AddressType.Billing)
+        {
+            errors.Add(Error.Validation(CompanyErrors.Creation.MissingBillingAddress, "Billing address must be explicitly set to Billing."));
+        }
+        if (shippingAddress != null && shippingAddress.Type != AddressType.Shipping)
+        {
+            errors.Add(Error.Validation(CompanyErrors.Creation.MissingShippingAddress, "Shipping address must be explicitly set to Shipping."));
+        }
+
         if (errors.Any())
             return Result<Company>.Failure(errors);
+        var addresses= new List<Address> { billingAddress, shippingAddress};
         var company = new Company(trimmedName, trimmedRegistrationNumber, addresses);
         return Result<Company>.Success(company);
     }
