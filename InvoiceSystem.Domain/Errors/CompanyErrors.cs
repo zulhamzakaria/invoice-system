@@ -12,4 +12,8 @@ public static class CompanyErrors
         public const string NameLengthViolation = "COM.COMPANY_NAME_LENGTH_INVALID";
         public const string RegistrationNoViolation = "COM.REGISTRATION_NO_LENGTH_INVALID";
     }
+    public static class Service
+    {
+        public const string CompanyExists = "COM.SIMILAR_REGISTRATION_NO_EXISTED";
+    }
 }

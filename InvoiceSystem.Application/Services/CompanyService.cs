@@ -1,6 +1,7 @@
 ﻿using InvoiceSystem.Application.DTOs.Company;
 using InvoiceSystem.Application.Services.Interfaces;
 using InvoiceSystem.Domain.Common;
+using InvoiceSystem.Domain.Errors;
 using InvoiceSystem.Domain.Repositories;
 using System.Runtime.CompilerServices;
 
@@ -19,7 +20,8 @@ public class CompanyService : ICompanyService
         var company = await _companyRepository.ExistsByRegistrationNumberAsync(dto.RegistrationNumber);
         if (company)
         {
-            var errors = new List<Error> { Error.Validation("", "") };
+            var errors = new List<Error> { Error.Validation(CompanyErrors.Service.CompanyExists, "A company record with the provided unique identifiers already exists") };
         }
+
     }
 }
