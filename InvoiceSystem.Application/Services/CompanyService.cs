@@ -1,5 +1,6 @@
 ﻿using InvoiceSystem.Application.DTOs.Address;
 using InvoiceSystem.Application.DTOs.Company;
+using InvoiceSystem.Application.Mappers;
 using InvoiceSystem.Application.Services.Interfaces;
 using InvoiceSystem.Domain.Common;
 using InvoiceSystem.Domain.Entities;
@@ -42,7 +43,7 @@ public class CompanyService : ICompanyService
         }
         var newCompany = createdCompany.Value;
         await _companyRepository.AddAsync(newCompany);
-        return Result<CompanyDetailsDTO>.Success();
+        return Result<CompanyDetailsDTO>.Success(CompanyMapper.ToDetailsDTO(newCompany));
 
     }
 
