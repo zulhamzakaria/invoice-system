@@ -13,9 +13,13 @@ public class CompanyService : ICompanyService
     {
         _companyRepository = companyRepository;
     }
-    public Task<Result<CompanyDetailsDTO>> CreateCompanyAsync(CompanyCreationDTO dto)
+    public async Task<Result<CompanyDetailsDTO>> CreateCompanyAsync(CompanyCreationDTO dto)
     {
-       //Check existin company
-       var company = _companyRepository.GetByIdAsync(dto.)
+        //Check existin company
+        var company = await _companyRepository.ExistsByRegistrationNumberAsync(dto.RegistrationNumber);
+        if (company)
+        {
+            var errors = new List<Error> { Error.Validation("", "") };
+        }
     }
 }
