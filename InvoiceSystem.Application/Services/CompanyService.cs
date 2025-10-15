@@ -43,6 +43,7 @@ public class CompanyService : ICompanyService
         }
         var newCompany = createdCompany.Value;
         await _companyRepository.AddAsync(newCompany);
+        await _companyRepository.SaveChangesAsync();
         return Result<CompanyDetailsDTO>.Success(CompanyMapper.ToDetailsDTO(newCompany));
 
     }
