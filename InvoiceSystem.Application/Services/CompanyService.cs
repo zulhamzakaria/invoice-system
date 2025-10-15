@@ -26,16 +26,23 @@ public class CompanyService : ICompanyService
             var error = new List<Error> { Error.Validation(CompanyErrors.Service.CompanyExists, "A company record with the provided unique identifiers already exists") };
             return Result<CompanyDetailsDTO>.Failure(error);
         }
-        var validateBillingAddress = ValidateAndCreateAddress(dto.BillingAddress);
-        var validateShippingAddress = ValidateAndCreateAddress(dto.ShippingAddress);
+        var createdBillingAddress = ValidateAndCreateAddress(dto.BillingAddress);
+        var creatatedShippingAddress = ValidateAndCreateAddress(dto.ShippingAddress);
         var errors = new List<Error>();
-        if (validateBillingAddress.IsFailure) errors.AddRange(validateBillingAddress.Errors);
-        if (validateShippingAddress.IsFailure) errors.AddRange(validateShippingAddress.Errors);
+        if (createdBillingAddress.IsFailure) errors.AddRange(createdBillingAddress.Errors);
+        if (creatatedShippingAddress.IsFailure) errors.AddRange(creatatedShippingAddress.Errors);
         if (errors.Any())
         {
             return Result<CompanyDetailsDTO>.Failure(errors);
         }
-        var createdCompany = Company.Create(dto.Name, dto.RegistrationNumber,)
+        var createdCompany = Company.Create(dto.Name, dto.RegistrationNumber, createdBillingAddress.Value, creatatedShippingAddress.Value);
+        if (createdCompany.IsFailure)
+        {
+            return Result<CompanyDetailsDTO>.Failure(createdCompany.Errors);
+        }
+        var newCompany = createdCompany.Value;
+        await _companyRepository.AddAsync(newCompany);
+        return Result<CompanyDetailsDTO>.Success();
 
     }
 
