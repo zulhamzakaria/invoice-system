@@ -78,4 +78,23 @@ public class CompanyService : ICompanyService
         return Result<TEnum>.Success(result);
     }
 
+    public Task<Result<CompanyDetailsDTO>> UpdateCompanyAsync(CompanyUpdateDTO dto)
+    {
+        throw new NotImplementedException();
+    }
+
+    public Task<Result<CompanyDetailsDTO>> GetCompanyByIdAsync(Guid id)
+    {
+        throw new NotImplementedException();
+    }
+
+    public Task<Result<CompanyDetailsDTO>> GetCompanyByRegistrationNumberAsync(string registrationNumber)
+    {
+        throw new NotImplementedException();
+    }
+
+    public Task<Result<IReadOnlyList<CompanyDetailsDTO>>> GetAllCompaniesAsync()
+    {
+        throw new NotImplementedException();
+    }
 }
