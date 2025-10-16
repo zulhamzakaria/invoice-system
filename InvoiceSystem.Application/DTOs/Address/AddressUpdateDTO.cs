@@ -13,5 +13,4 @@ public record AddressUpdateDTO(
     [property : StringLength(100, MinimumLength = 1)]
     string ? State,
     [property : StringLength(50, MinimumLength = 1)]
-    string ? Country,
-    AddressType? AddressType);
+    string ? Country);
