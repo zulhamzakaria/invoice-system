@@ -15,12 +15,12 @@ public class CompanyService : ICompanyService
 {
     private readonly ICompanyRepository _companyRepository;
     private readonly ICompanyMappingService _companyMappingService;
-    private readonly IAddressMapper _addressMapper;
-    public CompanyService(ICompanyRepository companyRepository, ICompanyMappingService companyMappingService, IAddressMapper addressMapper)
+    private readonly ICompanyMapper _companyMapper;
+    public CompanyService(ICompanyRepository companyRepository, ICompanyMappingService companyMappingService, ICompanyMapper companyMapper)
     {
         _companyRepository = companyRepository;
         _companyMappingService = companyMappingService;
-        _addressMapper = addressMapper;
+        _companyMapper = companyMapper;
     }
     public async Task<Result<CompanyDetailsDTO>> CreateCompanyAsync(CompanyCreationDTO dto)
     {
@@ -48,7 +48,7 @@ public class CompanyService : ICompanyService
         var newCompany = createdCompany.Value;
         await _companyRepository.AddAsync(newCompany);
         await _companyRepository.SaveChangesAsync();
-        return Result<CompanyDetailsDTO>.Success(CompanyMapper.ToDetailsDTO(newCompany));
+        return Result<CompanyDetailsDTO>.Success(_companyMapper.ToDetailsDTO(newCompany));
 
     }
 
@@ -85,24 +85,53 @@ public class CompanyService : ICompanyService
     public async Task<Result<CompanyDetailsDTO>> UpdateCompanyAsync(Guid id, CompanyUpdateDTO dto)
     {
         var result = await _companyRepository.GetByIdAsync(id);
+        if(result is null)
+        {
             return Result<CompanyDetailsDTO>.Failure(Error.Validation(CompanyErrors.Service.CompanyNotFound, "No Such Company Exists"));
+        }
+            
 
-        var mergeResult = _companyMappingService.MergeAndValidateAddress();
-        
+        var mergeResult = _companyMappingService.MergeAndValidateAddress(result, dto);
+        if (mergeResult.IsFailure)
+        {
+            return Result<CompanyDetailsDTO>.Failure(mergeResult.Errors);
+        }
+
+        var (newBillingAddress, newShippingAddress) = mergeResult.Value;
+
+        //var updateResult = result.
+
+        //if (updateResult.IsFailure)
+        //{
+        //    return Result<CompanyDetailsDTO>.Failure(updateResult.Errors);
+        //}
+
+        await _companyRepository.SaveChangesAsync();
+        return Result<CompanyDetailsDTO>.Success(_companyMapper.ToDetailsDTO(result));
+
+
     }
 
-    public Task<Result<CompanyDetailsDTO>> GetCompanyByIdAsync(Guid id)
+    public async Task<Result<CompanyDetailsDTO>> GetCompanyByIdAsync(Guid id)
+    {
+        var company = await _companyRepository.GetByIdAsync(id);
+        if(company is null)
+        {
+            return Result<CompanyDetailsDTO>.Failure(Error.Validation(CompanyErrors.Service.CompanyNotFound, "No Such Company Exists"));
+        }
+        var dto = _companyMapper.ToDetailsDTO(company);
+        return Result<CompanyDetailsDTO>.Success(dto);
+    }
+
+    public async Task<Result<CompanyDetailsDTO>> GetCompanyByRegistrationNumberAsync(string registrationNumber)
     {
         throw new NotImplementedException();
     }
 
-    public Task<Result<CompanyDetailsDTO>> GetCompanyByRegistrationNumberAsync(string registrationNumber)
+    public async Task<Result<List<CompanySummaryDTO>>> GetAllCompaniesAsync()
     {
-        throw new NotImplementedException();
-    }
-
-    public Task<Result<IReadOnlyList<CompanyDetailsDTO>>> GetAllCompaniesAsync()
-    {
-        throw new NotImplementedException();
+        var companies = await _companyRepository.GetAllAsync();
+        var dtos = _companyMapper.MapToSummaryDTOs(companies);
+        return Result<List<CompanySummaryDTO>>.Success(dtos);
     }
 }

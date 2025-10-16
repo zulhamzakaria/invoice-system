@@ -1,18 +1,24 @@
 ﻿using InvoiceSystem.Application.DTOs.Company;
+using InvoiceSystem.Application.Mappers.Interfaces;
 using InvoiceSystem.Domain.Entities;
 using InvoiceSystem.Domain.Enums;
 
 namespace InvoiceSystem.Application.Mappers;
 
-public class CompanyMapper
+public class CompanyMapper: ICompanyMapper
 {
-    public static CompanyDetailsDTO ToDetailsDTO(Company company)
+    private readonly IAddressMapper _addressMapper;
+    public CompanyMapper(IAddressMapper addressMapper)
+    {
+        _addressMapper = addressMapper;
+    }
+    public CompanyDetailsDTO ToDetailsDTO(Company company)
     {
 
         var billingAddress = company.Addresses.Single(c => c.Type == AddressType.Billing);
-        var billingAdressDTO = AddressMapper.ToAddressDTO(billingAddress);
+        var billingAdressDTO = _addressMapper.ToAddressDTO(billingAddress);
         var shippingAddress = company.Addresses.Single(c => c.Type == AddressType.Shipping);
-        var shippingAdressDTO = AddressMapper.ToAddressDTO(shippingAddress);
+        var shippingAdressDTO = _addressMapper.ToAddressDTO(shippingAddress);
 
 
         return new CompanyDetailsDTO(
