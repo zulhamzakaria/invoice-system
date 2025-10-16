@@ -1,7 +1,6 @@
 ﻿using InvoiceSystem.Domain.Common;
 using InvoiceSystem.Domain.Enums;
 using InvoiceSystem.Domain.Errors;
-using static InvoiceSystem.Domain.Entities.Address;
 
 namespace InvoiceSystem.Domain.Entities;
 
@@ -23,6 +22,15 @@ public class Company : Entity
         Name = name;
         RegistrationNumber = registrationNumber;
         Addresses = addresses;
+    }
+
+    public Result UpdateAddresses(Address newBillingAddress, Address newShippingAddress)
+    {       
+        var preservedAddress = this.Addresses.Where(a => a.Type != AddressType.Billing && a.Type != AddressType.Shipping).ToList();
+        preservedAddress.Add(newBillingAddress);
+        preservedAddress.Add(newShippingAddress);
+        this.Addresses = preservedAddress;
+        return Result.Success();
     }
 
     public static Result<Company> Create(string name, string registrationNumber, Address billingAddress, Address shippingAddress)
