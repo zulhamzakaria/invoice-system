@@ -123,7 +123,7 @@ public class CompanyService : ICompanyService
         return Result<CompanyDetailsDTO>.Success(dto);
     }
 
-    public async Task<Result<CompanyDetailsDTO>> GetCompanyByRegistrationNumberAsync(string registrationNumber)
+    public Task<Result<CompanyDetailsDTO>> GetCompanyByRegistrationNumberAsync(string registrationNumber)
     {
         throw new NotImplementedException();
     }

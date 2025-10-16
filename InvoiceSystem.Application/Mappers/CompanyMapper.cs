@@ -12,6 +12,12 @@ public class CompanyMapper: ICompanyMapper
     {
         _addressMapper = addressMapper;
     }
+
+    public List<CompanySummaryDTO> MapToSummaryDTOs(IReadOnlyList<Company> companies)
+    {
+        return companies.Select(c => new CompanySummaryDTO(c.Id, c.Name, c.RegistrationNumber)).ToList();
+    }
+
     public CompanyDetailsDTO ToDetailsDTO(Company company)
     {
 

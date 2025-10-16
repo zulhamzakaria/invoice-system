@@ -6,4 +6,5 @@ namespace InvoiceSystem.Application.Mappers.Interfaces;
 public interface ICompanyMapper
 {
     CompanyDetailsDTO ToDetailsDTO(Company company);
+    List<CompanySummaryDTO> MapToSummaryDTOs(IReadOnlyList<Company> companies);
 }
