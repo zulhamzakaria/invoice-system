@@ -9,30 +9,30 @@ namespace InvoiceSystem.Application.Services.Helpers.CompanyHelpers;
 
 public class CompanyMappingService : ICompanyMappingService
 {
-    public Result<Address> MergeAndValidateAddress(Address currentAddress, AddressUpdateDTO? updateDto)
-    {
-        if (updateDto == null)
-        {
-            return Result<Address>.Success(currentAddress);
-        }
+    //public Result<Address> MergeAndValidateAddress(Address currentAddress, AddressUpdateDTO? updateDto)
+    //{
+    //    if (updateDto == null)
+    //    {
+    //        return Result<Address>.Success(currentAddress);
+    //    }
 
-        var mergedStreet = updateDto.Street ?? currentAddress.Street;
-        var mergedZipcode = updateDto.Zipcode ?? currentAddress.ZipCode;
-        var mergedCity = updateDto.City ?? currentAddress.City;
-        var mergedState = updateDto.State ?? currentAddress.State;
-        var mergedCountry = updateDto.Country ?? currentAddress.Country;
+    //    var mergedStreet = updateDto.Street ?? currentAddress.Street;
+    //    var mergedZipcode = updateDto.Zipcode ?? currentAddress.ZipCode;
+    //    var mergedCity = updateDto.City ?? currentAddress.City;
+    //    var mergedState = updateDto.State ?? currentAddress.State;
+    //    var mergedCountry = updateDto.Country ?? currentAddress.Country;
 
-        var addressType = currentAddress.Type;
+    //    var addressType = currentAddress.Type;
 
-        return Address.Create(
-            mergedStreet,
-            mergedZipcode,
-            mergedCity,
-            mergedState,
-            mergedCountry,
-            addressType
-        );
-    }
+    //    return Address.Create(
+    //        mergedStreet,
+    //        mergedZipcode,
+    //        mergedCity,
+    //        mergedState,
+    //        mergedCountry,
+    //        addressType
+    //    );
+    //}
 
     public Result<Address> ValidateAndCreateAddress(AddressCreationDTO dto, AddressType type)
     {

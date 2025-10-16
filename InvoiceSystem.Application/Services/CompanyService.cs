@@ -86,6 +86,8 @@ public class CompanyService : ICompanyService
     {
         var result = await _companyRepository.GetByIdAsync(id);
             return Result<CompanyDetailsDTO>.Failure(Error.Validation(CompanyErrors.Service.CompanyNotFound, "No Such Company Exists"));
+
+        var mergeResult = _companyMappingService.MergeAndValidateAddress();
         
     }
 
