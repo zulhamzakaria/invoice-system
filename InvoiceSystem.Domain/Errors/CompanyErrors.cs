@@ -17,5 +17,7 @@ public static class CompanyErrors
         public const string CompanyExists = "COM.SIMILAR_REGISTRATION_NO_EXISTED";
         public const string InvalidAddressType = "COM.ADDRESS_TYPE_UNDEFINED";
         public const string CompanyNotFound = "COM.COMPANY_ID_INVALID";
+        public const string BillingAddressUpdateFailed = "COM.BILLING_ADDRESS_UPDATE_FAILED";
+        public const string ShippingAddressUpdateFailed = "COM.SHIPPING_ADDRESS_UPDATE_FAILED";
     }
 }
