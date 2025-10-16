@@ -44,4 +44,21 @@ public class CompanyMappingService : ICompanyMappingService
             type
         );
     }
+
+    public Result<(Address billingAddress, Address shippingAddress)> MergeAndValidateAddress(Company existingCompany, Compan )
+    {
+
+    }
+
+    private Result<Address> MergeAndCreateAddress(Address currentAddress, AddressUpdateDTO? updateDTO,  AddressType type)
+    {
+        string street = updateDTO?.Street ?? currentAddress.Street;
+        string zipcode = updateDTO?.Zipcode ?? currentAddress.ZipCode;
+        string city = updateDTO?.City ?? currentAddress.City;
+        string state = updateDTO?.State ?? currentAddress.State;
+        string country = updateDTO?.Country ?? currentAddress.Country;
+
+
+        return Address.Create(street, city, state, zipcode, country, type);
+    }
 }

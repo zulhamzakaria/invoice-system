@@ -85,7 +85,8 @@ public class CompanyService : ICompanyService
     public async Task<Result<CompanyDetailsDTO>> UpdateCompanyAsync(Guid id, CompanyUpdateDTO dto)
     {
         var result = await _companyRepository.GetByIdAsync(id);
-            return Result<CompanyDetailsDTO>.Failure(Error.Validation(CompanyErrors.Service., ""));
+            return Result<CompanyDetailsDTO>.Failure(Error.Validation(CompanyErrors.Service.CompanyNotFound, "No Such Company Exists"));
+        
     }
 
     public Task<Result<CompanyDetailsDTO>> GetCompanyByIdAsync(Guid id)
