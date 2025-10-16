@@ -84,14 +84,14 @@ public class CompanyService : ICompanyService
 
     public async Task<Result<CompanyDetailsDTO>> UpdateCompanyAsync(Guid id, CompanyUpdateDTO dto)
     {
-        var result = await _companyRepository.GetByIdAsync(id);
-        if(result is null)
+        var company = await _companyRepository.GetByIdAsync(id);
+        if(company is null)
         {
             return Result<CompanyDetailsDTO>.Failure(Error.Validation(CompanyErrors.Service.CompanyNotFound, "No Such Company Exists"));
         }
             
 
-        var mergeResult = _companyMappingService.MergeAndValidateAddress(result, dto);
+        var mergeResult = _companyMappingService.MergeAndValidateAddress(company, dto);
         if (mergeResult.IsFailure)
         {
             return Result<CompanyDetailsDTO>.Failure(mergeResult.Errors);
@@ -99,15 +99,15 @@ public class CompanyService : ICompanyService
 
         var (newBillingAddress, newShippingAddress) = mergeResult.Value;
 
-        //var updateResult = result.
+        var updateResult = company.UpdateAddresses(newBillingAddress, newShippingAddress);
 
-        //if (updateResult.IsFailure)
-        //{
-        //    return Result<CompanyDetailsDTO>.Failure(updateResult.Errors);
-        //}
+        if (updateResult.IsFailure)
+        {
+            return Result<CompanyDetailsDTO>.Failure(updateResult.Errors);
+        }
 
         await _companyRepository.SaveChangesAsync();
-        return Result<CompanyDetailsDTO>.Success(_companyMapper.ToDetailsDTO(result));
+        return Result<CompanyDetailsDTO>.Success(_companyMapper.ToDetailsDTO(company));
 
 
     }
