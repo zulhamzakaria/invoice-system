@@ -3,22 +3,13 @@
   "WorkspaceRootPath": "D:\\Learning1\\Projects\\invoice-system\\InvoiceSystem.API\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{75669D0E-FF10-431A-9DD3-7C24DDA855AE}|..\\InvoiceSystem.Application\\InvoiceSystem.Application.csproj|d:\\learning1\\projects\\invoice-system\\invoicesystem.application\\services\\helpers\\companyhelpers\\companymappingservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{75669D0E-FF10-431A-9DD3-7C24DDA855AE}|..\\InvoiceSystem.Application\\InvoiceSystem.Application.csproj|d:\\learning1\\projects\\invoice-system\\invoicesystem.application\\services\\interfaces\\icompanymappingservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
       "AbsoluteMoniker": "D:0:0:{75669D0E-FF10-431A-9DD3-7C24DDA855AE}|..\\InvoiceSystem.Application\\InvoiceSystem.Application.csproj|d:\\learning1\\projects\\invoice-system\\invoicesystem.application\\services\\companyservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{16CA3BFB-D56E-49CE-9E89-2719355BC7C8}|..\\InvoiceSystem.Domain\\InvoiceSystem.Domain.csproj|d:\\learning1\\projects\\invoice-system\\invoicesystem.domain\\errors\\companyerrors.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{75669D0E-FF10-431A-9DD3-7C24DDA855AE}|..\\InvoiceSystem.Application\\InvoiceSystem.Application.csproj|d:\\learning1\\projects\\invoice-system\\invoicesystem.application\\services\\interfaces\\icompanyservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{75669D0E-FF10-431A-9DD3-7C24DDA855AE}|..\\InvoiceSystem.Application\\InvoiceSystem.Application.csproj|d:\\learning1\\projects\\invoice-system\\invoicesystem.application\\dtos\\company\\companyupdatedto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{75669D0E-FF10-431A-9DD3-7C24DDA855AE}|..\\InvoiceSystem.Application\\InvoiceSystem.Application.csproj|d:\\learning1\\projects\\invoice-system\\invoicesystem.application\\dtos\\address\\addressupdatedto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{24C62EA7-6535-4EFD-B5A1-C0EB68924D59}|..\\InvoiceSystem.Infrastructure\\InvoiceSystem.Infrastructure.csproj|d:\\learning1\\projects\\invoice-system\\invoicesystem.infrastructure\\repositories\\companyrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
   "DocumentGroupContainers": [
@@ -28,19 +19,19 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 5,
+          "SelectedChildIndex": 6,
           "Children": [
             {
               "$type": "Document",
               "DocumentIndex": 1,
-              "Title": "ICompanyMappingService.cs",
-              "DocumentMoniker": "D:\\Learning1\\Projects\\invoice-system\\InvoiceSystem.Application\\Services\\Interfaces\\ICompanyMappingService.cs",
-              "RelativeDocumentMoniker": "..\\InvoiceSystem.Application\\Services\\Interfaces\\ICompanyMappingService.cs",
-              "ToolTip": "D:\\Learning1\\Projects\\invoice-system\\InvoiceSystem.Application\\Services\\Interfaces\\ICompanyMappingService.cs",
-              "RelativeToolTip": "..\\InvoiceSystem.Application\\Services\\Interfaces\\ICompanyMappingService.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAsAAACQAAAAAAAAAA==",
+              "Title": "ICompanyService.cs",
+              "DocumentMoniker": "D:\\Learning1\\Projects\\invoice-system\\InvoiceSystem.Application\\Services\\Interfaces\\ICompanyService.cs",
+              "RelativeDocumentMoniker": "..\\InvoiceSystem.Application\\Services\\Interfaces\\ICompanyService.cs",
+              "ToolTip": "D:\\Learning1\\Projects\\invoice-system\\InvoiceSystem.Application\\Services\\Interfaces\\ICompanyService.cs",
+              "RelativeToolTip": "..\\InvoiceSystem.Application\\Services\\Interfaces\\ICompanyService.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAsAAAAjAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-10-16T14:51:30.793Z",
+              "WhenOpened": "2025-10-16T15:21:05.924Z",
               "EditorCaption": ""
             },
             {
@@ -61,65 +52,26 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 0,
-              "Title": "CompanyMappingService.cs",
-              "DocumentMoniker": "D:\\Learning1\\Projects\\invoice-system\\InvoiceSystem.Application\\Services\\Helpers\\CompanyHelpers\\CompanyMappingService.cs",
-              "RelativeDocumentMoniker": "..\\InvoiceSystem.Application\\Services\\Helpers\\CompanyHelpers\\CompanyMappingService.cs",
-              "ToolTip": "D:\\Learning1\\Projects\\invoice-system\\InvoiceSystem.Application\\Services\\Helpers\\CompanyHelpers\\CompanyMappingService.cs",
-              "RelativeToolTip": "..\\InvoiceSystem.Application\\Services\\Helpers\\CompanyHelpers\\CompanyMappingService.cs",
-              "ViewState": "AgIAACMAAAAAAAAAAAAAwC0AAAAKAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-10-16T13:20:54.889Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 3,
-              "Title": "CompanyErrors.cs",
-              "DocumentMoniker": "D:\\Learning1\\Projects\\invoice-system\\InvoiceSystem.Domain\\Errors\\CompanyErrors.cs",
-              "RelativeDocumentMoniker": "..\\InvoiceSystem.Domain\\Errors\\CompanyErrors.cs",
-              "ToolTip": "D:\\Learning1\\Projects\\invoice-system\\InvoiceSystem.Domain\\Errors\\CompanyErrors.cs",
-              "RelativeToolTip": "..\\InvoiceSystem.Domain\\Errors\\CompanyErrors.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAABIAAABFAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-10-16T13:16:23.767Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 4,
-              "Title": "CompanyUpdateDTO.cs",
-              "DocumentMoniker": "D:\\Learning1\\Projects\\invoice-system\\InvoiceSystem.Application\\DTOs\\Company\\CompanyUpdateDTO.cs",
-              "RelativeDocumentMoniker": "..\\InvoiceSystem.Application\\DTOs\\Company\\CompanyUpdateDTO.cs",
-              "ToolTip": "D:\\Learning1\\Projects\\invoice-system\\InvoiceSystem.Application\\DTOs\\Company\\CompanyUpdateDTO.cs",
-              "RelativeToolTip": "..\\InvoiceSystem.Application\\DTOs\\Company\\CompanyUpdateDTO.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAUAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-10-16T12:13:43.433Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 5,
-              "Title": "AddressUpdateDTO.cs",
-              "DocumentMoniker": "D:\\Learning1\\Projects\\invoice-system\\InvoiceSystem.Application\\DTOs\\Address\\AddressUpdateDTO.cs",
-              "RelativeDocumentMoniker": "..\\InvoiceSystem.Application\\DTOs\\Address\\AddressUpdateDTO.cs",
-              "ToolTip": "D:\\Learning1\\Projects\\invoice-system\\InvoiceSystem.Application\\DTOs\\Address\\AddressUpdateDTO.cs",
-              "RelativeToolTip": "..\\InvoiceSystem.Application\\DTOs\\Address\\AddressUpdateDTO.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA8AAAAUAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-10-16T10:51:12.068Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
               "DocumentIndex": 2,
+              "Title": "CompanyRepository.cs",
+              "DocumentMoniker": "D:\\Learning1\\Projects\\invoice-system\\InvoiceSystem.Infrastructure\\Repositories\\CompanyRepository.cs",
+              "RelativeDocumentMoniker": "..\\InvoiceSystem.Infrastructure\\Repositories\\CompanyRepository.cs",
+              "ToolTip": "D:\\Learning1\\Projects\\invoice-system\\InvoiceSystem.Infrastructure\\Repositories\\CompanyRepository.cs",
+              "RelativeToolTip": "..\\InvoiceSystem.Infrastructure\\Repositories\\CompanyRepository.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA8AAAAsAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-10-16T15:09:44.68Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
               "Title": "CompanyService.cs",
               "DocumentMoniker": "D:\\Learning1\\Projects\\invoice-system\\InvoiceSystem.Application\\Services\\CompanyService.cs",
               "RelativeDocumentMoniker": "..\\InvoiceSystem.Application\\Services\\CompanyService.cs",
               "ToolTip": "D:\\Learning1\\Projects\\invoice-system\\InvoiceSystem.Application\\Services\\CompanyService.cs",
               "RelativeToolTip": "..\\InvoiceSystem.Application\\Services\\CompanyService.cs",
-              "ViewState": "AgIAAEcAAAAAAAAAAAAgwFkAAABAAAAAAAAAAA==",
+              "ViewState": "AgIAAHoAAAAAAAAAAAAswIYAAAA9AAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-10-15T13:25:03.027Z",
               "EditorCaption": ""
