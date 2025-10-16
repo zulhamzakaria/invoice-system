@@ -29,7 +29,7 @@ public class Company : Entity
         var preservedAddress = this.Addresses.Where(a => a.Type != AddressType.Billing && a.Type != AddressType.Shipping).ToList();
         preservedAddress.Add(newBillingAddress);
         preservedAddress.Add(newShippingAddress);
-        this.Addresses = preservedAddress;
+        this.Addresses = preservedAddress.AsReadOnly();
         return Result.Success();
     }
 
