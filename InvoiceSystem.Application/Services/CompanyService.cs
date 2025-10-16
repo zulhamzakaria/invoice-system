@@ -1,6 +1,7 @@
 ﻿using InvoiceSystem.Application.DTOs.Address;
 using InvoiceSystem.Application.DTOs.Company;
 using InvoiceSystem.Application.Mappers;
+using InvoiceSystem.Application.Mappers.Interfaces;
 using InvoiceSystem.Application.Services.Interfaces;
 using InvoiceSystem.Domain.Common;
 using InvoiceSystem.Domain.Entities;
@@ -14,10 +15,12 @@ public class CompanyService : ICompanyService
 {
     private readonly ICompanyRepository _companyRepository;
     private readonly ICompanyMappingService _companyMappingService;
-    public CompanyService(ICompanyRepository companyRepository, ICompanyMappingService companyMappingService)
+    private readonly IAddressMapper _addressMapper;
+    public CompanyService(ICompanyRepository companyRepository, ICompanyMappingService companyMappingService, IAddressMapper addressMapper)
     {
         _companyRepository = companyRepository;
         _companyMappingService = companyMappingService;
+        _addressMapper = addressMapper;
     }
     public async Task<Result<CompanyDetailsDTO>> CreateCompanyAsync(CompanyCreationDTO dto)
     {
@@ -79,9 +82,10 @@ public class CompanyService : ICompanyService
         return Result<TEnum>.Success(result);
     }
 
-    public Task<Result<CompanyDetailsDTO>> UpdateCompanyAsync(CompanyUpdateDTO dto)
+    public async Task<Result<CompanyDetailsDTO>> UpdateCompanyAsync(Guid id, CompanyUpdateDTO dto)
     {
-        throw new NotImplementedException();
+        var result = await _companyRepository.GetByIdAsync(id);
+            return Result<CompanyDetailsDTO>.Failure(Error.Validation(CompanyErrors.Service., ""));
     }
 
     public Task<Result<CompanyDetailsDTO>> GetCompanyByIdAsync(Guid id)
