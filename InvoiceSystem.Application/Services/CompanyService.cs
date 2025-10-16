@@ -99,19 +99,6 @@ public class CompanyService : ICompanyService
 
         var (newBillingAddress, newShippingAddress) = mergeResult.Value;
 
-        var updatedBillingAddress = Address.Create(
-            newBillingAddress.Street, 
-            newBillingAddress.City, 
-            newBillingAddress.State, 
-            newBillingAddress.ZipCode, 
-            newBillingAddress.Country, 
-            AddressType.Billing);
-
-        if (updatedBillingAddress.IsFailure)
-        {
-            return Result<CompanyDetalsDTO>.Failure(Error.Validation());
-        }
-        
         //var updateResult = result.
 
         //if (updateResult.IsFailure)
