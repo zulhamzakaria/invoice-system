@@ -1,11 +1,12 @@
 ﻿using InvoiceSystem.Application.DTOs.Address;
+using InvoiceSystem.Application.Mappers.Interfaces;
 using InvoiceSystem.Domain.Entities;
 
 namespace InvoiceSystem.Application.Mappers;
 
-public class AddressMapper
+public class AddressMapper : IAddressMapper
 {
-    public static AddressDTO ToAddressDTO(Address address)
+    public AddressDTO ToAddressDTO(Address address)
     {
         return new AddressDTO(
             address.Street,

@@ -1,4 +1,6 @@
 using InvoiceSystem.API.Endpoints;
+using InvoiceSystem.Application.Mappers;
+using InvoiceSystem.Application.Mappers.Interfaces;
 using InvoiceSystem.Application.Services;
 using InvoiceSystem.Application.Services.Helpers.Company;
 using InvoiceSystem.Application.Services.Interfaces;
@@ -31,6 +33,7 @@ builder.Services.AddScoped<IInvoiceRepository, InvoiceRepository>();
 builder.Services.AddScoped<IWorkflowStepRepository, WorkflowStepRepository>();
 builder.Services.AddScoped<ICompanyRepository, CompanyRepository>();
 builder.Services.AddScoped<ICompanyMappingService, CompanyMappingService>();
+builder.Services.AddScoped<IAddressMapper, AddressMapper>();    
 
 var app = builder.Build();
 
