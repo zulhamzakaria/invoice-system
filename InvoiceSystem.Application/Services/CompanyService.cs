@@ -13,9 +13,11 @@ namespace InvoiceSystem.Application.Services;
 public class CompanyService : ICompanyService
 {
     private readonly ICompanyRepository _companyRepository;
-    public CompanyService(ICompanyRepository companyRepository)
+    private readonly ICompanyMappingService _companyMappingService;
+    public CompanyService(ICompanyRepository companyRepository, ICompanyMappingService companyMappingService)
     {
         _companyRepository = companyRepository;
+        _companyMappingService = companyMappingService;
     }
     public async Task<Result<CompanyDetailsDTO>> CreateCompanyAsync(CompanyCreationDTO dto)
     {
