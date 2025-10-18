@@ -35,7 +35,7 @@ public class InvoiceItem
         if (unitPrice < 0)
             errors.Add(Error.Validation(InvoiceItemErrors.Creation.NegativePrice, "Unit price cannot be in negative"));
 
-        if (errors.Any())
+        if (errors.Count > 0)
             return Result<InvoiceItem>.Failure(errors);
 
         return Result<InvoiceItem>.Success(new InvoiceItem(trimmedDescription, quantity, unitPrice));

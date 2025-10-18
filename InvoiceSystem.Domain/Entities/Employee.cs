@@ -38,7 +38,7 @@ public abstract class Employee : AuditableEntity
         if (!string.IsNullOrEmpty(trimmedEmail) && trimmedEmail.Length > MaxEmailLength)
             errors.Add(Error.Validation(EmployeeErrors.Creation.EmailLengthViolation, $"Street length must be between {MinLength} and {MaxEmailLength} characters"));
 
-        if (errors.Any())
+        if (errors.Count > 0)
             return Result<Employee>.Failure(errors);
         return Result<Employee>.Success(null);
     }

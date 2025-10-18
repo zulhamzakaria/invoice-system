@@ -64,7 +64,7 @@ public class Company : Entity
             errors.Add(Error.Validation(CompanyErrors.Creation.MissingShippingAddress, "Shipping address must be explicitly set to Shipping."));
         }
 
-        if (errors.Any())
+        if (errors.Count > 0)
             return Result<Company>.Failure(errors);
         var addresses= new List<Address> { billingAddress, shippingAddress};
         var company = new Company(trimmedName, trimmedRegistrationNumber, addresses);
