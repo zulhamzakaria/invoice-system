@@ -4,7 +4,7 @@ using InvoiceSystem.Domain.Entities;
 
 namespace InvoiceSystem.Application.Mappers;
 
-internal class EmployeeMapper : IEmployeeMapper
+public class EmployeeMapper : IEmployeeMapper
 {
     public EmployeeDetailsDTO ToDetailsDTO(Employee employee)
     {
