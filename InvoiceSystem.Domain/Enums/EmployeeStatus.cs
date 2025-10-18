@@ -1,6 +1,6 @@
 ﻿namespace InvoiceSystem.Domain.Enums;
 
-public enum EmpoyeeStatus
+public enum EmployeeStatus
 {
     Inactive = 0,
     Active = 1,

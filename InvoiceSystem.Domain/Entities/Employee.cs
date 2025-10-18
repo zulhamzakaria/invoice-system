@@ -1,4 +1,5 @@
 ﻿using InvoiceSystem.Domain.Common;
+using InvoiceSystem.Domain.Enums;
 using InvoiceSystem.Domain.Errors;
 
 namespace InvoiceSystem.Domain.Entities;
@@ -14,7 +15,13 @@ public abstract class Employee : AuditableEntity
     public string Name { get; private set; }
     public string Email { get; private set; }
 
-    protected Employee() { } // For EF Core
+    public EmployeeStatus Status { get; private set; }
+    protected Employee() 
+    {
+        //Status = EmployeeStatus.Active;
+    } // For EF Core
+
+
 
     protected static Result<Employee> CreateBase(string name, string email)
     {
@@ -40,5 +47,17 @@ public abstract class Employee : AuditableEntity
     {
         Name = name;
         Email = email;
+        Status = EmployeeStatus.Active;
+    }
+
+    public void Deactivate()
+    {
+        if (Status == EmployeeStatus.Active)
+            Status = EmployeeStatus.Inactive;
+    }
+    public void Activate()
+    {
+        if(Status == EmployeeStatus.Inactive)
+            Status = EmployeeStatus.Active;
     }
 }
