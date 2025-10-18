@@ -39,6 +39,7 @@ builder.Services.AddScoped<ICompanyMappingService, CompanyMappingService>();
 
 builder.Services.AddScoped<IAddressMapper, AddressMapper>();    
 builder.Services.AddScoped<ICompanyMapper, CompanyMapper>();
+builder.Services.AddScoped<IEmployeeMapper, IEmployeeMapper>();
 
 var app = builder.Build();
 
