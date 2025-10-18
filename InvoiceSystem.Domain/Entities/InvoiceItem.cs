@@ -6,11 +6,11 @@ namespace InvoiceSystem.Domain.Entities;
 public class InvoiceItem
 {
     private const int MaxDescriptionLength = 500;
-    public Guid Id { get; } = Guid.NewGuid();
-    public Invoice Invoice { get; set; }
-    public string Description { get; }
-    public int Quantity { get; }
-    public decimal UnitPrice { get; }
+    public Guid Id { get; private set; } = Guid.NewGuid();
+    public Invoice Invoice { get; private set; }
+    public string Description { get; private set; }
+    public int Quantity { get; private set; }
+    public decimal UnitPrice { get; private set; }
     public decimal TotalPrice => Quantity * UnitPrice;
 
     private InvoiceItem() { } // For EF Core
