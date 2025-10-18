@@ -3,15 +3,10 @@
   "WorkspaceRootPath": "D:\\Learning1\\Projects\\invoice-system\\InvoiceSystem.API\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{F35F738C-7C9B-49BE-BAE5-9F36AA0EFFAF}|InvoiceSystem.API.csproj|d:\\learning1\\projects\\invoice-system\\invoicesystem.api\\controllers\\companycontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{F35F738C-7C9B-49BE-BAE5-9F36AA0EFFAF}|InvoiceSystem.API.csproj|solutionrelative:controllers\\companycontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{75669D0E-FF10-431A-9DD3-7C24DDA855AE}|..\\InvoiceSystem.Application\\InvoiceSystem.Application.csproj|d:\\learning1\\projects\\invoice-system\\invoicesystem.application\\dtos\\employee\\employeedetailsdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{75669D0E-FF10-431A-9DD3-7C24DDA855AE}|..\\InvoiceSystem.Application\\InvoiceSystem.Application.csproj|d:\\learning1\\projects\\invoice-system\\invoicesystem.application\\services\\companyservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{F35F738C-7C9B-49BE-BAE5-9F36AA0EFFAF}|InvoiceSystem.API.csproj|d:\\learning1\\projects\\invoice-system\\invoicesystem.api\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{F35F738C-7C9B-49BE-BAE5-9F36AA0EFFAF}|InvoiceSystem.API.csproj|solutionrelative:program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{75669D0E-FF10-431A-9DD3-7C24DDA855AE}|..\\InvoiceSystem.Application\\InvoiceSystem.Application.csproj|d:\\learning1\\projects\\invoice-system\\invoicesystem.application\\dtos\\employee\\employeecreationdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
   "DocumentGroupContainers": [
@@ -21,7 +16,7 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 5,
+          "SelectedChildIndex": 4,
           "Children": [
             {
               "$type": "Bookmark",
@@ -41,41 +36,28 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 2,
-              "Title": "Program.cs",
-              "DocumentMoniker": "D:\\Learning1\\Projects\\invoice-system\\InvoiceSystem.API\\Program.cs",
-              "RelativeDocumentMoniker": "Program.cs",
-              "ToolTip": "D:\\Learning1\\Projects\\invoice-system\\InvoiceSystem.API\\Program.cs",
-              "RelativeToolTip": "Program.cs",
-              "ViewState": "AgIAAAwAAAAAAAAAAAAAACYAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-10-16T16:14:57.515Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
               "DocumentIndex": 0,
-              "Title": "CompanyController.cs",
-              "DocumentMoniker": "D:\\Learning1\\Projects\\invoice-system\\InvoiceSystem.API\\Controllers\\CompanyController.cs",
-              "RelativeDocumentMoniker": "Controllers\\CompanyController.cs",
-              "ToolTip": "D:\\Learning1\\Projects\\invoice-system\\InvoiceSystem.API\\Controllers\\CompanyController.cs",
-              "RelativeToolTip": "Controllers\\CompanyController.cs",
-              "ViewState": "AgIAACkAAAAAAAAAAAAgwAUAAAAnAAAAAAAAAA==",
+              "Title": "EmployeeDetailsDTO.cs",
+              "DocumentMoniker": "D:\\Learning1\\Projects\\invoice-system\\InvoiceSystem.Application\\DTOs\\Employee\\EmployeeDetailsDTO.cs",
+              "RelativeDocumentMoniker": "..\\InvoiceSystem.Application\\DTOs\\Employee\\EmployeeDetailsDTO.cs",
+              "ToolTip": "D:\\Learning1\\Projects\\invoice-system\\InvoiceSystem.Application\\DTOs\\Employee\\EmployeeDetailsDTO.cs",
+              "RelativeToolTip": "..\\InvoiceSystem.Application\\DTOs\\Employee\\EmployeeDetailsDTO.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAoAAAAdAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-10-16T16:14:21.29Z",
+              "WhenOpened": "2025-10-18T04:29:47.563Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
               "DocumentIndex": 1,
-              "Title": "CompanyService.cs",
-              "DocumentMoniker": "D:\\Learning1\\Projects\\invoice-system\\InvoiceSystem.Application\\Services\\CompanyService.cs",
-              "RelativeDocumentMoniker": "..\\InvoiceSystem.Application\\Services\\CompanyService.cs",
-              "ToolTip": "D:\\Learning1\\Projects\\invoice-system\\InvoiceSystem.Application\\Services\\CompanyService.cs",
-              "RelativeToolTip": "..\\InvoiceSystem.Application\\Services\\CompanyService.cs",
-              "ViewState": "AgIAAFgAAAAAAAAAAAAmwGwAAAA0AAAAAAAAAA==",
+              "Title": "EmployeeCreationDTO.cs",
+              "DocumentMoniker": "D:\\Learning1\\Projects\\invoice-system\\InvoiceSystem.Application\\DTOs\\Employee\\EmployeeCreationDTO.cs",
+              "RelativeDocumentMoniker": "..\\InvoiceSystem.Application\\DTOs\\Employee\\EmployeeCreationDTO.cs",
+              "ToolTip": "D:\\Learning1\\Projects\\invoice-system\\InvoiceSystem.Application\\DTOs\\Employee\\EmployeeCreationDTO.cs",
+              "RelativeToolTip": "..\\InvoiceSystem.Application\\DTOs\\Employee\\EmployeeCreationDTO.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-10-15T13:25:03.027Z",
+              "WhenOpened": "2025-10-18T04:29:21.028Z",
               "EditorCaption": ""
             }
           ]
