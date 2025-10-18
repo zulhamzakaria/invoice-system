@@ -3,6 +3,7 @@
 public record EmployeeSummaryDTO(
     Guid Id,
     string Name,
-    string EmployeeRole
+    string EmployeeRole,
+    string Email
     );
 
