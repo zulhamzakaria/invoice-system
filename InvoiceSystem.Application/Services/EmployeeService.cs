@@ -33,17 +33,25 @@ public class EmployeeService : IEmployeeService
             return Result.Failure(Error.Validation(EmployeeErrors.Service.EmployeeNotFound, "No such Employee exists"));
         }
         employee.Deactivate();
+        await _employeeRepository.SaveChangesAsync();
         return Result.Success();
     }
 
-    public Task<Result<List<EmployeeSummaryDTO>>> GetAllEmployeesAsync()
+    public async Task<Result<IReadOnlyList<EmployeeSummaryDTO>>> GetAllEmployeesAsync()
     {
-        throw new NotImplementedException();
+        var employees = await _employeeRepository.GetAllAsync();
+        var dtos = _employeeMapper.ToSummaryDTOs(employees);
+        return Result<IReadOnlyList<EmployeeSummaryDTO>>.Success(dtos);
     }
 
-    public Task<Result<EmployeeDetailsDTO>> GetEmployeeByIdAsync(int id)
+    public async Task<Result<EmployeeDetailsDTO>> GetEmployeeByIdAsync(Guid id)
     {
-        throw new NotImplementedException();
+        var employee = await _employeeRepository.GetByIdAsync(id);
+        if(employee == null)
+        {
+            return Result<EmployeeDetailsDTO>.Failure(Error.Validation(EmployeeErrors.Service.EmployeeNotFound, "No such Employee exists"));
+        }
+        return Result<EmployeeDetailsDTO>.Success(_employeeMapper.ToDetailsDTO(employee));
     }
 
     public Task<Result<EmployeeUpdateDTO>> UpdateEmployeeAsync(Guid id, EmployeeUpdateDTO employeeUpdateDTO)
