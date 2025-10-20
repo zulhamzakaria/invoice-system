@@ -15,13 +15,13 @@ namespace InvoiceSystem.Infrastructure.Repositories
         public async Task AddAsync(Employee employee)
         {
             await _context.Employees.AddAsync(employee);
-            await _context.SaveChangesAsync();
+            //await _context.SaveChangesAsync();
         }
 
         public async Task DeleteAsync(Employee employee)
         {
             _context.Employees.Remove(employee);
-            await _context.SaveChangesAsync();
+            //await _context.SaveChangesAsync();
         }
 
         public async Task<IReadOnlyList<Employee>> GetAllAsync()
@@ -34,10 +34,15 @@ namespace InvoiceSystem.Infrastructure.Repositories
             return await _context.Employees.FindAsync(id);
         }
 
+        public async Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
+        {
+            return await _context.SaveChangesAsync(cancellationToken);
+        }
+
         public async Task UpdateAsync(Employee employee)
         {
             _context.Employees.Update(employee);
-            await _context.SaveChangesAsync();
+            //await _context.SaveChangesAsync();
         }
     }
 }

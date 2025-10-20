@@ -7,4 +7,5 @@ public interface IEmployeeRepository
     Task AddAsync(Employee employee);
     Task UpdateAsync(Employee employee);
     Task DeleteAsync(Employee employee);
+    Task<int> SaveChangesAsync(CancellationToken cancellationToken = default);
 }
