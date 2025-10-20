@@ -12,10 +12,18 @@ public abstract class Employee : AuditableEntity
     private const int MaxEmailLength = 100;
 
     public Guid Id { get; private set; } = Guid.NewGuid();
+    public string EmployeeCode { get; private set; } = GeneratedCode();
+
+    private static string GeneratedCode()
+    {
+        var random = Guid.NewGuid().ToString("N")[..6].ToUpper();
+        return $"EMP-{DateTime.UtcNow:yyyyMMdd}-{random}";
+    }
+
     public string Name { get; private set; }
     public string Email { get; private set; }
 
-    public EmployeeStatus Status { get; private set; }
+    public EmployeeStatus Status { get; private set; } = EmployeeStatus.Active;
     protected Employee() 
     {
         //Status = EmployeeStatus.Active;
