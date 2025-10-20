@@ -1,4 +1,5 @@
 ﻿using InvoiceSystem.Domain.Entities;
+using InvoiceSystem.Domain.Enums;
 using Microsoft.EntityFrameworkCore;
 
 namespace InvoiceSystem.Infrastructure.Repositories
@@ -22,6 +23,11 @@ namespace InvoiceSystem.Infrastructure.Repositories
         {
             _context.Employees.Remove(employee);
             //await _context.SaveChangesAsync();
+        }
+
+        public async Task<bool> EmployeeExists(string email)
+        {
+            return await _context.Employees.AsNoTracking().AnyAsync(e=> e.Email == email && e.Status == EmployeeStatus.Active);
         }
 
         public async Task<IReadOnlyList<Employee>> GetAllAsync()
