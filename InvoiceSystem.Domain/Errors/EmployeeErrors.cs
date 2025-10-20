@@ -10,5 +10,8 @@ public static class EmployeeErrors
         public const string EmailLengthViolation = "EMP.EMPLOYEE_EMAIL_LENGTH_INVALID";
         public const string NegativeFOApprovalLimit = "EMP.NEGATIVE_FO_APPROVAL_LIMIT";
     }
-
+    public static class Service
+    {
+        public const string EmployeeNotFound = "EMP.EMPLOYEE_ID_INVALID";
+    }
 }
