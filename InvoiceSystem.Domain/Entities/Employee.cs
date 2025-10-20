@@ -24,7 +24,7 @@ public abstract class Employee : AuditableEntity
     public string Email { get; private set; }
 
     public EmployeeStatus Status { get; private set; } = EmployeeStatus.Active;
-    protected Employee() 
+    protected Employee()
     {
         //Status = EmployeeStatus.Active;
     } // For EF Core
@@ -58,14 +58,10 @@ public abstract class Employee : AuditableEntity
         Status = EmployeeStatus.Active;
     }
 
-    public void Deactivate()
-    {
-        if (Status == EmployeeStatus.Active)
+    public void Deactivate() =>
             Status = EmployeeStatus.Inactive;
-    }
-    public void Activate()
-    {
-        if(Status == EmployeeStatus.Inactive)
+
+    public void Activate() =>
             Status = EmployeeStatus.Active;
-    }
+
 }
