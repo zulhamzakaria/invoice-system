@@ -67,8 +67,15 @@ public class EmployeeService : IEmployeeService
         return Result<EmployeeDetailsDTO>.Success(_employeeMapper.ToDetailsDTO(employee));
     }
 
-    public Task<Result<EmployeeUpdateDTO>> UpdateEmployeeAsync(Guid id, EmployeeUpdateDTO employeeUpdateDTO)
+    public async Task<Result<EmployeeUpdateDTO>> UpdateEmployeeAsync(Guid id, EmployeeUpdateDTO employeeUpdateDTO)
     {
-        throw new NotImplementedException();
+        var employee = await _employeeRepository.GetByIdAsync(id);
+        if (employee == null)
+        {
+            return Result<EmployeeUpdateDTO>.Failure(Error.Validation(EmployeeErrors.Service.EmployeeNotFound, "No such Employee exists"));
+        }
     }
+
+    
+
 }
