@@ -20,7 +20,7 @@ public class EmployeeService : IEmployeeService
     }
 
 
-    public Task<Result<EmployeeCreationDTO>> CreateEmployeeAsync(EmployeeCreationDTO employeeCreationDTO)
+    public async Task<Result<EmployeeCreationDTO>> CreateEmployeeAsync(EmployeeCreationDTO employeeCreationDTO)
     {
         throw new NotImplementedException();
     }

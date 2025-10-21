@@ -23,7 +23,7 @@ public class AppDbContext : DbContext
         ConfigureEmployees(modelBuilder);
         ConfigureInvoices(modelBuilder);
         ConfigureCompanies(modelBuilder);
-        ConfigureWorkflowSteps(modelBuilder);    
+        ConfigureWorkflowSteps(modelBuilder);
     }
 
     private void ConfigureWorkflowSteps(ModelBuilder modelBuilder)
@@ -60,6 +60,10 @@ public class AppDbContext : DbContext
             .HasValue<Clerk>("Clerk")
             .HasValue<FO>("FO")
             .HasValue<FM>("FM");
+
+        modelBuilder.Entity<Employee>()
+            .HasIndex(e => e.Email)
+            .IsUnique();
     }
 
     private void ConfigureInvoices(ModelBuilder modelBuilder)
