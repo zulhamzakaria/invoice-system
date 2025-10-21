@@ -42,9 +42,9 @@ public abstract class Employee : AuditableEntity
         if (string.IsNullOrEmpty(trimmedEmail))
             errors.Add(Error.Validation(EmployeeErrors.Creation.MissingEmail, "Email is required"));
         if (!string.IsNullOrEmpty(trimmedName) && trimmedName.Length > MaxNameLength)
-            errors.Add(Error.Validation(EmployeeErrors.Creation.NameLengthViolation, $"Street length must be between {MinLength} and {MaxNameLength} characters"));
+            errors.Add(Error.Validation(EmployeeErrors.Creation.NameLengthViolation, $"Name length must be between {MinLength} and {MaxNameLength} characters"));
         if (!string.IsNullOrEmpty(trimmedEmail) && trimmedEmail.Length > MaxEmailLength)
-            errors.Add(Error.Validation(EmployeeErrors.Creation.EmailLengthViolation, $"Street length must be between {MinLength} and {MaxEmailLength} characters"));
+            errors.Add(Error.Validation(EmployeeErrors.Creation.EmailLengthViolation, $"Email length must be between {MinLength} and {MaxEmailLength} characters"));
 
         if (errors.Count > 0)
             return Result<Employee>.Failure(errors);
@@ -63,5 +63,43 @@ public abstract class Employee : AuditableEntity
 
     public void Activate() =>
             Status = EmployeeStatus.Active;
+
+    public Result<Employee> UpdateName(string name)
+    {
+        var errors = new List<Error>();
+        if (string.IsNullOrWhiteSpace(name))
+        {
+            errors.Add(Error.Validation(EmployeeErrors.Creation.MissingName, "Name is required"));
+        }
+        var trimmedName = name.Trim();
+        if (!string.IsNullOrEmpty(trimmedName) && trimmedName.Length > MaxNameLength)
+        {
+            errors.Add(Error.Validation(EmployeeErrors.Creation.NameLengthViolation, $"Name length must be between {MinLength} and {MaxNameLength} characters"));
+        }
+
+        if(errors.Count > 0) return Result<Employee>.Failure(errors);
+
+        Name = trimmedName;
+        return Result<Employee>.Success(this);
+    }
+
+    public Result<Employee> UpdateEmail(string email)
+    {
+        var errors = new List<Error>();
+        if (string.IsNullOrWhiteSpace(email))
+        {
+            errors.Add(Error.Validation(EmployeeErrors.Creation.MissingEmail, "Email is required"));
+        }
+        var trimmedEmail = email.Trim();
+        if (!string.IsNullOrEmpty(trimmedEmail) && trimmedEmail.Length > MaxEmailLength)
+        {
+            errors.Add(Error.Validation(EmployeeErrors.Creation.EmailLengthViolation, $"Email length must be between {MinLength} and {MaxEmailLength} characters"));
+        }
+
+        if (errors.Count > 0) return Result<Employee>.Failure(errors);
+
+        Email = trimmedEmail;
+        return Result<Employee>.Success(this);
+    }
 
 }
