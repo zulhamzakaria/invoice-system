@@ -13,5 +13,6 @@ public static class EmployeeErrors
     public static class Service
     {
         public const string EmployeeNotFound = "EMP.EMPLOYEE_ID_INVALID";
+        public const string InvalidEmployeeType = "EMP.EMPLOYEE_TYPE_UNDEFINED";
     }
 }
