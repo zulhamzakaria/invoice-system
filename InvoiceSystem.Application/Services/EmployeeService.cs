@@ -1,5 +1,6 @@
 ﻿using InvoiceSystem.Application.DTOs.Employee;
 using InvoiceSystem.Application.Mappers.Interfaces;
+using InvoiceSystem.Application.Services.Helpers.EmployeeHelpers;
 using InvoiceSystem.Application.Services.Interfaces;
 using InvoiceSystem.Domain.Common;
 using InvoiceSystem.Domain.Entities;
@@ -20,12 +21,21 @@ public class EmployeeService : IEmployeeService
     }
 
 
-    public async Task<Result<EmployeeCreationDTO>> CreateEmployeeAsync(EmployeeCreationDTO employeeCreationDTO)
+    public async Task<Result<EmployeeDetailsDTO>> CreateEmployeeAsync(EmployeeCreationDTO employeeCreationDTO)
     {
         if(await _employeeRepository.EmployeeExists(employeeCreationDTO.Email))
         {
-            return Result<EmployeeCreationDTO>.Failure(Error.Validation(EmployeeErrors.Service.InvalidEmailAddress, "An employee with this email already exists"));
+            return Result<EmployeeDetailsDTO>.Failure(Error.Validation(EmployeeErrors.Service.InvalidEmailAddress, "An active Employee with this email already exists"));
         }
+        var employeeResult = EmployeeFactory.Create(employeeCreationDTO.Name, employeeCreationDTO.Email, employeeCreationDTO.EmployeeRole, employeeCreationDTO.ApprovalLimit);
+        if (employeeResult.IsFailure)
+        {
+            return Result<EmployeeDetailsDTO>.Failure(employeeResult.Errors);
+        }
+        var employee = employeeResult.Value;
+        await _employeeRepository.AddAsync(employee);
+        await _employeeRepository.SaveChangesAsync();
+        return Result<EmployeeDetailsDTO>.Success(_employeeMapper.ToDetailsDTO(employee));
     }
 
     public async Task<Result> DeactivateEmployeeAsync(Guid id)
