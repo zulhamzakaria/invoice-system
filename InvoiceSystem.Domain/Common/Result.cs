@@ -37,4 +37,5 @@ public abstract class Result
 
     public static Result Success() => new SuccessResult(Array.Empty<Error>());
     public static Result Failure(IReadOnlyList<Error> errors) => new FailureResult(errors);
+
 }
