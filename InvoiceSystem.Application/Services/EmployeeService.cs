@@ -23,7 +23,7 @@ public class EmployeeService : IEmployeeService
 
     public async Task<Result<EmployeeDetailsDTO>> CreateEmployeeAsync(EmployeeCreationDTO employeeCreationDTO)
     {
-        if(await _employeeRepository.EmployeeExists(employeeCreationDTO.Email))
+        if (await _employeeRepository.EmployeeExists(employeeCreationDTO.Email))
         {
             return Result<EmployeeDetailsDTO>.Failure(Error.Validation(EmployeeErrors.Service.InvalidEmailAddress, "An active Employee with this email already exists"));
         }
@@ -59,23 +59,33 @@ public class EmployeeService : IEmployeeService
 
     public async Task<Result<EmployeeDetailsDTO>> GetEmployeeByIdAsync(Guid id)
     {
-        var employee = await _employeeRepository.GetByIdAsync(id);
-        if(employee == null)
+        var result = await GetEmployeeDetailsByIdAsync(id);
+        if (!result.IsSuccess)
         {
-            return Result<EmployeeDetailsDTO>.Failure(Error.Validation(EmployeeErrors.Service.EmployeeNotFound, "No such Employee exists"));
+            return Result<EmployeeDetailsDTO>.Failure(result.Errors);
         }
-        return Result<EmployeeDetailsDTO>.Success(_employeeMapper.ToDetailsDTO(employee));
+        return Result<EmployeeDetailsDTO>.Success(_employeeMapper.ToDetailsDTO(result.Value));
     }
 
     public async Task<Result<EmployeeUpdateDTO>> UpdateEmployeeAsync(Guid id, EmployeeUpdateDTO employeeUpdateDTO)
     {
+        var result = await GetEmployeeDetailsByIdAsync(id);
+        if (!result.IsSuccess)
+        {
+            return Result<EmployeeUpdateDTO>.Failure(result.Errors);
+        }
+        var employee = result.Value;
+
+    }
+
+    private async Task<Result<Employee>> GetEmployeeDetailsByIdAsync(Guid id)
+    {
         var employee = await _employeeRepository.GetByIdAsync(id);
         if (employee == null)
         {
-            return Result<EmployeeUpdateDTO>.Failure(Error.Validation(EmployeeErrors.Service.EmployeeNotFound, "No such Employee exists"));
+            return Result<Employee>.Failure(Error.Validation(EmployeeErrors.Service.EmployeeNotFound, "No such Employee exists"));
         }
+        return Result<Employee>.Success(employee);
     }
-
-    
 
 }
