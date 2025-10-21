@@ -22,7 +22,10 @@ public class EmployeeService : IEmployeeService
 
     public async Task<Result<EmployeeCreationDTO>> CreateEmployeeAsync(EmployeeCreationDTO employeeCreationDTO)
     {
-        throw new NotImplementedException();
+        if(await _employeeRepository.EmployeeExists(employeeCreationDTO.Email))
+        {
+            return Result<EmployeeCreationDTO>.Failure(EmployeeErrors.Service.)
+        }
     }
 
     public async Task<Result> DeactivateEmployeeAsync(Guid id)
