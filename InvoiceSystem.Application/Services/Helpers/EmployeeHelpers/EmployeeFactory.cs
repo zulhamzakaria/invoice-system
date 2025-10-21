@@ -14,12 +14,12 @@ public static class EmployeeFactory
             EmployeeType.Clerk => Result<Employee>.Success(new Clerk(name, email)),
 
             EmployeeType.FO => maxApprovalLimit is null || maxApprovalLimit <= 0 ?
-            Result<Employee>.Failure(Error.Validation("", "Finance Officer must have a positive max approval limit")) :
+            Result<Employee>.Failure(Error.Validation(EmployeeErrors.Service.InvalidFOApprovalLimit, "Finance Officer must have a positive max approval limit")) :
             Result<Employee>.Success(new FO(name, email, (decimal)maxApprovalLimit)),
 
             EmployeeType.FM => Result<Employee>.Success(new FM(name, email, decimal.MaxValue)),
             
-            _ => Result<Employee>.Failure(Error.Validation("","Invalid Employee type"))
+            _ => Result<Employee>.Failure(Error.Validation(EmployeeErrors.Service.InvalidEmployeeType,"Invalid Employee type"))
 
         };
     }

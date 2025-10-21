@@ -14,5 +14,6 @@ public static class EmployeeErrors
     {
         public const string EmployeeNotFound = "EMP.EMPLOYEE_ID_INVALID";
         public const string InvalidEmployeeType = "EMP.EMPLOYEE_TYPE_UNDEFINED";
+        public const string InvalidFOApprovalLimit = "EMP.FO_APPROVAL_LIMIT_UNDEFINED";
     }
 }
