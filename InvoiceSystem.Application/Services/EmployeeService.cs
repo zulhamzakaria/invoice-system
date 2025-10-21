@@ -24,7 +24,7 @@ public class EmployeeService : IEmployeeService
     {
         if(await _employeeRepository.EmployeeExists(employeeCreationDTO.Email))
         {
-            return Result<EmployeeCreationDTO>.Failure(EmployeeErrors.Service.)
+            return Result<EmployeeCreationDTO>.Failure(Error.Validation(EmployeeErrors.Service.InvalidEmailAddress, "An employee with this email already exists"));
         }
     }
 
