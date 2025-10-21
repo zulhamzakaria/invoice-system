@@ -75,6 +75,15 @@ public class EmployeeService : IEmployeeService
             return Result<EmployeeUpdateDTO>.Failure(result.Errors);
         }
         var employee = result.Value;
+        var updatedEmployee = employee.UpdateName(employeeUpdateDTO.Name);
+        //update email
+
+        if (!updatedEmployee.IsSuccess) {
+            return Result<EmployeeUpdateDTO>.Failure(updatedEmployee.Errors);
+        }
+        await _employeeRepository.UpdateAsync(updatedEmployee.Value);
+        await _employeeRepository.SaveChangesAsync();
+        return Result<EmployeeUpdateDTO>.Success(employeeUpdateDTO);
 
     }
 
