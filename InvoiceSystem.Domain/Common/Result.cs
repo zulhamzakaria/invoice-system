@@ -39,3 +39,13 @@ public abstract class Result
     public static Result Failure(IReadOnlyList<Error> errors) => new FailureResult(errors);
 
 }
+
+public static class ResultExtensions
+{
+    public static Result<TOut> Then<TIn, TOut>(
+        this Result<TIn> result,
+        Func<TIn, Result<TOut>> next)
+    {
+        return result.IsSuccess ? next(result.Value) : Result<TOut>.Failure(result.Errors);
+    }
+}
