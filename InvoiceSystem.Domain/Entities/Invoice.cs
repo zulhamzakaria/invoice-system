@@ -80,7 +80,7 @@ public class Invoice : AuditableEntity
             throw new DomainException("Invoice item validation failed.", InvoiceErrors.Creation.InvalidInvoiceItems);
         }
 
-        Items.Add(addedItem.Value);
+        _items.Add(addedItem.Value);
     }
 
     public void SubmitForApproval()
