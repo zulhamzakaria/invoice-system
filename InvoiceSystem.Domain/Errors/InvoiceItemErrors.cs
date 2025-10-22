@@ -14,4 +14,8 @@ public static class InvoiceItemErrors
         public const string InvalidActor = "ITM.EMPLOYEE_NOT_A_CLERK";
         public const string InvalidStatus = "ITM.INVOICE_NOT_A_DRAFT";
     }
+    public static class Common
+    {
+        public const string InvoiceItemNotFound = "ITM.INVOICE_ITEM_ID_INVALID";
+    }
 }

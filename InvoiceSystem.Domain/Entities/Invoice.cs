@@ -133,4 +133,21 @@ public class Invoice : AuditableEntity
         }
         Status = InvoiceStatus.Voided;
     }
+
+    public void DeleteItem(Guid itemId, Employee actor)
+    {
+        if(actor is not Clerk)
+        {
+            throw new DomainException("Only Clerk can delete an item", InvoiceItemErrors.Deletion.InvalidActor);
+        }
+        if(Status != InvoiceStatus.Draft)
+        {
+            throw new DomainException("Cannot modify items after submission", InvoiceItemErrors.Deletion.InvalidStatus);
+        }
+        var invoiceItem = _items.FirstOrDefault(x => x.Id == itemId);
+        if (invoiceItem == null) {
+            throw new DomainException("Invoice Item not found", InvoiceItemErrors.Common.InvoiceItemNotFound);
+        }
+        _items.Remove(invoiceItem);
+    }
 }
