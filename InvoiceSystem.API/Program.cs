@@ -63,6 +63,7 @@ app.UseAuthorization();
 
 //Minimal API extensions
 app.MapWorkflowstepEndpoints();
+app.MapEmployeeEndpoints();
 
 app.MapControllers();
 
