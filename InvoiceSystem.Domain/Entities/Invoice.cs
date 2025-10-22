@@ -19,8 +19,8 @@ public class Invoice : AuditableEntity
     public DateTime InvoiceDate { get; private set; }
 
     private readonly List<InvoiceItem> _items = new();
-    public IReadOnlyCollection<InvoiceItem> Items => _items.AsReadOnly();
-    public decimal TotalAmount => Items.Sum(i => i.TotalPrice);
+    public IReadOnlyCollection<InvoiceItem> InvoiceItems => _items.AsReadOnly();
+    public decimal TotalAmount => InvoiceItems.Sum(i => i.TotalPrice);
 
     public InvoiceStatus Status { get; private set; } = InvoiceStatus.Draft;
     public Employee CreatedBy { get; private set; }
@@ -88,7 +88,7 @@ public class Invoice : AuditableEntity
         if (Status != InvoiceStatus.Draft)
             throw new DomainException("Only draft invoices can be submitted for approval.", InvoiceErrors.Approval.InvalidStatus);
 
-        if (!Items.Any())
+        if (!InvoiceItems.Any())
             throw new DomainException("Cannot submit an invoice without items.", InvoiceErrors.InvoiceItems.NoInvoiceItem);
 
         Status = InvoiceStatus.PendingApproval;

@@ -28,7 +28,7 @@ namespace InvoiceSystem.Infrastructure.Repositories
         public async Task<IReadOnlyList<Invoice>> GetAllAsync()
         {
             return await _context.Invoices
-                .Include(i => i.Items)        // include invoice items
+                .Include(i => i.InvoiceItems)        // include invoice items
                 .Include(i => i.Company)      // include company
                 .ToListAsync();
         }
@@ -36,7 +36,7 @@ namespace InvoiceSystem.Infrastructure.Repositories
         public async Task<Invoice?> GetByIdAsync(Guid id)
         {
             return await _context.Invoices
-                .Include(i => i.Items)
+                .Include(i => i.InvoiceItems)
                 .Include(i => i.Company)
                 .FirstOrDefaultAsync(i => i.Id == id);
         }
