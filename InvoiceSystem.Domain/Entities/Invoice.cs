@@ -17,7 +17,9 @@ public class Invoice : AuditableEntity
     public Address BillingAddress { get; private set; }
     public Address ShippingAddress { get; private set; }
     public DateTime InvoiceDate { get; private set; }
-    public List<InvoiceItem> Items { get; private set; } = new();
+
+    private readonly List<InvoiceItem> _items = new();
+    public IReadOnlyCollection<InvoiceItem> Items => _items.AsReadOnly();
     public decimal TotalAmount => Items.Sum(i => i.TotalPrice);
 
     public InvoiceStatus Status { get; private set; } = InvoiceStatus.Draft;
@@ -117,7 +119,6 @@ public class Invoice : AuditableEntity
         ApprovedBy = approver;
         Status = InvoiceStatus.Rejected;
     }
-
 
     public void Void(Employee user)
     {

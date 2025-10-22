@@ -9,4 +9,9 @@ public static class InvoiceItemErrors
         public const string NegativeQuantity = "ITM.QUANTITY_LESSER_THAN_ZERO";
         public const string NegativePrice = "ITM.PRICE_LESSER_THAN_ZERO";
     }
+    public static class Deletion
+    {
+        public const string InvalidActor = "ITM.EMPLOYEE_NOT_A_CLERK";
+        public const string InvalidStatus = "ITM.INVOICE_NOT_A_DRAFT";
+    }
 }

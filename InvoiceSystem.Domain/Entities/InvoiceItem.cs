@@ -1,4 +1,5 @@
 ﻿using InvoiceSystem.Domain.Common;
+using InvoiceSystem.Domain.Enums;
 using InvoiceSystem.Domain.Errors;
 
 namespace InvoiceSystem.Domain.Entities;
@@ -42,11 +43,5 @@ public class InvoiceItem
         return Result<InvoiceItem>.Success(new InvoiceItem(trimmedDescription, quantity, unitPrice));
     }
 
-    public void RemoveItem(Guid itemId, Employee actor)
-    {
-        if(actor is not Clerk)
-        {
-            throw new DomainException()
-        }
-    }
+
 }
