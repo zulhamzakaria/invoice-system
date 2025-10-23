@@ -6,8 +6,9 @@ using InvoiceSystem.Domain.Common;
 using InvoiceSystem.Domain.Entities;
 using InvoiceSystem.Domain.Enums;
 using InvoiceSystem.Domain.Errors;
+using InvoiceSystem.Domain.Repositories;
 
-namespace InvoiceSystem.Application.Services 
+namespace InvoiceSystem.Application.Services
 {
     public class InvoiceService : IInvoiceService
     {
@@ -15,22 +16,38 @@ namespace InvoiceSystem.Application.Services
         private readonly IEmployeeRepository _employeeRepository;
         private readonly IAddressMapper _addressMapper;
         private readonly ICompanyMapper _companyMapper;
-        public InvoiceService(IEmployeeRepository employeeRepository, IInvoiceRepository invoiceRepository, IAddressMapper addressMapper, ICompanyMapper companyMapper)
+        private readonly ICompanyRepository _companyRepository;
+        public InvoiceService(IEmployeeRepository employeeRepository, IInvoiceRepository invoiceRepository, IAddressMapper addressMapper, ICompanyMapper companyMapper, ICompanyRepository companyRepository)
         {
             _employeeRepository = employeeRepository;
             _invoiceRepository = invoiceRepository;
+            _companyRepository = companyRepository;
             _addressMapper = addressMapper;
             _companyMapper = companyMapper;
         }
         public async Task<Result<InvoiceDetailsDTO>> CreateInvoiceAsync(InvoiceCreationDTO creationDTO)
         {
             var employee = await _employeeRepository.GetByIdAsync(creationDTO.CreatedBy);
-            if(employee == null || employee is not Clerk)
+            if (employee == null || employee is not Clerk)
             {
                 return Result<InvoiceDetailsDTO>.Failure(Error.Validation(InvoiceErrors.Service.InvalidEmployeeRole, "Only Clerk can create invoice"));
             }
 
-            var newInvoice = Invoice.Create(creationDTO.InvoiceNo, creationDTO.Company, creationDTO.BillingAddress, creationDTO.ShippingAddress, creationDTO.InvoiceDate, employee);
+            var company = await _companyRepository.GetByIdAsync(creationDTO.CompanyId);
+            if (company is null)
+            {
+                return Result<InvoiceDetailsDTO>.Failure(Error.Validation(CompanyErrors.Service.CompanyNotFound, "No such company exists"));
+            }
+
+            var billingAddress = company.Addresses.FirstOrDefault(a => a.Type == AddressType.Billing);
+            var shippingAddress = company.Addresses.FirstOrDefault(a => a.Type == AddressType.Shipping);
+
+            if(billingAddress is null)
+            {
+                return Result<InvoiceDetailsDTO>.Failure(Error.Validation(CompanyErrors.Service.))
+            }
+
+            var newInvoice = Invoice.Create(creationDTO.InvoiceNo, company, billingAddress, shippingAddress, creationDTO.InvoiceDate, employee);
         }
 
         public Task<Result<InvoiceItemDTO>> CreateInvoiceItemAsync(Guid invoiceId, InvoiceItemCreationDTO itemDTO)
