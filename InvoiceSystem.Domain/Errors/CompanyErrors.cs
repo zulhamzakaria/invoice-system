@@ -20,4 +20,9 @@ public static class CompanyErrors
         public const string BillingAddressUpdateFailed = "COM.BILLING_ADDRESS_UPDATE_FAILED";
         public const string ShippingAddressUpdateFailed = "COM.SHIPPING_ADDRESS_UPDATE_FAILED";
     }
+    public static class Common
+    {
+        public const string NoBillingAddress = "COM.BILLING_ADDRESS_UNDEFINED";
+        public const string NoShippingAddress = "COM.SHIPPING_ADDRESS_UNDEFINED";
+    }
 }
