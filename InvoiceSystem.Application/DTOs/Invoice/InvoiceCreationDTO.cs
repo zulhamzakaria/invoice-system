@@ -1,6 +1,4 @@
-﻿using InvoiceSystem.Application.DTOs.Address;
-using InvoiceSystem.Application.DTOs.Company;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 
 namespace InvoiceSystem.Application.DTOs.Invoice;
 
@@ -14,11 +12,7 @@ public record InvoiceCreationDTO(
     decimal InvoiceAmount,
 
     [Required]
-    CompanySummaryDTO Company,
-    [Required]
-    AddressDTO BillingAddress,
-    [Required]
-    AddressDTO ShippingAddress,
+    Guid CompanyId,
 
     [Required]
     Guid CreatedBy,
