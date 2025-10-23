@@ -7,4 +7,5 @@ public interface IInvoiceRepository
     Task AddAsync(Invoice invoice);
     Task UpdateAsync(Invoice invoice);
     Task DeleteAsync(Invoice invoice);
+    Task<int> SaveChangesAsync(CancellationToken token = default);
 }
