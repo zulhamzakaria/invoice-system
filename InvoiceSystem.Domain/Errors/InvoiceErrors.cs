@@ -36,5 +36,6 @@ public static class InvoiceErrors
     public static class Service
     {
         public const string InvoiceNotFound = "INV.NO_INVOICE_FOUND";
+        public const string InvalidEmployeeRole = "INV.EMPLOYEE_NOT_A_CLERK";
     }
 }

@@ -2,7 +2,9 @@
 using InvoiceSystem.Application.DTOs.InvoiceItem;
 using InvoiceSystem.Application.Services.Interfaces;
 using InvoiceSystem.Domain.Common;
+using InvoiceSystem.Domain.Entities;
 using InvoiceSystem.Domain.Enums;
+using InvoiceSystem.Domain.Errors;
 
 namespace InvoiceSystem.Application.Services 
 {
@@ -15,9 +17,13 @@ namespace InvoiceSystem.Application.Services
             _employeeRepository = employeeRepository;
             _invoiceRepository = invoiceRepository;
         }
-        public Task<Result<InvoiceDetailsDTO>> CreateInvoiceAsync(InvoiceCreationDTO creationDTO)
+        public async Task<Result<InvoiceDetailsDTO>> CreateInvoiceAsync(InvoiceCreationDTO creationDTO)
         {
-           var employee = _employeeRepository.GetByIdAsync()
+            var employee = await _employeeRepository.GetByIdAsync(creationDTO.CreatedBy);
+            if(employee == null || employee is not Clerk)
+            {
+                return Result<InvoiceDetailsDTO>.Failure(Error.Validation(InvoiceErrors.Service.InvoiceNotFound, ""));
+            }
         }
 
         public Task<Result<InvoiceItemDTO>> CreateInvoiceItemAsync(Guid invoiceId, InvoiceItemCreationDTO itemDTO)
