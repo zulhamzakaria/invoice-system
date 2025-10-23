@@ -60,7 +60,8 @@ namespace InvoiceSystem.Application.Services
             }
 
             await _invoiceRepository.AddAsync(newInvoice.Value);
-            
+            await _invoiceRepository.SaveChangesAsync();
+
 
         }
 
