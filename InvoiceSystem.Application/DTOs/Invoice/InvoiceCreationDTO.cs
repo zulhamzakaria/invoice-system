@@ -1,7 +1,5 @@
 ﻿using InvoiceSystem.Application.DTOs.Address;
 using InvoiceSystem.Application.DTOs.Company;
-using InvoiceSystem.Application.DTOs.InvoiceItem;
-using InvoiceSystem.Domain.Enums;
 using System.ComponentModel.DataAnnotations;
 
 namespace InvoiceSystem.Application.DTOs.Invoice;
@@ -21,6 +19,9 @@ public record InvoiceCreationDTO(
     AddressDTO BillingAddress,
     [Required]
     AddressDTO ShippingAddress,
+
+    [Required]
+    Guid CreatedBy,
 
     [Required]
     List<InvoiceCreationDTO> InvoiceItems);
