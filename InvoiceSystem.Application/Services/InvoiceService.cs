@@ -44,10 +44,24 @@ namespace InvoiceSystem.Application.Services
 
             if(billingAddress is null)
             {
-                return Result<InvoiceDetailsDTO>.Failure(Error.Validation(CompanyErrors.Service.))
+                return Result<InvoiceDetailsDTO>.Failure(Error.Validation(CompanyErrors.Common.NoBillingAddress, "The Company has no Billing Address registered. Please add one"));
+            }
+
+            if(shippingAddress is null)
+            {
+                return Result<InvoiceDetailsDTO>.Failure(Error.Validation(CompanyErrors.Common.NoShippingAddress, "The Company has no Shipping Address registered. Please add one"));
             }
 
             var newInvoice = Invoice.Create(creationDTO.InvoiceNo, company, billingAddress, shippingAddress, creationDTO.InvoiceDate, employee);
+
+            if (newInvoice.IsFailure)
+            {
+                return Result<InvoiceDetailsDTO>.Failure(newInvoice.Errors);
+            }
+
+            await _invoiceRepository.AddAsync(newInvoice.Value);
+            
+
         }
 
         public Task<Result<InvoiceItemDTO>> CreateInvoiceItemAsync(Guid invoiceId, InvoiceItemCreationDTO itemDTO)
