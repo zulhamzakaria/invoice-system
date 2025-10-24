@@ -17,13 +17,15 @@ namespace InvoiceSystem.Application.Services
         private readonly IAddressMapper _addressMapper;
         private readonly ICompanyMapper _companyMapper;
         private readonly ICompanyRepository _companyRepository;
-        public InvoiceService(IEmployeeRepository employeeRepository, IInvoiceRepository invoiceRepository, IAddressMapper addressMapper, ICompanyMapper companyMapper, ICompanyRepository companyRepository)
+        private readonly IInvoiceMapper _invoiceMapper;
+        public InvoiceService(IEmployeeRepository employeeRepository, IInvoiceRepository invoiceRepository, IAddressMapper addressMapper, ICompanyMapper companyMapper, ICompanyRepository companyRepository, IInvoiceMapper invoiceMapper)
         {
             _employeeRepository = employeeRepository;
             _invoiceRepository = invoiceRepository;
             _companyRepository = companyRepository;
             _addressMapper = addressMapper;
             _companyMapper = companyMapper;
+            _invoiceMapper = invoiceMapper;
         }
         public async Task<Result<InvoiceDetailsDTO>> CreateInvoiceAsync(InvoiceCreationDTO creationDTO)
         {
@@ -61,7 +63,7 @@ namespace InvoiceSystem.Application.Services
 
             await _invoiceRepository.AddAsync(newInvoice.Value);
             await _invoiceRepository.SaveChangesAsync();
-
+            return Result<InvoiceDetailsDTO>.Success(_invoiceMapper.ToDetailsDTO(newInvoice.Value));
 
         }
 

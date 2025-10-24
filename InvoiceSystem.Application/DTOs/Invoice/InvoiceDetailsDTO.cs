@@ -12,7 +12,7 @@ public record InvoiceDetailsDTO(
     decimal InvoiceAmount,
     string Status, 
                                 
-    CompanySummaryDTO Company,
+    CompanyDetailsDTO Company,
     AddressDTO BillingAddress,
     AddressDTO ShippingAddress,
 
