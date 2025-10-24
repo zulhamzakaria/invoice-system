@@ -61,6 +61,13 @@ namespace InvoiceSystem.Application.Services
                 return Result<InvoiceDetailsDTO>.Failure(newInvoice.Errors);
             }
 
+            //invoice items
+            var invoice = newInvoice.Value;
+            foreach(var invoiceItem in invoice.InvoiceItems)
+            {
+                invoice.AddItem(invoiceItem.Description, invoiceItem.Quantity, invoiceItem.UnitPrice);
+            }
+
             await _invoiceRepository.AddAsync(newInvoice.Value);
             await _invoiceRepository.SaveChangesAsync();
             return Result<InvoiceDetailsDTO>.Success(_invoiceMapper.ToDetailsDTO(newInvoice.Value));
