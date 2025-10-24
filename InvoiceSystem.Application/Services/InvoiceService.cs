@@ -44,12 +44,12 @@ namespace InvoiceSystem.Application.Services
             var billingAddress = company.Addresses.FirstOrDefault(a => a.Type == AddressType.Billing);
             var shippingAddress = company.Addresses.FirstOrDefault(a => a.Type == AddressType.Shipping);
 
-            if(billingAddress is null)
+            if (billingAddress is null)
             {
                 return Result<InvoiceDetailsDTO>.Failure(Error.Validation(CompanyErrors.Common.NoBillingAddress, "The Company has no Billing Address registered. Please add one"));
             }
 
-            if(shippingAddress is null)
+            if (shippingAddress is null)
             {
                 return Result<InvoiceDetailsDTO>.Failure(Error.Validation(CompanyErrors.Common.NoShippingAddress, "The Company has no Shipping Address registered. Please add one"));
             }
@@ -63,12 +63,16 @@ namespace InvoiceSystem.Application.Services
 
             //invoice items
             var invoice = newInvoice.Value;
-            foreach(var invoiceItem in invoice.InvoiceItems)
+            foreach (var invoiceItem in invoice.InvoiceItems)
             {
-                invoice.AddItem(invoiceItem.Description, invoiceItem.Quantity, invoiceItem.UnitPrice);
+                var invoiceItemResult = invoice.AddItem(invoiceItem.Description, invoiceItem.Quantity, invoiceItem.UnitPrice);
+                if (invoiceItemResult.IsFailure)
+                {
+                    return Result<InvoiceDetailsDTO>.Failure(invoiceItemResult.Errors);
+                }
             }
 
-            await _invoiceRepository.AddAsync(newInvoice.Value);
+            await _invoiceRepository.AddAsync(invoice);
             await _invoiceRepository.SaveChangesAsync();
             return Result<InvoiceDetailsDTO>.Success(_invoiceMapper.ToDetailsDTO(newInvoice.Value));
 
