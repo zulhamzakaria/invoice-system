@@ -68,19 +68,21 @@ public class Invoice : AuditableEntity
         return Result<Invoice>.Success(invoice);
     }
 
-    public void AddItem(string description, int qty, decimal unitPrice)
+    public Result<InvoiceItem> AddItem(string description, int qty, decimal unitPrice)
     {
         if (Status != InvoiceStatus.Draft)
-            throw new DomainException("Cannot modify items once submitted.", InvoiceErrors.InvoiceItems.CannotModifyItems);
+            return Result<InvoiceItem>.Failure(Error.Validation(InvoiceErrors.InvoiceItems.CannotModifyItems, "Cannot modify items once submitted."));
 
         var addedItem = InvoiceItem.Create(description, qty, unitPrice);
 
         if (addedItem.IsFailure)
         {
-            throw new DomainException("Invoice item validation failed.", InvoiceErrors.Creation.InvalidInvoiceItems);
+            return Result<InvoiceItem>.Failure(Error.Validation(InvoiceErrors.Creation.InvalidInvoiceItems, "Invoice item validation failed."));
         }
 
         _items.Add(addedItem.Value);
+
+        return Result<InvoiceItem>.Success(addedItem.Value);
     }
 
     public void SubmitForApproval()
@@ -136,16 +138,17 @@ public class Invoice : AuditableEntity
 
     public void DeleteItem(Guid itemId, Employee actor)
     {
-        if(actor is not Clerk)
+        if (actor is not Clerk)
         {
             throw new DomainException("Only Clerk can delete an item", InvoiceItemErrors.Deletion.InvalidActor);
         }
-        if(Status != InvoiceStatus.Draft)
+        if (Status != InvoiceStatus.Draft)
         {
             throw new DomainException("Cannot modify items after submission", InvoiceItemErrors.Deletion.InvalidStatus);
         }
         var invoiceItem = _items.FirstOrDefault(x => x.Id == itemId);
-        if (invoiceItem == null) {
+        if (invoiceItem == null)
+        {
             throw new DomainException("Invoice Item not found", InvoiceItemErrors.Common.InvoiceItemNotFound);
         }
         _items.Remove(invoiceItem);
