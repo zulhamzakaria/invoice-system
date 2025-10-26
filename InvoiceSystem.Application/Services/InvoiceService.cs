@@ -18,7 +18,12 @@ namespace InvoiceSystem.Application.Services
         private readonly ICompanyMapper _companyMapper;
         private readonly ICompanyRepository _companyRepository;
         private readonly IInvoiceMapper _invoiceMapper;
-        public InvoiceService(IEmployeeRepository employeeRepository, IInvoiceRepository invoiceRepository, IAddressMapper addressMapper, ICompanyMapper companyMapper, ICompanyRepository companyRepository, IInvoiceMapper invoiceMapper)
+        public InvoiceService(IEmployeeRepository employeeRepository,
+            IInvoiceRepository invoiceRepository,
+            IAddressMapper addressMapper,
+            ICompanyMapper companyMapper,
+            ICompanyRepository companyRepository,
+            IInvoiceMapper invoiceMapper)
         {
             _employeeRepository = employeeRepository;
             _invoiceRepository = invoiceRepository;
