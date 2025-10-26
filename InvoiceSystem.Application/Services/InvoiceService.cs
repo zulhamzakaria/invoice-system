@@ -1,5 +1,6 @@
 ﻿using InvoiceSystem.Application.DTOs.Invoice;
 using InvoiceSystem.Application.DTOs.InvoiceItem;
+using InvoiceSystem.Application.Mappers;
 using InvoiceSystem.Application.Mappers.Interfaces;
 using InvoiceSystem.Application.Services.Interfaces;
 using InvoiceSystem.Domain.Common;
@@ -83,9 +84,27 @@ namespace InvoiceSystem.Application.Services
 
         }
 
-        public Task<Result<InvoiceItemDTO>> CreateInvoiceItemAsync(Guid invoiceId, InvoiceItemCreationDTO itemDTO)
+        public async Task<Result<InvoiceItemDTO>> CreateInvoiceItemAsync(Guid invoiceId, InvoiceItemCreationDTO itemDTO)
         {
-            throw new NotImplementedException();
+            var invoice = await _invoiceRepository.GetByIdAsync(invoiceId);
+            if (invoice is null)
+            {
+                return Result<InvoiceItemDTO>.Failure(Error.Validation(InvoiceErrors.Service.InvoiceNotFound, $"No such invoice exists"));
+            }
+            if (invoice.Status != InvoiceStatus.Draft)
+            {
+                return Result<InvoiceItemDTO>.Failure(Error.Validation(InvoiceErrors.Service.InvalidStatus, "Only Draft Invoice can be modified"));
+            }
+
+            var itemResult = invoice.AddItem(itemDTO.Description, itemDTO.Quantity, itemDTO.UnitPrice);
+            if (itemResult.IsFailure)
+            {
+                return Result<InvoiceItemDTO>.Failure(itemResult.Errors);
+            }
+
+            await _invoiceRepository.SaveChangesAsync();
+            return Result<InvoiceItemDTO>.Success(InvoiceItemMapper.ToDetailsDTO(itemResult.Value));
+
         }
 
         public Task<Result> DeleteInvoiceItemsAsync(Guid invoiceId, Guid itemId, EmployeeType employeeType)
