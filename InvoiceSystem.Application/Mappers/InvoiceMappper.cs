@@ -39,7 +39,7 @@ public class InvoiceMappper : IInvoiceMapper
         throw new NotImplementedException();
     }
 
-    public IReadOnlyList<InvoiceDetailsDTO> ToSummaryDTO(IEnumerable<Invoice> invoices)
+    public IReadOnlyList<InvoiceSummaryDTO> ToSummaryDTO(IEnumerable<Invoice> invoices)
     {
         throw new NotImplementedException();
     }

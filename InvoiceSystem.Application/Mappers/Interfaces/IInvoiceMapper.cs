@@ -7,5 +7,5 @@ public interface IInvoiceMapper
 {
     InvoiceDetailsDTO ToDetailsDTO(Invoice invoice);
     InvoiceSummaryDTO ToSummaryDTO(Invoice invoice);
-    IReadOnlyList<InvoiceDetailsDTO> ToSummaryDTO(IEnumerable<Invoice> invoices);
+    IReadOnlyList<InvoiceSummaryDTO> ToSummaryDTO(IEnumerable<Invoice> invoices);
 }

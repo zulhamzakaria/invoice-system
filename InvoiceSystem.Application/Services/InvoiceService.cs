@@ -112,9 +112,10 @@ namespace InvoiceSystem.Application.Services
             throw new NotImplementedException();
         }
 
-        public Task<Result<IReadOnlyList<InvoiceSummaryDTO>>> GetAllInvoicesAsync()
+        public async Task<Result<IReadOnlyList<InvoiceSummaryDTO>>> GetAllInvoicesAsync()
         {
-            throw new NotImplementedException();
+            var results = await _invoiceRepository.GetAllAsync();
+            return Result<IReadOnlyList<InvoiceSummaryDTO>>.Success(_invoiceMapper.ToSummaryDTO(results));
         }
 
         public Task<Result<InvoiceDetailsDTO>> GetInvoiceByIdAsync(Guid invoiceId)
