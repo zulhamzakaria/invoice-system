@@ -5,7 +5,7 @@ using InvoiceSystem.Domain.Enums;
 
 namespace InvoiceSystem.Application.Mappers;
 
-public class CompanyMapper: ICompanyMapper
+public class CompanyMapper : ICompanyMapper
 {
     private readonly IAddressMapper _addressMapper;
     public CompanyMapper(IAddressMapper addressMapper)
@@ -33,6 +33,15 @@ public class CompanyMapper: ICompanyMapper
             company.RegistrationNumber,
             billingAdressDTO,
             shippingAdressDTO
+            );
+    }
+
+    public CompanySummaryDTO ToSummaryDTO(Company company)
+    {
+        return new CompanySummaryDTO(
+            company.Id,
+            company.Name,
+            company.RegistrationNumber
             );
     }
 }
