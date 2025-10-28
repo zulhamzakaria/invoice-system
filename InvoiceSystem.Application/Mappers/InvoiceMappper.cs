@@ -35,15 +35,15 @@ public class InvoiceMappper : IInvoiceMapper
 
     public InvoiceSummaryDTO ToSummaryDTO(Invoice invoice)
     {
-        var company = _companyMapper.ToDetailsDTO(invoice.Company);
+        var company = _companyMapper.ToSummaryDTO(invoice.Company);
         return new InvoiceSummaryDTO(
             invoice.Id,
             invoice.InvoiceNumber,
             invoice.InvoiceDate,
             invoice.TotalAmount,
             invoice.Status.ToString(),
-            company,
-invoice.InvoiceItems.Count()
+            company, 
+            invoice.InvoiceItems.Count()
             );
     }
 
