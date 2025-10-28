@@ -20,13 +20,13 @@ public class InvoiceMappper : IInvoiceMapper
         var shippingAddress = _addressMapper.ToAddressDTO(invoice.ShippingAddress);
 
         return new InvoiceDetailsDTO(
-            invoice.Id, 
-            invoice.InvoiceNumber, 
-            invoice.InvoiceDate, 
-            invoice.TotalAmount, 
-            invoice.Status.ToString(), 
-            company, 
-            billingAddress, 
+            invoice.Id,
+            invoice.InvoiceNumber,
+            invoice.InvoiceDate,
+            invoice.TotalAmount,
+            invoice.Status.ToString(),
+            company,
+            billingAddress,
             shippingAddress,
             invoice.InvoiceItems.Select(InvoiceItemMapper.ToDetailsDTO).ToList()
             );
@@ -35,11 +35,20 @@ public class InvoiceMappper : IInvoiceMapper
 
     public InvoiceSummaryDTO ToSummaryDTO(Invoice invoice)
     {
-        throw new NotImplementedException();
+        var company = _companyMapper.ToDetailsDTO(invoice.Company);
+        return new InvoiceSummaryDTO(
+            invoice.Id,
+            invoice.InvoiceNumber,
+            invoice.InvoiceDate,
+            invoice.TotalAmount,
+            invoice.Status.ToString(),
+            company,
+invoice.InvoiceItems.Count()
+            );
     }
 
     public IReadOnlyList<InvoiceSummaryDTO> ToSummaryDTO(IEnumerable<Invoice> invoices)
     {
-        throw new NotImplementedException();
+        return invoices.Select(ToSummaryDTO).ToList();
     }
 }
