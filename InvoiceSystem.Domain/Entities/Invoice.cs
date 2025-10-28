@@ -153,4 +153,27 @@ public class Invoice : AuditableEntity
         }
         _items.Remove(invoiceItem);
     }
+
+    public Result UpdateInvoiceDate(DateTime invoiceDate, Guid userId)
+    {
+        if(Status != InvoiceStatus.Draft)
+        {
+            return Result.Failure(Error.Validation(InvoiceErrors.Service.InvalidStatus, "Only Draft invoices can be updated"));
+        }
+
+        if(invoiceDate == default)
+        {
+            return Result.Failure(Error.Validation(InvoiceErrors.Service.InvalidDate, "Invoice Date cannot be empty"));
+        }
+
+        if(invoiceDate > DateTime.UtcNow)
+        {
+            return Result.Failure(Error.Validation(InvoiceErrors.Service.AdvancedDate, "Invoice Date cannot be in the future"));
+        }
+
+        InvoiceDate = invoiceDate;
+        UpdatedById = userId;
+        UpdatedAt = DateTime.UtcNow;
+        return Result.Success();
+    }
 }
