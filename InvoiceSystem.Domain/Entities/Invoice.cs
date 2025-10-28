@@ -177,47 +177,47 @@ public class Invoice : AuditableEntity
         return Result.Success();
     }
 
-    public Result SubmitInvoice(Employee employee)
-    {
-        if (employee is not Clerk)
-        {
-            return Result.Failure(Error.Validation(InvoiceErrors.Submission.InvalidEmployeeRole, "Only Clerk can Submit an invoice"));
-        }
-        if (!_items.Any())
-        {
-            return Result.Failure(Error.Validation(InvoiceErrors.InvoiceItems.NoInvoiceItem, "No Invoice Item found"));
-        }
+    //public Result SubmitInvoice(Employee employee)
+    //{
+    //    if (employee is not Clerk)
+    //    {
+    //        return Result.Failure(Error.Validation(InvoiceErrors.Submission.InvalidEmployeeRole, "Only Clerk can Submit an invoice"));
+    //    }
+    //    if (!_items.Any())
+    //    {
+    //        return Result.Failure(Error.Validation(InvoiceErrors.InvoiceItems.NoInvoiceItem, "No Invoice Item found"));
+    //    }
 
-        Status = InvoiceStatus.PendingApproval;
-        return Result.Success();
-    }
+    //    Status = InvoiceStatus.PendingApproval;
+    //    return Result.Success();
+    //}
 
-    public Result ApproveInvoice(Employee employee)
-    {
-        if (employee is not IApprover)
-        {
-            return Result.Failure(Error.Validation(InvoiceErrors.Approval.InvalidEmployeeRole, "Only FO/FM can Approve invoices"));
-        }
-        if(Status != InvoiceStatus.PendingApproval)
-        {
-            return Result.Failure(Error.Validation(InvoiceErrors.Approval.InvalidInvoiceStatus, "Invoice status must be Pending for Approval"));
-        }
-        Status = InvoiceStatus.Approved;
-        return Result.Success();
-    }
+    //public Result ApproveInvoice(Employee employee)
+    //{
+    //    if (employee is not IApprover)
+    //    {
+    //        return Result.Failure(Error.Validation(InvoiceErrors.Approval.InvalidEmployeeRole, "Only FO/FM can Approve invoices"));
+    //    }
+    //    if(Status != InvoiceStatus.PendingApproval)
+    //    {
+    //        return Result.Failure(Error.Validation(InvoiceErrors.Approval.InvalidInvoiceStatus, "Invoice status must be Pending for Approval"));
+    //    }
+    //    Status = InvoiceStatus.Approved;
+    //    return Result.Success();
+    //}
 
-    public Result RejectInvoice(Employee employee)
-    {
-        if(employee is not FO)
-        {
-            return Result.Failure(Error.Validation(InvoiceErrors.Rejection.InvalidEmployeeRole, "Only FO can Reject invoices"));
-        }
-        if(Status != InvoiceStatus.PendingApproval)
-        {
-            return Result.Failure(Error.Validation(InvoiceErrors.Rejection.InvalidInvoiceStatus, "Invoice status must be Pending for Approval"));
-        }
-        Status = InvoiceStatus.Rejected;
-        return Result.Success();
-    }
+    //public Result RejectInvoice(Employee employee)
+    //{
+    //    if(employee is not FO)
+    //    {
+    //        return Result.Failure(Error.Validation(InvoiceErrors.Rejection.InvalidEmployeeRole, "Only FO can Reject invoices"));
+    //    }
+    //    if(Status != InvoiceStatus.PendingApproval)
+    //    {
+    //        return Result.Failure(Error.Validation(InvoiceErrors.Rejection.InvalidInvoiceStatus, "Invoice status must be Pending for Approval"));
+    //    }
+    //    Status = InvoiceStatus.Rejected;
+    //    return Result.Success();
+    //}
 
 }
