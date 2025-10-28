@@ -108,9 +108,21 @@ namespace InvoiceSystem.Application.Services
 
         }
 
-        public Task<Result> DeleteInvoiceItemsAsync(Guid invoiceId, Guid itemId, Employee employee)
+        public async Task<Result> DeleteInvoiceItemsAsync(Guid invoiceId, Guid itemId, Employee employee)
         {
-            throw new NotImplementedException();
+            var invoice = await _invoiceRepository.GetByIdAsync(invoiceId);
+            if(invoice is null)
+            {
+                return Result.Failure(Error.Validation(InvoiceErrors.Service.InvoiceNotFound, "No such Invoice exists"));
+            }
+            var invoiceItem = invoice.InvoiceItems.FirstOrDefault(it =>  it.Id == itemId);
+            if (invoiceItem is null) 
+            { 
+                return Result.Failure(Error.Validation(InvoiceItemErrors.Common.InvoiceItemNotFound, "No such Invoice Item exists"));
+            }
+            invoice.DeleteItem(invoiceItem.Id, employee);
+            await _invoiceRepository.SaveChangesAsync();
+            return Result.Success();
         }
 
         public async Task<Result<IReadOnlyList<InvoiceSummaryDTO>>> GetAllInvoicesAsync()
@@ -152,9 +164,17 @@ namespace InvoiceSystem.Application.Services
             return Result.Success();
         }
 
-        public Task<Result> VoidInvoiceAsync(Guid invoiceId, Employee employee)
+        public async Task<Result> VoidInvoiceAsync(Guid invoiceId, Employee employee)
         {
-            throw new NotImplementedException();
+            var invoice = await _invoiceRepository.GetByIdAsync(invoiceId);
+            if (invoice is null)
+            {
+                return Result.Failure(Error.Validation(InvoiceErrors.Service.InvoiceNotFound, "No such Invoice exists"));
+            }
+
+            invoice.Void(employee);
+            await _invoiceRepository.SaveChangesAsync();
+            return Result.Success();
         }
     }
 }
