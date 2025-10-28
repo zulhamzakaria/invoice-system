@@ -127,15 +127,29 @@ namespace InvoiceSystem.Application.Services
             return Result<InvoiceDetailsDTO>.Success(_invoiceMapper.ToDetailsDTO(result));
         }
 
-        public async Task<Result> UpdateInvoiceAsync(Guid invoiceId, InvoiceUpdateDTO updateDTO)
+        public async Task<Result> UpdateInvoiceAsync(Guid invoiceId, InvoiceUpdateDTO updateDTO, Guid userId)
         {
             var result = await _invoiceRepository.GetByIdAsync(invoiceId);
             if (result is null)
                 return Result<InvoiceDetailsDTO>.Failure(Error.Validation(InvoiceErrors.Service.InvoiceNotFound, "No such invoice exists"));
 
+            if (updateDTO.InvoiceDate is null)
+            {
+                return Result.Failure(Error.Validation(InvoiceErrors.Service.InvalidDate, "Invoice Date cannot be empty"));
+            }
 
-            
+            //no user id so far
+            var updateResult = result.UpdateInvoiceDate(updateDTO.InvoiceDate.Value, userId);
 
+            if (updateResult.IsFailure)
+            {
+                return Result.Failure(updateResult.Error);
+            }
+
+            await _invoiceRepository.UpdateAsync(result);
+            await _invoiceRepository.SaveChangesAsync();
+
+            return Result.Success();
         }
 
         public Task<Result> VoidInvoiceAsync(Guid invoiceId, EmployeeType employeeType)
