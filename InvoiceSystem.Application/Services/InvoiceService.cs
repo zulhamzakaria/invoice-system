@@ -152,7 +152,7 @@ namespace InvoiceSystem.Application.Services
             return Result.Success();
         }
 
-        public Task<Result> VoidInvoiceAsync(Guid invoiceId, EmployeeType employeeType)
+        public Task<Result> VoidInvoiceAsync(Guid invoiceId, Employee employee)
         {
             throw new NotImplementedException();
         }

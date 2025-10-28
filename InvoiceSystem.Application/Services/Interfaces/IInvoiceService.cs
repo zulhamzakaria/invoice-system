@@ -17,5 +17,5 @@ public interface IInvoiceService
 
 
     public Task<Result<InvoiceItemDTO>> CreateInvoiceItemAsync(Guid invoiceId, InvoiceItemCreationDTO itemDTO);
-    public Task<Result> DeleteInvoiceItemsAsync(Guid invoiceId, Guid itemId, EmployeeType employeeType);
+    public Task<Result> DeleteInvoiceItemsAsync(Guid invoiceId, Guid itemId, Employee employee);
  }
