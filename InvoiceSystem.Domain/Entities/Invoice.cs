@@ -136,9 +136,9 @@ public class Invoice : AuditableEntity
         Status = InvoiceStatus.Voided;
     }
 
-    public void DeleteItem(Guid itemId, Employee actor)
+    public void DeleteItem(Guid itemId, Employee user)
     {
-        if (actor is not Clerk)
+        if (user is not Clerk)
         {
             throw new DomainException("Only Clerk can delete an item", InvoiceItemErrors.Deletion.InvalidActor);
         }

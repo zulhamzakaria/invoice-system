@@ -3,16 +3,16 @@
   "WorkspaceRootPath": "D:\\Learning1\\Projects\\invoice-system\\InvoiceSystem.API\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{75669D0E-FF10-431A-9DD3-7C24DDA855AE}|..\\InvoiceSystem.Application\\InvoiceSystem.Application.csproj|d:\\learning1\\projects\\invoice-system\\invoicesystem.application\\services\\invoiceservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
       "AbsoluteMoniker": "D:0:0:{75669D0E-FF10-431A-9DD3-7C24DDA855AE}|..\\InvoiceSystem.Application\\InvoiceSystem.Application.csproj|d:\\learning1\\projects\\invoice-system\\invoicesystem.application\\services\\interfaces\\iinvoiceservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{75669D0E-FF10-431A-9DD3-7C24DDA855AE}|..\\InvoiceSystem.Application\\InvoiceSystem.Application.csproj|d:\\learning1\\projects\\invoice-system\\invoicesystem.application\\dtos\\invoice\\invoiceupdatedto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{75669D0E-FF10-431A-9DD3-7C24DDA855AE}|..\\InvoiceSystem.Application\\InvoiceSystem.Application.csproj|d:\\learning1\\projects\\invoice-system\\invoicesystem.application\\services\\invoiceservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{16CA3BFB-D56E-49CE-9E89-2719355BC7C8}|..\\InvoiceSystem.Domain\\InvoiceSystem.Domain.csproj|d:\\learning1\\projects\\invoice-system\\invoicesystem.domain\\entities\\invoice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{75669D0E-FF10-431A-9DD3-7C24DDA855AE}|..\\InvoiceSystem.Application\\InvoiceSystem.Application.csproj|d:\\learning1\\projects\\invoice-system\\invoicesystem.application\\dtos\\invoice\\invoiceupdatedto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{16CA3BFB-D56E-49CE-9E89-2719355BC7C8}|..\\InvoiceSystem.Domain\\InvoiceSystem.Domain.csproj|d:\\learning1\\projects\\invoice-system\\invoicesystem.domain\\errors\\invoiceerrors.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
@@ -31,17 +31,17 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 0,
+          "SelectedChildIndex": 1,
           "Children": [
             {
               "$type": "Document",
-              "DocumentIndex": 0,
+              "DocumentIndex": 1,
               "Title": "InvoiceService.cs",
               "DocumentMoniker": "D:\\Learning1\\Projects\\invoice-system\\InvoiceSystem.Application\\Services\\InvoiceService.cs",
               "RelativeDocumentMoniker": "..\\InvoiceSystem.Application\\Services\\InvoiceService.cs",
               "ToolTip": "D:\\Learning1\\Projects\\invoice-system\\InvoiceSystem.Application\\Services\\InvoiceService.cs",
               "RelativeToolTip": "..\\InvoiceSystem.Application\\Services\\InvoiceService.cs",
-              "ViewState": "AgIAAJQAAAAAAAAAAAAwwBQAAAApAAAAAAAAAA==",
+              "ViewState": "AgIAAFEAAAAAAAAAAAAYwG4AAABiAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-10-22T13:50:19.195Z",
               "IsPinned": true,
@@ -49,20 +49,20 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
+              "DocumentIndex": 0,
               "Title": "IInvoiceService.cs",
               "DocumentMoniker": "D:\\Learning1\\Projects\\invoice-system\\InvoiceSystem.Application\\Services\\Interfaces\\IInvoiceService.cs",
               "RelativeDocumentMoniker": "..\\InvoiceSystem.Application\\Services\\Interfaces\\IInvoiceService.cs",
               "ToolTip": "D:\\Learning1\\Projects\\invoice-system\\InvoiceSystem.Application\\Services\\Interfaces\\IInvoiceService.cs",
               "RelativeToolTip": "..\\InvoiceSystem.Application\\Services\\Interfaces\\IInvoiceService.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA0AAABiAAAAAAAAAA==",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA8AAAA9AAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-10-28T14:08:22.336Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 2,
+              "DocumentIndex": 3,
               "Title": "InvoiceUpdateDTO.cs",
               "DocumentMoniker": "D:\\Learning1\\Projects\\invoice-system\\InvoiceSystem.Application\\DTOs\\Invoice\\InvoiceUpdateDTO.cs",
               "RelativeDocumentMoniker": "..\\InvoiceSystem.Application\\DTOs\\Invoice\\InvoiceUpdateDTO.cs",
@@ -130,13 +130,13 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 3,
+              "DocumentIndex": 2,
               "Title": "Invoice.cs",
               "DocumentMoniker": "D:\\Learning1\\Projects\\invoice-system\\InvoiceSystem.Domain\\Entities\\Invoice.cs",
               "RelativeDocumentMoniker": "..\\InvoiceSystem.Domain\\Entities\\Invoice.cs",
               "ToolTip": "D:\\Learning1\\Projects\\invoice-system\\InvoiceSystem.Domain\\Entities\\Invoice.cs",
               "RelativeToolTip": "..\\InvoiceSystem.Domain\\Entities\\Invoice.cs",
-              "ViewState": "AgIAAJIAAAAAAAAAAAAgwKUAAAB3AAAAAAAAAA==",
+              "ViewState": "AgIAAH4AAAAAAAAAAAAYwI8AAAAJAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-10-24T03:56:07.657Z",
               "EditorCaption": ""

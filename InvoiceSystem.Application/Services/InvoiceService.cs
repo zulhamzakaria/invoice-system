@@ -108,7 +108,7 @@ namespace InvoiceSystem.Application.Services
 
         }
 
-        public Task<Result> DeleteInvoiceItemsAsync(Guid invoiceId, Guid itemId, EmployeeType employeeType)
+        public Task<Result> DeleteInvoiceItemsAsync(Guid invoiceId, Guid itemId, Employee employee)
         {
             throw new NotImplementedException();
         }
