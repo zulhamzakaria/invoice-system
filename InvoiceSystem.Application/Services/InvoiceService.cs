@@ -8,6 +8,7 @@ using InvoiceSystem.Domain.Entities;
 using InvoiceSystem.Domain.Enums;
 using InvoiceSystem.Domain.Errors;
 using InvoiceSystem.Domain.Repositories;
+using Microsoft.VisualBasic;
 
 namespace InvoiceSystem.Application.Services
 {
@@ -118,14 +119,23 @@ namespace InvoiceSystem.Application.Services
             return Result<IReadOnlyList<InvoiceSummaryDTO>>.Success(_invoiceMapper.ToSummaryDTO(results));
         }
 
-        public Task<Result<InvoiceDetailsDTO>> GetInvoiceByIdAsync(Guid invoiceId)
+        public async Task<Result<InvoiceDetailsDTO>> GetInvoiceByIdAsync(Guid invoiceId)
         {
-            throw new NotImplementedException();
+            var result = await _invoiceRepository.GetByIdAsync(invoiceId);
+            if (result is null)
+                return Result<InvoiceDetailsDTO>.Failure(Error.Validation(InvoiceErrors.Service.InvoiceNotFound, "No such invoice exists"));
+            return Result<InvoiceDetailsDTO>.Success(_invoiceMapper.ToDetailsDTO(result));
         }
 
-        public Task<Result> UpdateInvoiceAsync(Guid invoiceId, InvoiceUpdateDTO updateDTO)
+        public async Task<Result> UpdateInvoiceAsync(Guid invoiceId, InvoiceUpdateDTO updateDTO)
         {
-            throw new NotImplementedException();
+            var result = await _invoiceRepository.GetByIdAsync(invoiceId);
+            if (result is null)
+                return Result<InvoiceDetailsDTO>.Failure(Error.Validation(InvoiceErrors.Service.InvoiceNotFound, "No such invoice exists"));
+
+
+            
+
         }
 
         public Task<Result> VoidInvoiceAsync(Guid invoiceId, EmployeeType employeeType)
