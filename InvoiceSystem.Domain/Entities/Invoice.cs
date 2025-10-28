@@ -111,14 +111,14 @@ public class Invoice : AuditableEntity
         Status = InvoiceStatus.Approved;
     }
 
-    public void Reject(Employee approver)
+    public void Reject(Employee employee)
     {
         if (Status != InvoiceStatus.PendingApproval)
             throw new DomainException("Only pending invoices can be rejected.", InvoiceErrors.Approval.InvalidStatus);
-        if (approver is null)
-            throw new DomainException("An approver must be provided to reject the invoice.", InvoiceErrors.Approval.MissingApprover);
+        if (employee is null)
+            throw new DomainException("An employee must be provided to reject the invoice.", InvoiceErrors.Approval.MissingApprover);
 
-        ApprovedBy = approver;
+        UpdatedById = employee.Id;
         Status = InvoiceStatus.Rejected;
     }
 
