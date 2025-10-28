@@ -122,9 +122,9 @@ public class Invoice : AuditableEntity
         Status = InvoiceStatus.Rejected;
     }
 
-    public void Void(Employee user)
+    public void Void(Employee employee)
     {
-        if (user is not ICanVoidInvoice)
+        if (employee is not ICanVoidInvoice)
         {
             throw new DomainException("Only Clerk can void an invoice.", InvoiceErrors.Voiding.InvalidRole);
         }
@@ -136,9 +136,9 @@ public class Invoice : AuditableEntity
         Status = InvoiceStatus.Voided;
     }
 
-    public void DeleteItem(Guid itemId, Employee user)
+    public void DeleteItem(Guid itemId, Employee employee)
     {
-        if (user is not Clerk)
+        if (employee is not Clerk)
         {
             throw new DomainException("Only Clerk can delete an item", InvoiceItemErrors.Deletion.InvalidActor);
         }
@@ -154,26 +154,70 @@ public class Invoice : AuditableEntity
         _items.Remove(invoiceItem);
     }
 
-    public Result UpdateInvoiceDate(DateTime invoiceDate, Guid userId)
+    public Result UpdateInvoiceDate(DateTime invoiceDate, Guid employeeId)
     {
-        if(Status != InvoiceStatus.Draft)
+        if (Status != InvoiceStatus.Draft)
         {
             return Result.Failure(Error.Validation(InvoiceErrors.Service.InvalidStatus, "Only Draft invoices can be updated"));
         }
 
-        if(invoiceDate == default)
+        if (invoiceDate == default)
         {
             return Result.Failure(Error.Validation(InvoiceErrors.Service.InvalidDate, "Invoice Date cannot be empty"));
         }
 
-        if(invoiceDate > DateTime.UtcNow)
+        if (invoiceDate > DateTime.UtcNow)
         {
             return Result.Failure(Error.Validation(InvoiceErrors.Service.AdvancedDate, "Invoice Date cannot be in the future"));
         }
 
         InvoiceDate = invoiceDate;
-        UpdatedById = userId;
+        UpdatedById = employeeId;
         UpdatedAt = DateTime.UtcNow;
         return Result.Success();
     }
+
+    public Result SubmitInvoice(Employee employee)
+    {
+        if (employee is not Clerk)
+        {
+            return Result.Failure(Error.Validation(InvoiceErrors.Submission.InvalidEmployeeRole, "Only Clerk can Submit an invoice"));
+        }
+        if (!_items.Any())
+        {
+            return Result.Failure(Error.Validation(InvoiceErrors.InvoiceItems.NoInvoiceItem, "No Invoice Item found"));
+        }
+
+        Status = InvoiceStatus.PendingApproval;
+        return Result.Success();
+    }
+
+    public Result ApproveInvoice(Employee employee)
+    {
+        if (employee is not IApprover)
+        {
+            return Result.Failure(Error.Validation(InvoiceErrors.Approval.InvalidEmployeeRole, "Only FO/FM can Approve invoices"));
+        }
+        if(Status != InvoiceStatus.PendingApproval)
+        {
+            return Result.Failure(Error.Validation(InvoiceErrors.Approval.InvalidInvoiceStatus, "Invoice status must be Pending for Approval"));
+        }
+        Status = InvoiceStatus.Approved;
+        return Result.Success();
+    }
+
+    public Result RejectInvoice(Employee employee)
+    {
+        if(employee is not FO)
+        {
+            return Result.Failure(Error.Validation(InvoiceErrors.Rejection.InvalidEmployeeRole, "Only FO can Reject invoices"));
+        }
+        if(Status != InvoiceStatus.PendingApproval)
+        {
+            return Result.Failure(Error.Validation(InvoiceErrors.Rejection.InvalidInvoiceStatus, "Invoice status must be Pending for Approval"));
+        }
+        Status = InvoiceStatus.Rejected;
+        return Result.Success();
+    }
+
 }

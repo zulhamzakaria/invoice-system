@@ -21,18 +21,28 @@ public static class InvoiceErrors
         public const string Voided = "INV.INVOICE_VOIDED_ALREADY";
         public const string InvalidRole = "INV.INVALID_ROLE";
     }
+    public static class Submission
+    {
+        public const string InvalidEmployeeRole = "INV.EMPLOYEE_NOT_A_CLERK";
+    }
     public static class Approval
     {
         public const string InvalidStatus = "INV.INVALID_STATUS"; 
         public const string LimitExceeded = "INV.APPROVAL_LIMIT_EXCEEDED";
         public const string MissingApprover = "INV.NO_APPROVER_PROVIDED";
+        public const string InvalidEmployeeRole = "INV.EMPLOYEE_NOT_AN_APPROVER";
+        public const string InvalidInvoiceStatus = "INV.INVOICE_STATUS_NOT_PENDING_APPROVAL";
+    }
+    public static class Rejection
+    {
+        public const string InvalidEmployeeRole = "INV.EMPLOYEE_NOT_FO";
+        public const string InvalidInvoiceStatus = "INV.INVOICE_STATUS_NOT_PENDING_APPROVAL";
     }
     public static class  InvoiceItems
     {
         public const string NoInvoiceItem = "INV.NO_INVOICE_ITEMS";
         public const string CannotModifyItems = "INV.CANNOT_MODIFY_ITEMS";   
     }
-
     public static class Service
     {
         public const string InvoiceNotFound = "INV.NO_INVOICE_FOUND";
