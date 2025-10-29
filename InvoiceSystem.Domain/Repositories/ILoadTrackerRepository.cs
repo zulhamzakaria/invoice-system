@@ -8,4 +8,5 @@ public interface ILoadTrackerRepository
     List<LoadTracker> GetQueryableLoadTrackers();
     Task AddAsync(LoadTracker loadTracker);
     Task UpdateAsync(LoadTracker loadTracker);
+    Task<int> SaveChangesAsync(CancellationToken token = default);
 }

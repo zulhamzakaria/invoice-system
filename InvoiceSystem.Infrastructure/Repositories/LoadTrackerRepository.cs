@@ -24,4 +24,29 @@ public class LoadTrackerRepository : ILoadTrackerRepository
     {
         throw new NotImplementedException();
     }
+
+    Task ILoadTrackerRepository.AddAsync(LoadTracker loadTracker)
+    {
+        throw new NotImplementedException();
+    }
+
+    Task<LoadTracker> ILoadTrackerRepository.GetLoadTrackerByApproverIdAsync(Guid id)
+    {
+        throw new NotImplementedException();
+    }
+
+    List<LoadTracker> ILoadTrackerRepository.GetQueryableLoadTrackers()
+    {
+        throw new NotImplementedException();
+    }
+
+    Task<int> ILoadTrackerRepository.SaveChangesAsync(CancellationToken token)
+    {
+        throw new NotImplementedException();
+    }
+
+    Task ILoadTrackerRepository.UpdateAsync(LoadTracker loadTracker)
+    {
+        throw new NotImplementedException();
+    }
 }
