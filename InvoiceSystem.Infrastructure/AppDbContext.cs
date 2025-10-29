@@ -14,6 +14,7 @@ public class AppDbContext : DbContext
     public DbSet<InvoiceItem> InvoiceItems { get; set; }
     public DbSet<WorkflowStep> WorkflowSteps { get; set; }
 
+    public DbSet<LoadTracker> LoadTrackers { get; set; }
     public AppDbContext(DbContextOptions<AppDbContext> options) : base(options) { }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -24,6 +25,15 @@ public class AppDbContext : DbContext
         ConfigureInvoices(modelBuilder);
         ConfigureCompanies(modelBuilder);
         ConfigureWorkflowSteps(modelBuilder);
+        ConfigureLoadTracker(modelBuilder);
+    }
+
+    private void ConfigureLoadTracker(ModelBuilder modelBuilder)
+    {
+        modelBuilder.Entity<LoadTracker>(tracker => {
+            tracker.HasKey(e => e.Id);
+            tracker.HasIndex(e => e.ApproverId).IsUnique();
+        });
     }
 
     private void ConfigureWorkflowSteps(ModelBuilder modelBuilder)
