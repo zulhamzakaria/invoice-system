@@ -1,52 +1,38 @@
 ﻿using InvoiceSystem.Domain.Entities;
 using InvoiceSystem.Domain.Repositories;
+using Microsoft.EntityFrameworkCore;
 
 namespace InvoiceSystem.Infrastructure.Repositories;
 
 public class LoadTrackerRepository : ILoadTrackerRepository
 {
-    public Task AddAsync(LoadTracker loadTracker)
+    private readonly AppDbContext _dbContext;
+    public LoadTrackerRepository(AppDbContext dbContext)
     {
-        throw new NotImplementedException();
+        _dbContext = dbContext;
+    }
+    public async Task AddAsync(LoadTracker loadTracker)
+    {
+        await _dbContext.AddAsync(loadTracker);
     }
 
-    public Task<LoadTracker> GetLoadTrackerByApproverIdAsync(Guid id)
+    public async Task<LoadTracker> GetLoadTrackerByApproverIdAsync(Guid id)
     {
-        throw new NotImplementedException();
+        return await _dbContext.LoadTrackers.FirstOrDefaultAsync(lt => lt.ApproverId == id);
     }
 
-    public List<LoadTracker> GetQueryableLoadTrackers()
+    public IQueryable<LoadTracker> GetQueryableLoadTrackers()
     {
-        throw new NotImplementedException();
+        return _dbContext.LoadTrackers.AsQueryable();
     }
 
-    public Task UpdateAsync(LoadTracker loadTracker)
+    public async Task<int> SaveChangesAsync(CancellationToken token = default)
     {
-        throw new NotImplementedException();
+        return await _dbContext.SaveChangesAsync(token);
     }
 
-    Task ILoadTrackerRepository.AddAsync(LoadTracker loadTracker)
+    public void UpdateAsync(LoadTracker loadTracker)
     {
-        throw new NotImplementedException();
-    }
-
-    Task<LoadTracker> ILoadTrackerRepository.GetLoadTrackerByApproverIdAsync(Guid id)
-    {
-        throw new NotImplementedException();
-    }
-
-    List<LoadTracker> ILoadTrackerRepository.GetQueryableLoadTrackers()
-    {
-        throw new NotImplementedException();
-    }
-
-    Task<int> ILoadTrackerRepository.SaveChangesAsync(CancellationToken token)
-    {
-        throw new NotImplementedException();
-    }
-
-    Task ILoadTrackerRepository.UpdateAsync(LoadTracker loadTracker)
-    {
-        throw new NotImplementedException();
+        _dbContext.Update(loadTracker);
     }
 }

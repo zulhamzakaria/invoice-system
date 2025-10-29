@@ -5,8 +5,8 @@ namespace InvoiceSystem.Domain.Repositories;
 public interface ILoadTrackerRepository
 {
     Task<LoadTracker> GetLoadTrackerByApproverIdAsync(Guid id);
-    List<LoadTracker> GetQueryableLoadTrackers();
+    IQueryable<LoadTracker> GetQueryableLoadTrackers();
     Task AddAsync(LoadTracker loadTracker);
-    Task UpdateAsync(LoadTracker loadTracker);
+    void UpdateAsync(LoadTracker loadTracker);
     Task<int> SaveChangesAsync(CancellationToken token = default);
 }
