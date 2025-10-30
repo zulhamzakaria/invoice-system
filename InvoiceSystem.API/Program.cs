@@ -38,6 +38,7 @@ builder.Services.AddScoped<IWorkflowStepRepository, WorkflowStepRepository>();
 builder.Services.AddScoped<ICompanyRepository, CompanyRepository>();
 builder.Services.AddScoped<IEmployeeRepository, EmployeeRepository>();
 builder.Services.AddScoped<IInvoiceRepository, InvoiceRepository>();
+builder.Services.AddScoped<ILoadTrackerRepository, LoadTrackerRepository>();
 
 builder.Services.AddScoped<ICompanyMappingService, CompanyMappingService>();
 
