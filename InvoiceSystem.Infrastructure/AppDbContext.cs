@@ -31,8 +31,15 @@ public class AppDbContext : DbContext
     private void ConfigureLoadTracker(ModelBuilder modelBuilder)
     {
         modelBuilder.Entity<LoadTracker>(tracker => {
+
             tracker.HasKey(e => e.Id);
             tracker.HasIndex(e => e.ApproverId).IsUnique();
+
+            tracker.HasOne(lt =>lt.Approver)
+                .WithMany()
+                .HasForeignKey(lt => lt.ApproverId)
+                .OnDelete(DeleteBehavior.Restrict);
+
         });
     }
 

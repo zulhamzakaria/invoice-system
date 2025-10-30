@@ -4,6 +4,7 @@ public class LoadTracker
 {
     public Guid Id { get; private set; } = Guid.NewGuid();
     public Guid ApproverId { get; private set; }
+    public Employee Approver { get; private set; }
     public int ActiveAssignments { get; private set; }
     public DateTimeOffset LastAssignedAt { get; private set; }
 
