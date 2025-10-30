@@ -16,12 +16,13 @@ public class LoadTrackerRepository : ILoadTrackerRepository
         await _dbContext.AddAsync(loadTracker);
     }
 
-    public async Task<LoadTracker> GetLoadTrackerByApproverIdAsync(Guid id)
+    public async Task<LoadTracker> GetApproverByIdAsync(Guid id)
     {
+
         return await _dbContext.LoadTrackers.FirstOrDefaultAsync(lt => lt.ApproverId == id);
     }
 
-    public IQueryable<LoadTracker> GetQueryableLoadTrackers()
+    public IQueryable<LoadTracker> Query()
     {
         return _dbContext.LoadTrackers.AsQueryable();
     }
@@ -31,7 +32,7 @@ public class LoadTrackerRepository : ILoadTrackerRepository
         return await _dbContext.SaveChangesAsync(token);
     }
 
-    public void UpdateAsync(LoadTracker loadTracker)
+    public void Update(LoadTracker loadTracker)
     {
         _dbContext.Update(loadTracker);
     }
