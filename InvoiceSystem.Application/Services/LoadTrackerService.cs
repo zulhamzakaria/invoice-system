@@ -1,5 +1,6 @@
 ﻿using InvoiceSystem.Application.Services.Interfaces;
 using InvoiceSystem.Domain.Entities;
+using InvoiceSystem.Domain.Enums;
 using InvoiceSystem.Domain.Repositories;
 
 namespace InvoiceSystem.Application.Services;
@@ -10,11 +11,23 @@ public class LoadTrackerService : ILoadTrackerService
     public LoadTrackerService(ILoadTrackerRepository loadTrackerRepository)
     {
         _loadTrackerRepository = loadTrackerRepository;
-        
+
     }
-    public Task<Employee> GetNextApproverAsync()
+    public async Task<Employee> GetNextApproverAsync()
     {
-        throw new NotImplementedException();
+        var trackers = await _loadTrackerRepository.GetAllWithApproverAsync();
+        var FOs = trackers
+            .Where(t => t.Approver != null && t.Approver.Status == EmployeeStatus.Active && t.Approver is FO)
+            .OrderBy(t => t.LastAssignedAt)
+            .ToList();
+        if (!FOs.Any())
+        {
+            //return result 
+        }
+        var next = FOs.First();
+        next.MarkAssigned();
+        _loadTrackerRepository.Update(next);
+        return next.Approver;
     }
 
     public Task RecordAssignmentAsync(Guid employeeId)
