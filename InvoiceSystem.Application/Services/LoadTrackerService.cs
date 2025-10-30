@@ -2,6 +2,7 @@
 using InvoiceSystem.Domain.Common;
 using InvoiceSystem.Domain.Entities;
 using InvoiceSystem.Domain.Enums;
+using InvoiceSystem.Domain.Errors;
 using InvoiceSystem.Domain.Repositories;
 
 namespace InvoiceSystem.Application.Services;
@@ -23,16 +24,21 @@ public class LoadTrackerService : ILoadTrackerService
             .ToList();
         if (!FOs.Any())
         {
-            //return result 
+            return Result<Employee>.Failure(Error.Validation(LoadTrackerErrors.Service.ApproverNotFound, "No eligible FOs found. Please add one"));
         }
         var next = FOs.First();
         next.MarkAssigned();
         _loadTrackerRepository.Update(next);
+        await _loadTrackerRepository.SaveChangesAsync();
         return Result<Employee>.Success(next.Approver);
     }
 
     public Task RecordAssignmentAsync(Guid employeeId)
     {
-        throw new NotImplementedException();
+        var FO = _loadTrackerRepository.GetApproverByIdAsync(employeeId);
+        if (FO != null) 
+        { 
+        
+        }
     }
 }

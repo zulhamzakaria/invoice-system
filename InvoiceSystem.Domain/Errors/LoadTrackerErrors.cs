@@ -1,6 +1,6 @@
 ﻿namespace InvoiceSystem.Domain.Errors;
 
-public static class LoadTrackers
+public static class LoadTrackerErrors
 {
     public static class Service
     {
