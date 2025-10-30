@@ -27,9 +27,9 @@ public class LoadTrackerService : ILoadTrackerService
             return Result<Employee>.Failure(Error.Validation(LoadTrackerErrors.Service.ApproversNotFound, "No eligible FOs found. Please add one"));
         }
         var next = FOs.First();
-        next.MarkAssigned();
-        _loadTrackerRepository.Update(next);
-        await _loadTrackerRepository.SaveChangesAsync();
+        //next.MarkAssigned();
+        //_loadTrackerRepository.Update(next);
+        //await _loadTrackerRepository.SaveChangesAsync();
         return Result<Employee>.Success(next.Approver);
     }
 

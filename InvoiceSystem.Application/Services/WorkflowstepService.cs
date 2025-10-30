@@ -12,11 +12,16 @@ public class WorkflowstepService : IWorkflowstepService
 {
     private readonly IWorkflowStepRepository _workflowStepRepository;
     private readonly IInvoiceRepository _invoiceRepository;
+    private readonly ILoadTrackerService _loadTrackerService;
 
-    public WorkflowstepService(IWorkflowStepRepository workflowStepRepository, IInvoiceRepository invoiceRepository)
+    public WorkflowstepService(
+        IWorkflowStepRepository workflowStepRepository, 
+        IInvoiceRepository invoiceRepository, 
+        ILoadTrackerService loadTrackerService)
     {
-        _invoiceRepository = invoiceRepository;
         _workflowStepRepository = workflowStepRepository;
+        _invoiceRepository = invoiceRepository;
+        _loadTrackerService = loadTrackerService;
     }
     public async Task<Result<WorkflowstepsDetailsDTO>> CreateWorkflowstepAsync(WorkflowstepsCreationDTO dto)
     {
