@@ -34,11 +34,13 @@ public class WorkflowstepService : IWorkflowstepService
         }
 
         //LoadTracker
-        var approver = await _loadTrackerService.GetNextApproverAsync(invoiceAmount);
+        var approver = await _loadTrackerService.GetNextApproverAsync(invoice.TotalAmount);
         if (approver.IsFailure)
         {
             return Result<WorkflowstepsDetailsDTO>.Failure(approver.Errors);
         }
+
+        await _loadTrackerService.RecordAssignmentAsync(approver.Value.Id);
 
         var statusBefore = invoice.Status;
         var statusAfter = DeterminNextStatus(invoice.Status, dto.ActionType);

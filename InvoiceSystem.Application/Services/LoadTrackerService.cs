@@ -38,7 +38,7 @@ public class LoadTrackerService : ILoadTrackerService
         var FO = await _loadTrackerRepository.GetApproverByIdAsync(employeeId);
         if (FO is null) 
         {
-            return Result.Failure(Error.Validation(LoadTrackerErrors.Service.ApproverNotFound, "No such Appover exists"));
+            return Result.Failure(Error.Validation(LoadTrackerErrors.Service.ApproverNotFound, "No such Approver exists"));
         }
         FO.MarkAssigned();
         _loadTrackerRepository.Update(FO);
