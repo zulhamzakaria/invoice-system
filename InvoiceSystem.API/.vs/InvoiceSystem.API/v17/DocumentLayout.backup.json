@@ -3,6 +3,12 @@
   "WorkspaceRootPath": "D:\\Learning1\\Projects\\invoice-system\\InvoiceSystem.API\\",
   "Documents": [
     {
+      "AbsoluteMoniker": "D:0:0:{24C62EA7-6535-4EFD-B5A1-C0EB68924D59}|..\\InvoiceSystem.Infrastructure\\InvoiceSystem.Infrastructure.csproj|d:\\learning1\\projects\\invoice-system\\invoicesystem.infrastructure\\appdbcontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{16CA3BFB-D56E-49CE-9E89-2719355BC7C8}|..\\InvoiceSystem.Domain\\InvoiceSystem.Domain.csproj|d:\\learning1\\projects\\invoice-system\\invoicesystem.domain\\entities\\loadtracker.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
       "AbsoluteMoniker": "D:0:0:{24C62EA7-6535-4EFD-B5A1-C0EB68924D59}|..\\InvoiceSystem.Infrastructure\\InvoiceSystem.Infrastructure.csproj|d:\\learning1\\projects\\invoice-system\\invoicesystem.infrastructure\\repositories\\loadtrackerrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
@@ -25,7 +31,7 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 7,
+          "SelectedChildIndex": 4,
           "Children": [
             {
               "$type": "Bookmark",
@@ -45,7 +51,33 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 2,
+              "DocumentIndex": 0,
+              "Title": "AppDbContext.cs",
+              "DocumentMoniker": "D:\\Learning1\\Projects\\invoice-system\\InvoiceSystem.Infrastructure\\AppDbContext.cs",
+              "RelativeDocumentMoniker": "..\\InvoiceSystem.Infrastructure\\AppDbContext.cs",
+              "ToolTip": "D:\\Learning1\\Projects\\invoice-system\\InvoiceSystem.Infrastructure\\AppDbContext.cs",
+              "RelativeToolTip": "..\\InvoiceSystem.Infrastructure\\AppDbContext.cs",
+              "ViewState": "AgIAABwAAAAAAAAAAADwvyUAAAAsAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-10-30T01:18:26.763Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "LoadTracker.cs",
+              "DocumentMoniker": "D:\\Learning1\\Projects\\invoice-system\\InvoiceSystem.Domain\\Entities\\LoadTracker.cs",
+              "RelativeDocumentMoniker": "..\\InvoiceSystem.Domain\\Entities\\LoadTracker.cs",
+              "ToolTip": "D:\\Learning1\\Projects\\invoice-system\\InvoiceSystem.Domain\\Entities\\LoadTracker.cs",
+              "RelativeToolTip": "..\\InvoiceSystem.Domain\\Entities\\LoadTracker.cs",
+              "ViewState": "AgIAAAQAAAAAAAAAAAAzwAUAAAAwAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-10-30T01:17:59.218Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
               "Title": "InvoiceRepository.cs",
               "DocumentMoniker": "D:\\Learning1\\Projects\\invoice-system\\InvoiceSystem.Infrastructure\\Repositories\\InvoiceRepository.cs",
               "RelativeDocumentMoniker": "..\\InvoiceSystem.Infrastructure\\Repositories\\InvoiceRepository.cs",
@@ -58,7 +90,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 3,
+              "DocumentIndex": 5,
               "Title": "CompanyRepository.cs",
               "DocumentMoniker": "D:\\Learning1\\Projects\\invoice-system\\InvoiceSystem.Infrastructure\\Repositories\\CompanyRepository.cs",
               "RelativeDocumentMoniker": "..\\InvoiceSystem.Infrastructure\\Repositories\\CompanyRepository.cs",
@@ -71,7 +103,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 4,
+              "DocumentIndex": 6,
               "Title": "EmployeeService.cs",
               "DocumentMoniker": "D:\\Learning1\\Projects\\invoice-system\\InvoiceSystem.Application\\Services\\EmployeeService.cs",
               "RelativeDocumentMoniker": "..\\InvoiceSystem.Application\\Services\\EmployeeService.cs",
@@ -84,26 +116,26 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 0,
+              "DocumentIndex": 2,
               "Title": "LoadTrackerRepository.cs",
               "DocumentMoniker": "D:\\Learning1\\Projects\\invoice-system\\InvoiceSystem.Infrastructure\\Repositories\\LoadTrackerRepository.cs",
               "RelativeDocumentMoniker": "..\\InvoiceSystem.Infrastructure\\Repositories\\LoadTrackerRepository.cs",
               "ToolTip": "D:\\Learning1\\Projects\\invoice-system\\InvoiceSystem.Infrastructure\\Repositories\\LoadTrackerRepository.cs",
               "RelativeToolTip": "..\\InvoiceSystem.Infrastructure\\Repositories\\LoadTrackerRepository.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAACUAAAAFAAAAAAAAAA==",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAsAAAAfAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-10-29T03:17:11.859Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
+              "DocumentIndex": 3,
               "Title": "ILoadTrackerRepository.cs",
               "DocumentMoniker": "D:\\Learning1\\Projects\\invoice-system\\InvoiceSystem.Domain\\Repositories\\ILoadTrackerRepository.cs",
               "RelativeDocumentMoniker": "..\\InvoiceSystem.Domain\\Repositories\\ILoadTrackerRepository.cs",
               "ToolTip": "D:\\Learning1\\Projects\\invoice-system\\InvoiceSystem.Domain\\Repositories\\ILoadTrackerRepository.cs",
               "RelativeToolTip": "..\\InvoiceSystem.Domain\\Repositories\\ILoadTrackerRepository.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAuwAkAAAAPAAAAAAAAAA==",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAuwAYAAAAVAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-10-29T03:10:41.138Z",
               "EditorCaption": ""

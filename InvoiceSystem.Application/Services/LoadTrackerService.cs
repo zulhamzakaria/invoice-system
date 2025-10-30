@@ -7,11 +7,10 @@ namespace InvoiceSystem.Application.Services;
 public class LoadTrackerService : ILoadTrackerService
 {
     private readonly ILoadTrackerRepository _loadTrackerRepository;
-    private readonly IEmployeeRepository _employeeRepository;
-    public LoadTrackerService(ILoadTrackerRepository loadTrackerRepository, IEmployeeRepository employeeRepository)
+    public LoadTrackerService(ILoadTrackerRepository loadTrackerRepository)
     {
         _loadTrackerRepository = loadTrackerRepository;
-        _employeeRepository = employeeRepository;
+        
     }
     public Task<Employee> GetNextApproverAsync()
     {
