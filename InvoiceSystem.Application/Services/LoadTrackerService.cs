@@ -15,16 +15,16 @@ public class LoadTrackerService : ILoadTrackerService
         _loadTrackerRepository = loadTrackerRepository;
 
     }
-    public async Task<Result<Employee>> GetNextApproverAsync()
+    public async Task<Result<Employee>> GetNextApproverAsync(decimal invoiceAmount)
     {
         var trackers = await _loadTrackerRepository.GetAllWithApproverAsync();
         var FOs = trackers
-            .Where(t => t.Approver != null && t.Approver.Status == EmployeeStatus.Active && t.Approver is FO)
+            .Where(t => t.Approver != null && t.Approver.Status == EmployeeStatus.Active && t.Approver is FO fo && fo.CanApprove(invoiceAmount))
             .OrderBy(t => t.LastAssignedAt)
             .ToList();
         if (!FOs.Any())
         {
-            return Result<Employee>.Failure(Error.Validation(LoadTrackerErrors.Service.ApproversNotFound, "No eligible FOs found. Please add one"));
+            return Result<Employee>.Failure(Error.Validation(LoadTrackerErrors.Service.ApproversNotFound, "No eligible FO(s) found. Please add one"));
         }
         var next = FOs.First();
         //next.MarkAssigned();
