@@ -6,5 +6,5 @@ namespace InvoiceSystem.Application.Services.Interfaces;
 public interface ILoadTrackerService
 {
     Task<Result<Employee>> GetNextApproverAsync();
-    Task RecordAssignmentAsync(Guid employeeId);
+    Task<Result> RecordAssignmentAsync(Guid employeeId);
 }

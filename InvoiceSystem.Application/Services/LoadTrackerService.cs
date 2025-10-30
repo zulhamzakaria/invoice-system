@@ -24,7 +24,7 @@ public class LoadTrackerService : ILoadTrackerService
             .ToList();
         if (!FOs.Any())
         {
-            return Result<Employee>.Failure(Error.Validation(LoadTrackerErrors.Service.ApproverNotFound, "No eligible FOs found. Please add one"));
+            return Result<Employee>.Failure(Error.Validation(LoadTrackerErrors.Service.ApproversNotFound, "No eligible FOs found. Please add one"));
         }
         var next = FOs.First();
         next.MarkAssigned();
@@ -33,12 +33,16 @@ public class LoadTrackerService : ILoadTrackerService
         return Result<Employee>.Success(next.Approver);
     }
 
-    public Task RecordAssignmentAsync(Guid employeeId)
+    public async Task<Result> RecordAssignmentAsync(Guid employeeId)
     {
-        var FO = _loadTrackerRepository.GetApproverByIdAsync(employeeId);
-        if (FO != null) 
-        { 
-        
+        var FO = await _loadTrackerRepository.GetApproverByIdAsync(employeeId);
+        if (FO is null) 
+        {
+            return Result.Failure(Error.Validation(LoadTrackerErrors.Service.ApproverNotFound, "No such Appover exists"));
         }
+        FO.MarkAssigned();
+        _loadTrackerRepository.Update(FO);
+        await _loadTrackerRepository.SaveChangesAsync();
+        return Result.Success();
     }
 }
