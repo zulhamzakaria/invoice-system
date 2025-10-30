@@ -2,6 +2,7 @@
 using InvoiceSystem.Application.Mappers;
 using InvoiceSystem.Application.Services.Interfaces;
 using InvoiceSystem.Domain.Common;
+using InvoiceSystem.Domain.Entities;
 using InvoiceSystem.Domain.Enums;
 using InvoiceSystem.Domain.Errors;
 using InvoiceSystem.Domain.Repositories;
@@ -31,6 +32,19 @@ public class WorkflowstepService : IWorkflowstepService
             var errors = new List<Error> { Error.Validation(InvoiceErrors.Service.InvoiceNotFound, "No invoice found for the Invoice Id")};
             return Result<WorkflowstepsDetailsDTO>.Failure(errors);
         }
+
+        //LoadTracker
+        var approver = await _loadTrackerService.GetNextApproverAsync();
+        if (approver.IsFailure)
+        {
+            return Result<WorkflowstepsDetailsDTO>.Failure(approver.Errors);
+        }
+
+        if(approver.Value is FO fo && !fo.CanApprove(invoice.TotalAmount))
+        {
+
+        }
+
         var statusBefore = invoice.Status;
         var statusAfter = DeterminNextStatus(invoice.Status, dto.ActionType);
         var timestamp = DateTimeOffset.UtcNow;
