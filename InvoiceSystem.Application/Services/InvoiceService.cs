@@ -8,7 +8,6 @@ using InvoiceSystem.Domain.Entities;
 using InvoiceSystem.Domain.Enums;
 using InvoiceSystem.Domain.Errors;
 using InvoiceSystem.Domain.Repositories;
-using Microsoft.VisualBasic;
 
 namespace InvoiceSystem.Application.Services
 {
@@ -16,22 +15,16 @@ namespace InvoiceSystem.Application.Services
     {
         private readonly IInvoiceRepository _invoiceRepository;
         private readonly IEmployeeRepository _employeeRepository;
-        private readonly IAddressMapper _addressMapper;
-        private readonly ICompanyMapper _companyMapper;
         private readonly ICompanyRepository _companyRepository;
         private readonly IInvoiceMapper _invoiceMapper;
         public InvoiceService(IEmployeeRepository employeeRepository,
             IInvoiceRepository invoiceRepository,
-            IAddressMapper addressMapper,
-            ICompanyMapper companyMapper,
             ICompanyRepository companyRepository,
             IInvoiceMapper invoiceMapper)
         {
             _employeeRepository = employeeRepository;
             _invoiceRepository = invoiceRepository;
             _companyRepository = companyRepository;
-            _addressMapper = addressMapper;
-            _companyMapper = companyMapper;
             _invoiceMapper = invoiceMapper;
         }
         public async Task<Result<InvoiceDetailsDTO>> CreateInvoiceAsync(InvoiceCreationDTO creationDTO)
