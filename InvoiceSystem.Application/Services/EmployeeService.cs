@@ -5,6 +5,8 @@ using InvoiceSystem.Application.Services.Interfaces;
 using InvoiceSystem.Domain.Common;
 using InvoiceSystem.Domain.Entities;
 using InvoiceSystem.Domain.Errors;
+using InvoiceSystem.Domain.Interfaces;
+using InvoiceSystem.Domain.Repositories;
 
 namespace InvoiceSystem.Application.Services;
 
@@ -12,11 +14,15 @@ public class EmployeeService : IEmployeeService
 {
     private readonly IEmployeeRepository _employeeRepository;
     private readonly IEmployeeMapper _employeeMapper;
+    private readonly ILoadTrackerRepository _loadTrackerRepository;
 
-    public EmployeeService(IEmployeeRepository employeeRepository, IEmployeeMapper employeeMapper)
+    public EmployeeService(IEmployeeRepository employeeRepository, 
+        IEmployeeMapper employeeMapper, 
+        ILoadTrackerRepository loadTrackerRepository)
     {
         _employeeRepository = employeeRepository;
         _employeeMapper = employeeMapper;
+        _loadTrackerRepository = loadTrackerRepository;
     }
 
 
@@ -34,6 +40,15 @@ public class EmployeeService : IEmployeeService
         var employee = employeeResult.Value;
         await _employeeRepository.AddAsync(employee);
         await _employeeRepository.SaveChangesAsync();
+
+        //register into the LoadTracker
+        if(employee is IApprover approver)
+        {
+            var tracker = LoadTracker.Create(employee.Id);
+            await _loadTrackerRepository.AddAsync(tracker);
+            await _loadTrackerRepository.SaveChangesAsync();
+        }
+
         return Result<EmployeeDetailsDTO>.Success(_employeeMapper.ToDetailsDTO(employee));
     }
 
