@@ -33,6 +33,7 @@ builder.Services.AddScoped<ICompanyService, CompanyService>();
 builder.Services.AddScoped<IEmployeeService, EmployeeService>();
 builder.Services.AddScoped<IInvoiceService, InvoiceService>();
 builder.Services.AddScoped<ILoadTrackerService, LoadTrackerService>();
+builder.Services.AddScoped<IInvoiceOrchestratorService, InvoiceOrchestratorService>();
 
 builder.Services.AddScoped<IInvoiceRepository, InvoiceRepository>();
 builder.Services.AddScoped<IWorkflowStepRepository, WorkflowStepRepository>();
