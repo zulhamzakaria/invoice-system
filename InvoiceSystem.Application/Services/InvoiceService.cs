@@ -164,7 +164,7 @@ namespace InvoiceSystem.Application.Services
             {
                 return Result.Failure(Error.Validation(InvoiceErrors.Service.InvoiceNotFound, "No such Invoice found"));
             }
-            invoice.Status = nextStatus.ToString();
+            invoice.UpdateStatus(nextStatus);
             await _invoiceRepository.UpdateAsync(invoice);
             await _invoiceRepository.SaveChangesAsync();
             return Result.Success();
