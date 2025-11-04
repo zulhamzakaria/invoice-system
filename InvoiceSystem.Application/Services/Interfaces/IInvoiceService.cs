@@ -13,6 +13,8 @@ public interface IInvoiceService
     public Task<Result<IReadOnlyList<InvoiceSummaryDTO>>> GetAllInvoicesAsync();
 
     public Task<Result> UpdateInvoiceAsync(Guid invoiceId, InvoiceUpdateDTO updateDTO, Guid userId);
+
+    public Task<Result> UpdateInvoiceStatusAsync(Guid invoiceId, InvoiceStatus nextStatus);
     public Task<Result> VoidInvoiceAsync(Guid invoiceId, Employee employee);
 
 

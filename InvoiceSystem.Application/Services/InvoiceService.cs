@@ -157,6 +157,19 @@ namespace InvoiceSystem.Application.Services
             return Result.Success();
         }
 
+        public async Task<Result> UpdateInvoiceStatusAsync(Guid invoiceId, InvoiceStatus nextStatus)
+        {
+            var invoice = await _invoiceRepository.GetByIdAsync(invoiceId);
+            if(invoice is null)
+            {
+                return Result.Failure(Error.Validation(InvoiceErrors.Service.InvoiceNotFound, "No such Invoice found"));
+            }
+            invoice.Status = nextStatus.ToString();
+            await _invoiceRepository.UpdateAsync(invoice);
+            await _invoiceRepository.SaveChangesAsync();
+            return Result.Success();
+        }
+
         public async Task<Result> VoidInvoiceAsync(Guid invoiceId, Employee employee)
         {
             var invoice = await _invoiceRepository.GetByIdAsync(invoiceId);
