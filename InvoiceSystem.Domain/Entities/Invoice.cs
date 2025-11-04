@@ -154,6 +154,18 @@ public class Invoice : AuditableEntity
         _items.Remove(invoiceItem);
     }
 
+    public void UpdateStatus(InvoiceStatus newStatus)
+    {
+        if (Status == newStatus) return;
+
+        if(Status == InvoiceStatus.Approved || Status == InvoiceStatus.Voided)
+        {
+            throw new DomainException("Cannot change the Status for approved and voided Invoices ", InvoiceErrors.Workflow.InvalidStatus);
+        }
+
+        Status = newStatus;
+    }
+
     public Result UpdateInvoiceDate(DateTime invoiceDate, Guid employeeId)
     {
         if (Status != InvoiceStatus.Draft)

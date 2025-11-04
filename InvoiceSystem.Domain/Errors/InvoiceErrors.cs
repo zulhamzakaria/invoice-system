@@ -15,6 +15,10 @@ public static class InvoiceErrors
         public const string InvalidInvoiceItems = "INV.ITEM_VALIDATION_FAILED";
         public const string InvoiceNoLengthViolation = "INV.INVOICE_NO_LENGTH_INVALID";      
     }
+    public static class Workflow
+    {
+        public const string InvalidStatus = "INV.INVOICE_VOIDED_OR_PROCESSED";
+    }
     public static class Voiding
     {
         public const string Processed = "INV.INVOICE_PROCESSED_ALREADY";
