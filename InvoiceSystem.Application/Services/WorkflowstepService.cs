@@ -2,6 +2,7 @@
 using InvoiceSystem.Application.Mappers;
 using InvoiceSystem.Application.Services.Interfaces;
 using InvoiceSystem.Domain.Common;
+using InvoiceSystem.Domain.Entities;
 using InvoiceSystem.Domain.Enums;
 using InvoiceSystem.Domain.Errors;
 using InvoiceSystem.Domain.Repositories;
@@ -15,8 +16,8 @@ public class WorkflowstepService : IWorkflowstepService
     private readonly ILoadTrackerService _loadTrackerService;
 
     public WorkflowstepService(
-        IWorkflowStepRepository workflowStepRepository, 
-        IInvoiceRepository invoiceRepository, 
+        IWorkflowStepRepository workflowStepRepository,
+        IInvoiceRepository invoiceRepository,
         ILoadTrackerService loadTrackerService)
     {
         _workflowStepRepository = workflowStepRepository;
@@ -25,10 +26,10 @@ public class WorkflowstepService : IWorkflowstepService
     }
     public async Task<Result<WorkflowstepsDetailsDTO>> CreateWorkflowstepAsync(WorkflowstepsCreationDTO dto)
     {
-        var invoice  = await _invoiceRepository.GetByIdAsync(dto.InvoiceId);
+        var invoice = await _invoiceRepository.GetByIdAsync(dto.InvoiceId);
         if (invoice == null)
         {
-            var errors = new List<Error> { Error.Validation(InvoiceErrors.Service.InvoiceNotFound, "No invoice found for the Invoice Id")};
+            var errors = new List<Error> { Error.Validation(InvoiceErrors.Service.InvoiceNotFound, "No invoice found for the Invoice Id") };
             return Result<WorkflowstepsDetailsDTO>.Failure(errors);
         }
 
@@ -57,7 +58,7 @@ public class WorkflowstepService : IWorkflowstepService
 
         if (stepResult.IsFailure)
         {
-            return Result<WorkflowstepsDetailsDTO>.Failure(stepResult.Errors);        
+            return Result<WorkflowstepsDetailsDTO>.Failure(stepResult.Errors);
         }
         var newStep = stepResult.Value;
         await _workflowStepRepository.AddAsync(newStep);
@@ -65,8 +66,29 @@ public class WorkflowstepService : IWorkflowstepService
         return Result<WorkflowstepsDetailsDTO>.Success(WorkflowstepMapper.ToDetailsDTO(newStep));
     }
 
-    private InvoiceStatus DeterminNextStatus(InvoiceStatus currentStatus, WorkflowStepType stepType) {
-        return (currentStatus,  stepType) switch
+    public async Task<Result> RecordStepAsync(Guid invoiceId,
+                                        InvoiceStatus before,
+                                        InvoiceStatus after,
+                                        WorkflowStepType stepType,
+                                        Guid? approverId,
+                                        string reason)
+    {
+        var stepResult = WorkflowStep.Create(invoiceId, before, after, stepType, approverId, reason, DateTimeOffset.UtcNow);
+
+        if (stepResult.IsFailure)
+        {
+            return Result.Failure(stepResult.Errors);
+        }
+
+        await _workflowStepRepository.AddAsync(stepResult.Value);
+        await _workflowStepRepository.SaveChangesAsync();
+        return Result.Success();
+
+    }
+
+    private InvoiceStatus DeterminNextStatus(InvoiceStatus currentStatus, WorkflowStepType stepType)
+    {
+        return (currentStatus, stepType) switch
         {
             (InvoiceStatus.PendingApproval, WorkflowStepType.Approval) => InvoiceStatus.Approved,
             (InvoiceStatus.PendingApproval, WorkflowStepType.AutoApproval) => InvoiceStatus.Approved,
