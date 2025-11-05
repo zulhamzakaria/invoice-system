@@ -52,6 +52,16 @@ public class InvoiceOrchestratorService : IInvoiceOrchestratorService
             return Result.Failure(Error.Validation(EmployeeErrors.Service.InvalidApprover, "Provided Employee is not a valid Approver"));
         }
         invoice.Approve(approver, approvingOfficer.MaxApprovalAmount);
+
+        // status: approved
+        var resultStep = await _workflowstepService.RecordStepAsync(
+            invoice.Id, InvoiceStatus.PendingApproval, InvoiceStatus.Approved, WorkflowStepType.Approval, approver.Id, "Approved Invoice");
+
+        if (resultStep.IsFailure)
+        {
+            return Result.Failure(resultStep.Errors);
+        }
+
         await _invoiceRepository.UpdateAsync(invoice);
         await _invoiceRepository.SaveChangesAsync();
         return Result.Success();
