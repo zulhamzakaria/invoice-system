@@ -51,11 +51,13 @@ public class InvoiceOrchestratorService : IInvoiceOrchestratorService
         {
             return Result.Failure(Error.Validation(EmployeeErrors.Service.InvalidApprover, "Provided Employee is not a valid Approver"));
         }
+
         invoice.Approve(approver, approvingOfficer.MaxApprovalAmount);
+        var status = GetStatus(approvingOfficer);
 
         // status: approved
         var resultStep = await _workflowstepService.RecordStepAsync(
-            invoice.Id, InvoiceStatus.PendingApproval, InvoiceStatus.Approved, WorkflowStepType.Approval, approver.Id, "Approved Invoice");
+            invoice.Id, InvoiceStatus.PendingApproval, status, WorkflowStepType.Approval, approver.Id, "Approved Invoice");
 
         if (resultStep.IsFailure)
         {
@@ -131,21 +133,32 @@ public class InvoiceOrchestratorService : IInvoiceOrchestratorService
 
     }
 
-    private InvoiceStatus DetermineNextStatus(InvoiceStatus currentStatus, WorkflowStepType stepType)
+    private InvoiceStatus GetStatus (IApprover approver)
     {
-        return (currentStatus, stepType) switch
+        return (approver) switch
         {
-            (InvoiceStatus.PendingApproval, WorkflowStepType.Approval) => InvoiceStatus.Approved,
-            (InvoiceStatus.PendingApproval, WorkflowStepType.AutoApproval) => InvoiceStatus.Approved,
+            FO => InvoiceStatus.PendingManagerApproval,
+            FM => InvoiceStatus.Approved,
+            _ => InvoiceStatus.PendingApproval,
+        };
+    }
 
-            (_, WorkflowStepType.Rejection) => InvoiceStatus.Rejected,
+    private InvoiceStatus DetermineNextStatus(InvoiceStatus currentStatus, WorkflowStepType stepType, IApprover approver = null)
+    {
+        return (currentStatus, stepType, approver) switch
+        {
+            (InvoiceStatus.PendingApproval, WorkflowStepType.Approval, FO) => InvoiceStatus.PendingManagerApproval,
+            (InvoiceStatus.PendingApproval, WorkflowStepType.Approval, FM) => InvoiceStatus.Approved,
+            (InvoiceStatus.PendingApproval, WorkflowStepType.AutoApproval,_) => InvoiceStatus.Approved,
 
-            (InvoiceStatus.PendingApproval, WorkflowStepType.Routing) => InvoiceStatus.PendingApproval,
-            (InvoiceStatus.Approved, WorkflowStepType.PaymentProcessing) => InvoiceStatus.Paid,
+            (_, WorkflowStepType.Rejection, _) => InvoiceStatus.Rejected,
 
-            (_, WorkflowStepType.Recall) => InvoiceStatus.Draft,
-            (_, WorkflowStepType.Delegation) => currentStatus,
-            (_, WorkflowStepType.Escalation) => currentStatus,
+            (InvoiceStatus.PendingApproval, WorkflowStepType.Routing, _) => InvoiceStatus.PendingApproval,
+            (InvoiceStatus.Approved, WorkflowStepType.PaymentProcessing, _) => InvoiceStatus.Paid,
+
+            (_, WorkflowStepType.Recall, _) => InvoiceStatus.Draft,
+            (_, WorkflowStepType.Delegation, _) => currentStatus,
+            (_, WorkflowStepType.Escalation, _) => currentStatus,
 
             _ => currentStatus
         };
