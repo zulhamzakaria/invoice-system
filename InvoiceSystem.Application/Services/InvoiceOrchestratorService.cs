@@ -1,26 +1,31 @@
 ﻿using InvoiceSystem.Application.DTOs.WorkflowSteps;
 using InvoiceSystem.Application.Services.Interfaces;
 using InvoiceSystem.Domain.Common;
+using InvoiceSystem.Domain.Entities;
 using InvoiceSystem.Domain.Enums;
 using InvoiceSystem.Domain.Errors;
+using InvoiceSystem.Domain.Interfaces;
 
 namespace InvoiceSystem.Application.Services;
 
 public class InvoiceOrchestratorService : IInvoiceOrchestratorService
 {
     private readonly IInvoiceService _invoiceService;
+    private readonly IEmployeeRepository _employeeRepository;
     private readonly IInvoiceRepository _invoiceRepository;
     private readonly IWorkflowstepService _workflowstepService;
     private readonly ILoadTrackerService _loadTrackerService;
     public InvoiceOrchestratorService(IInvoiceService invoiceService,
         IWorkflowstepService workflowstepService,
         ILoadTrackerService loadTrackerService,
-        IInvoiceRepository invoiceRepository)
+        IInvoiceRepository invoiceRepository,
+        IEmployeeRepository employeeRepository)
     {
         _invoiceService = invoiceService;
         _workflowstepService = workflowstepService;
         _loadTrackerService = loadTrackerService;
         _invoiceRepository = invoiceRepository;
+        _employeeRepository = employeeRepository;
     }
 
     public async Task<Result> ApproveInvoiceAsync(Guid invoiceId, Guid approverId)
@@ -36,7 +41,18 @@ public class InvoiceOrchestratorService : IInvoiceOrchestratorService
             return Result.Failure(Error.Validation(InvoiceErrors.Approval.InvalidStatus, "Only submitted Invoices can be approved"));
         }
         
-        invoice.UpdateStatus(InvoiceStatus.Approved);
+        var approver = await _employeeRepository.GetByIdAsync(approverId);
+        if (approver is null)
+        {
+            return Result.Failure(Error.Validation(EmployeeErrors.Service.EmployeeNotFound, "No such Employee found"));
+
+        }
+        if(approver is IApprover approvingOfficier)
+        {
+            return Result.Failure(Error.Validation(EmployeeErrors.Service.))
+        }
+
+        
 
     }
 
