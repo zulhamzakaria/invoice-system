@@ -9,27 +9,35 @@ namespace InvoiceSystem.Application.Services;
 public class InvoiceOrchestratorService : IInvoiceOrchestratorService
 {
     private readonly IInvoiceService _invoiceService;
+    private readonly IInvoiceRepository _invoiceRepository;
     private readonly IWorkflowstepService _workflowstepService;
     private readonly ILoadTrackerService _loadTrackerService;
-    public InvoiceOrchestratorService(IInvoiceService invoiceService, 
-        IWorkflowstepService workflowstepService, 
-        ILoadTrackerService loadTrackerService)
+    public InvoiceOrchestratorService(IInvoiceService invoiceService,
+        IWorkflowstepService workflowstepService,
+        ILoadTrackerService loadTrackerService,
+        IInvoiceRepository invoiceRepository)
     {
         _invoiceService = invoiceService;
         _workflowstepService = workflowstepService;
         _loadTrackerService = loadTrackerService;
+        _invoiceRepository = invoiceRepository;
     }
 
     public async Task<Result> ApproveInvoiceAsync(Guid invoiceId, Guid approverId)
     {
-        var invoice  = await _invoiceService.GetInvoiceByIdAsync(invoiceId);
+        var invoice  = await _invoiceRepository.GetByIdAsync(invoiceId);
         if (invoice is null) 
         { 
             return Result.Failure(Error.Validation(InvoiceErrors.Service.InvoiceNotFound, "No such Invoice found"));
         }
 
-        if(!invoice.Value.Status is InvoiceStatus.)
+        if(invoice.Status != InvoiceStatus.Submitted)
+        {
+            return Result.Failure(Error.Validation(InvoiceErrors.Approval.InvalidStatus, "Only submitted Invoices can be approved"));
+        }
         
+        invoice.UpdateStatus(InvoiceStatus.Approved);
+
     }
 
     public Task<Result> RejectInvoiceAsync(Guid invoiceId, Guid employeeId, string reason)
