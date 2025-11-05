@@ -121,6 +121,7 @@ public class Invoice : AuditableEntity
             throw new DomainException("An employee must be provided to reject the invoice.", InvoiceErrors.Approval.MissingApprover);
 
         UpdatedById = employee.Id;
+        UpdatedAt = DateTime.UtcNow;
         Status = InvoiceStatus.Rejected;
     }
 

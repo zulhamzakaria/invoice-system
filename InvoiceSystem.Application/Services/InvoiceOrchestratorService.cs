@@ -67,9 +67,38 @@ public class InvoiceOrchestratorService : IInvoiceOrchestratorService
         return Result.Success();
     }
 
-    public Task<Result> RejectInvoiceAsync(Guid invoiceId, Guid employeeId, string reason)
+    public async Task<Result> RejectInvoiceAsync(Guid invoiceId, Guid employeeId, string reason)
     {
-        throw new NotImplementedException();
+        var invoice = await _invoiceRepository.GetByIdAsync(invoiceId);
+        if (invoice is null)
+        {
+            return Result.Failure(Error.Validation(InvoiceErrors.Service.InvoiceNotFound, "No such Invoice found"));
+        }
+        if (invoice.Status != InvoiceStatus.PendingApproval)
+        {
+            return Result.Failure(Error.Validation(InvoiceErrors.Approval.InvalidStatus, "Only Invoices pending for approval can be rejected"));
+        }
+
+        var approver = await _employeeRepository.GetByIdAsync(employeeId);
+        if (approver is null)
+        {
+            return Result.Failure(Error.Validation(EmployeeErrors.Service.EmployeeNotFound, "No such Employee found"));
+        }
+        if (approver is not IApprover approvingOfficer)
+        {
+            return Result.Failure(Error.Validation(EmployeeErrors.Service.InvalidApprover, "Only Approver can reject an Invoice"));
+        }
+
+        invoice.Reject(approver);
+        var resultStep = await _workflowstepService.RecordStepAsync(invoice.Id, InvoiceStatus.PendingApproval, InvoiceStatus.Rejected, 
+                                                                    WorkflowStepType.Approval, approver.Id, reason);
+        if (resultStep.IsFailure)
+        {
+            return Result.Failure(resultStep.Errors);
+        }
+        await _invoiceRepository.UpdateAsync(invoice);
+        await _invoiceRepository.SaveChangesAsync();
+        return Result.Success();
     }
 
     public async Task<Result> SubmitInvoiceAsync(Guid invoiceId, WorkflowstepsCreationDTO dTO)
