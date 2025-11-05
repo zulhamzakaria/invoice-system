@@ -108,6 +108,8 @@ public class Invoice : AuditableEntity
             throw new DomainException("Approver cannot approve this invoice.", InvoiceErrors.Approval.LimitExceeded);
 
         ApprovedBy = approver;
+        UpdatedById = approver.Id;
+        UpdatedAt = DateTime.UtcNow;
         Status = InvoiceStatus.Approved;
     }
 
