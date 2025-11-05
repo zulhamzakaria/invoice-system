@@ -19,6 +19,24 @@ public class InvoiceOrchestratorService : IInvoiceOrchestratorService
         _workflowstepService = workflowstepService;
         _loadTrackerService = loadTrackerService;
     }
+
+    public async Task<Result> ApproveInvoiceAsync(Guid invoiceId, Guid approverId)
+    {
+        var invoice  = await _invoiceService.GetInvoiceByIdAsync(invoiceId);
+        if (invoice is null) 
+        { 
+            return Result.Failure(Error.Validation(InvoiceErrors.Service.InvoiceNotFound, "No such Invoice found"));
+        }
+
+        if(!invoice.Value.Status is InvoiceStatus.)
+        
+    }
+
+    public Task<Result> RejectInvoiceAsync(Guid invoiceId, Guid employeeId, string reason)
+    {
+        throw new NotImplementedException();
+    }
+
     public async Task<Result> SubmitInvoiceAsync(Guid invoiceId, WorkflowstepsCreationDTO dTO)
     {
         var invoice = await _invoiceService.GetInvoiceByIdAsync(invoiceId);
