@@ -30,30 +30,31 @@ public class InvoiceOrchestratorService : IInvoiceOrchestratorService
 
     public async Task<Result> ApproveInvoiceAsync(Guid invoiceId, Guid approverId)
     {
-        var invoice  = await _invoiceRepository.GetByIdAsync(invoiceId);
-        if (invoice is null) 
-        { 
+        var invoice = await _invoiceRepository.GetByIdAsync(invoiceId);
+        if (invoice is null)
+        {
             return Result.Failure(Error.Validation(InvoiceErrors.Service.InvoiceNotFound, "No such Invoice found"));
         }
 
-        if(invoice.Status != InvoiceStatus.Submitted)
+        if (invoice.Status != InvoiceStatus.Submitted)
         {
             return Result.Failure(Error.Validation(InvoiceErrors.Approval.InvalidStatus, "Only submitted Invoices can be approved"));
         }
-        
+
         var approver = await _employeeRepository.GetByIdAsync(approverId);
         if (approver is null)
         {
             return Result.Failure(Error.Validation(EmployeeErrors.Service.EmployeeNotFound, "No such Employee found"));
 
         }
-        if(approver is IApprover approvingOfficier)
+        if (approver is not IApprover approvingOfficer)
         {
-            return Result.Failure(Error.Validation(EmployeeErrors.Service.))
+            return Result.Failure(Error.Validation(EmployeeErrors.Service.InvalidApprover, "Provided Employee is not a valid Approver"));
         }
-
-        
-
+        invoice.Approve(approver, approvingOfficer.MaxApprovalAmount);
+        await _invoiceRepository.UpdateAsync(invoice);
+        await _invoiceRepository.SaveChangesAsync();
+        return Result.Success();
     }
 
     public Task<Result> RejectInvoiceAsync(Guid invoiceId, Guid employeeId, string reason)
@@ -64,7 +65,7 @@ public class InvoiceOrchestratorService : IInvoiceOrchestratorService
     public async Task<Result> SubmitInvoiceAsync(Guid invoiceId, WorkflowstepsCreationDTO dTO)
     {
         var invoice = await _invoiceService.GetInvoiceByIdAsync(invoiceId);
-        if(invoice is null)
+        if (invoice is null)
         {
             return Result.Failure(Error.Validation(InvoiceErrors.Service.InvoiceNotFound, "No such Invoice found"));
         }
@@ -78,7 +79,7 @@ public class InvoiceOrchestratorService : IInvoiceOrchestratorService
         await _loadTrackerService.RecordAssignmentAsync(approver.Value.Id);
 
         //convert status to Enum
-        if(!Enum.TryParse<InvoiceStatus>(invoice.Value.Status, out var statusType))
+        if (!Enum.TryParse<InvoiceStatus>(invoice.Value.Status, out var statusType))
         {
             return Result.Failure(Error.Validation("InvoiceStatusUndefined", "Invalid Invoice status"));
         }
@@ -91,7 +92,7 @@ public class InvoiceOrchestratorService : IInvoiceOrchestratorService
 
     }
 
-    private InvoiceStatus DetermineNextStatus (InvoiceStatus currentStatus, WorkflowStepType stepType)
+    private InvoiceStatus DetermineNextStatus(InvoiceStatus currentStatus, WorkflowStepType stepType)
     {
         return (currentStatus, stepType) switch
         {

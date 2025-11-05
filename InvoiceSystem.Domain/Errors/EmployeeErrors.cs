@@ -17,5 +17,6 @@ public static class EmployeeErrors
         public const string InvalidFOApprovalLimit = "EMP.FO_APPROVAL_LIMIT_UNDEFINED";
         public const string InvalidEmailAddress = "EMP.EMPLOYEE_EMAIL_IN_USED";
         public const string ApprovalLimitExceeded = "EMP.FO_APPROVAL_LIMIT_NOT_ENOUGH";
-    }
+        public const string InvalidApprover = "EMP.EMPLOYEE_NOT_AN_APPROVER";
+     }
 }
