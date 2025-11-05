@@ -12,6 +12,12 @@ public sealed record ErrorResponse
     {
         Errors = errors.Select(e => new ErrorDetail(e.Code, e.Message)).ToList();
     }
+
+    public ErrorResponse(string code, string message)
+    {
+        Errors = new List<ErrorDetail> { new ErrorDetail(code, message) };
+    }
+
 }
 
 public sealed record ErrorDetail(string Code, string Message);
