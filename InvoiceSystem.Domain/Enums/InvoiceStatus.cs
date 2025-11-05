@@ -3,7 +3,6 @@
 public enum InvoiceStatus
 {
     Draft,
-    Submitted,
     PendingApproval,
     Approved,
     Rejected,
