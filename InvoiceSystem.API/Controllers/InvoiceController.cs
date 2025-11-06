@@ -23,13 +23,13 @@ namespace InvoiceSystem.API.Controllers
         public async Task<IActionResult> GetInvoices()
         {
             var results = await _invoiceService.GetAllInvoicesAsync();
+            if (results is null)
+            {
+                return NotFound(ErrorCodes.NotFound<IInvoiceService>());
+            }
             if (results.IsFailure)
             {
                 return BadRequest(results.Errors);
-            }
-            if(results is null)
-            {
-                return NotFound();
             }
             return Ok(results);
         }
