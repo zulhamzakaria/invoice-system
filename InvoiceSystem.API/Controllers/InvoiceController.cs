@@ -50,9 +50,18 @@ namespace InvoiceSystem.API.Controllers
                 return NotFound();
             }
             return Ok(result);
-        } 
+        }
 
-
+        [HttpPost]
+        public async Task<IActionResult> CreateInvoice([FromBody] InvoiceCreationDTO dto)
+        {
+            var result = await _invoiceService.CreateInvoiceAsync(dto);
+            if(result.IsFailure)
+            {
+                return BadRequest(result.Errors);
+            }
+            return CreatedAtAction(nameof(GetInvoiceDetails), new {id = result.Value.Id}, result.Value);
+        }
 
     }
 }
