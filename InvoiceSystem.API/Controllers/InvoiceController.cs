@@ -1,5 +1,6 @@
 ﻿using InvoiceSystem.API.Models;
 using InvoiceSystem.Application.DTOs.Invoice;
+using InvoiceSystem.Application.DTOs.WorkflowSteps;
 using InvoiceSystem.Application.Services.Interfaces;
 using InvoiceSystem.Domain.Common;
 using Microsoft.AspNetCore.Mvc;
@@ -62,6 +63,18 @@ namespace InvoiceSystem.API.Controllers
             }
             return CreatedAtAction(nameof(GetInvoiceDetails), new {id = result.Value.Id}, result.Value);
         }
+
+        [HttpPost("{invoiceId:guid}/submit")]
+        public async Task<IActionResult> SubmitInvoice(Guid invoiceId, [FromBody] WorkflowstepsCreationDTO dto)
+        {
+            var result = await _invoiceOrchestratorService.SubmitInvoiceAsync(invoiceId, dto);
+            if(result.IsFailure)
+            {
+                return BadRequest(result.Errors);
+            }
+            return NoContent();
+        }
+
 
     }
 }
