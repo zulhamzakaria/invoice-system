@@ -101,11 +101,11 @@ namespace InvoiceSystem.API.Controllers
         [HttpPost("{invoiceId:guid}/voiding")]
         public async Task<IActionResult> VoidInvoice(Guid invoiceId, [FromBody] InvoiceRejectionDTO dto)
         {
-            //var result = await _invoiceOrchestratorService.(invoiceId, dto.employeeId, dto.reason.Trim());
-            //if (result.IsFailure)
-            //{
-            //    return BadRequest(result.Errors);
-            //}
+            var result = await _invoiceOrchestratorService.VoidInvoiceAsync(invoiceId, dto.employeeId, dto.reason.Trim());
+            if (result.IsFailure)
+            {
+                return BadRequest(result.Errors);
+            }
             return NoContent();
         }
     }
