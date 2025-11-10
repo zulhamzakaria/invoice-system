@@ -29,6 +29,10 @@ builder.Services.AddDbContext<AppDbContext>(options =>
     )
 );
 
+builder.Services.AddAuthorization();
+builder.Services.AddAuthentication();
+builder.Services.AddControllers();
+
 builder.Services.AddScoped<IWorkflowstepService, WorkflowstepService>();
 builder.Services.AddScoped<ICompanyService, CompanyService>();
 builder.Services.AddScoped<IEmployeeService, EmployeeService>();
