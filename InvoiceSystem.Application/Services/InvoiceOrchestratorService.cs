@@ -163,4 +163,9 @@ public class InvoiceOrchestratorService : IInvoiceOrchestratorService
             _ => currentStatus
         };
     }
+
+    public Task<Result> VoidInvoiceAsync(Guid invoiceid, Guid employeeid, string reason)
+    {
+        throw new NotImplementedException();
+    }
 }
