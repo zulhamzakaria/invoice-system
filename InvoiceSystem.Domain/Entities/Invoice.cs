@@ -136,6 +136,8 @@ public class Invoice : AuditableEntity
         {
             throw new DomainException("Processed invoices cannot be voided.", InvoiceErrors.Voiding.Processed);
         }
+        UpdatedById = employee.Id;
+        UpdatedAt = DateTime.UtcNow;
         Status = InvoiceStatus.Voided;
     }
 
