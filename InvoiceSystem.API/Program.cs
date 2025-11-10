@@ -15,6 +15,12 @@ var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 
+builder.Services.AddControllers()
+    .AddJsonOptions(options =>
+    {
+        options.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter());
+    });
+
 builder.Services.Configure<JsonOptions>(options =>
 {
     options.SerializerOptions.Converters.Add(new JsonStringEnumConverter());
@@ -31,7 +37,6 @@ builder.Services.AddDbContext<AppDbContext>(options =>
 
 builder.Services.AddAuthorization();
 builder.Services.AddAuthentication();
-builder.Services.AddControllers();
 
 builder.Services.AddScoped<IWorkflowstepService, WorkflowstepService>();
 builder.Services.AddScoped<ICompanyService, CompanyService>();
@@ -49,7 +54,7 @@ builder.Services.AddScoped<ILoadTrackerRepository, LoadTrackerRepository>();
 
 builder.Services.AddScoped<ICompanyMappingService, CompanyMappingService>();
 
-builder.Services.AddScoped<IAddressMapper, AddressMapper>();    
+builder.Services.AddScoped<IAddressMapper, AddressMapper>();
 builder.Services.AddScoped<ICompanyMapper, CompanyMapper>();
 builder.Services.AddScoped<IEmployeeMapper, EmployeeMapper>();
 builder.Services.AddScoped<IInvoiceMapper, InvoiceMappper>();
