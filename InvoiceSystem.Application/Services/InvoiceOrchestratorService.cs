@@ -133,6 +133,24 @@ public class InvoiceOrchestratorService : IInvoiceOrchestratorService
 
     }
 
+    public async Task<Result> VoidInvoiceAsync(Guid invoiceid, Guid employeeid, string reason)
+    {
+        var invoice = await _invoiceRepository.GetByIdAsync(invoiceid);
+        if(invoice is null)
+        {
+            return Result.Failure(Error.Validation(InvoiceErrors.Service.InvoiceNotFound, "No such Invoice found"));
+        }
+        var employee =  await _employeeRepository.GetByIdAsync(employeeid);
+        if (employee is null) 
+        {
+            return Result.Failure(Error.Validation(EmployeeErrors.Service.EmployeeNotFound, "No such Employee found"));
+        }
+        // no Reason added yet
+        invoice.Void(employee);
+        await _invoiceRepository.UpdateAsync(invoice);
+        await _invoiceRepository.SaveChangesAsync();
+        return Result.Success();        
+    }
     private InvoiceStatus GetStatus (IApprover approver)
     {
         return (approver) switch
@@ -164,8 +182,5 @@ public class InvoiceOrchestratorService : IInvoiceOrchestratorService
         };
     }
 
-    public Task<Result> VoidInvoiceAsync(Guid invoiceid, Guid employeeid, string reason)
-    {
-        throw new NotImplementedException();
-    }
+
 }
