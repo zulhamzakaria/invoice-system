@@ -90,14 +90,23 @@ namespace InvoiceSystem.API.Controllers
         [HttpPost("{invoiceId:guid}/reject")]
         public async Task<IActionResult> RejectInvoice(Guid invoiceId, [FromBody] InvoiceRejectionDTO dto)
         {
-            var result = await _invoiceOrchestratorService.RejectInvoiceAsync(invoiceId, dto.employeeId, dto.Reason.Trim());
+            var result = await _invoiceOrchestratorService.RejectInvoiceAsync(invoiceId, dto.employeeId, dto.reason.Trim());
             if (result.IsFailure) 
             { 
             return BadRequest(result.Errors);
             }
             return NoContent();
         }
-        
 
+        [HttpPost("{invoiceId:guid}/voiding")]
+        public async Task<IActionResult> VoidInvoice(Guid invoiceId, [FromBody] InvoiceRejectionDTO dto)
+        {
+            //var result = await _invoiceOrchestratorService.(invoiceId, dto.employeeId, dto.reason.Trim());
+            //if (result.IsFailure)
+            //{
+            //    return BadRequest(result.Errors);
+            //}
+            return NoContent();
+        }
     }
 }
