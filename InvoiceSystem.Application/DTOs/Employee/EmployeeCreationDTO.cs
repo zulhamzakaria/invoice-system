@@ -4,15 +4,15 @@ using System.ComponentModel.DataAnnotations;
 namespace InvoiceSystem.Application.DTOs.Employee;
 
 public record EmployeeCreationDTO(
-    [property: Required, StringLength(100,MinimumLength =1)]
+    [Required, StringLength(100,MinimumLength =1)]
     string Name,
-    [property: Required, EmailAddress, StringLength(100,MinimumLength =1)]
+    [Required, EmailAddress, StringLength(100,MinimumLength =1)]
     string Email,
     ///summary
     ///Valid EmployeeType: Clerk, FO, FM
     /// </summary>
-    [property:Required]
+    [Required]
     EmployeeType EmployeeRole,
-    [property: Range(0.0001, (double)decimal.MaxValue)]
+    [Range(0.0001, (double)decimal.MaxValue)]
     decimal? ApprovalLimit
     );
