@@ -33,7 +33,7 @@ public static class EmployeeEndpoints
             : Results.BadRequest(result.Errors);
         });
 
-        group.MapPut("/{id:guid}", async (Guid id, EmployeeUpdateDTO dto, IEmployeeService service)=>{
+        group.MapPatch("/{id:guid}", async (Guid id, EmployeeUpdateDTO dto, IEmployeeService service)=>{
             var result = await service.UpdateEmployeeAsync(id, dto);
             return result.IsSuccess
             ? Results.Ok(result.Value)
