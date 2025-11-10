@@ -1,5 +1,6 @@
 ﻿using InvoiceSystem.API.Models;
 using InvoiceSystem.Application.DTOs.Invoice;
+using InvoiceSystem.Application.DTOs.InvoiceOrchestrator;
 using InvoiceSystem.Application.DTOs.WorkflowSteps;
 using InvoiceSystem.Application.Services.Interfaces;
 using InvoiceSystem.Domain.Common;
@@ -75,6 +76,28 @@ namespace InvoiceSystem.API.Controllers
             return NoContent();
         }
 
+        [HttpPost("{invoiceId:guid}/approve")]
+        public async Task<IActionResult> ApproveInvoice(Guid invoiceId, [FromBody] InvoiceApprovalDTO dto)
+        {
+            var result = await _invoiceOrchestratorService.ApproveInvoiceAsync(invoiceId, dto.approverId);
+            if(result.IsFailure)
+            {
+                return BadRequest(result.Errors);
+            }
+            return NoContent();
+        }
+
+        [HttpPost("{invoiceId:guid}/reject")]
+        public async Task<IActionResult> RejectInvoice(Guid invoiceId, [FromBody] InvoiceRejectionDTO dto)
+        {
+            var result = await _invoiceOrchestratorService.RejectInvoiceAsync(invoiceId, dto.employeeId, dto.Reason.Trim());
+            if (result.IsFailure) 
+            { 
+            return BadRequest(result.Errors);
+            }
+            return NoContent();
+        }
+        
 
     }
 }

@@ -2,7 +2,7 @@
 
 namespace InvoiceSystem.Application.DTOs.InvoiceOrchestrator;
 
-public record InvoiceAcceptanceDTO(
+public record InvoiceApprovalDTO(
     [Required]
     Guid approverId,
     [StringLength(maximumLength:500, MinimumLength =1)]
