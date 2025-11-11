@@ -104,7 +104,15 @@ public abstract class Employee : AuditableEntity
     }
 
     public Result<Employee> PatchEmployee(string? name, string? email, decimal? maxApprovalLimit)
-        => throw new NotImplementedException();
+    {
+        if(maxApprovalLimit is not null) UpdateMaxApprovalLimit((decimal)maxApprovalLimit);
+    }
+
+    public Result<Employee> UpdateName(string name)
+    {
+        var trimmedName = name.Trim();
+        if()
+    }
 
     private Result<Employee> UpdateMaxApprovalLimit(decimal maxApprovalLimit)
     {
@@ -117,5 +125,7 @@ public abstract class Employee : AuditableEntity
             return Result<Employee>.Failure(Error.Validation(EmployeeErrors.Updating.InvalidApprovalAmount, "Approval Limit cannot be lesser than zero"));
         }
         //update approval limit
+        approver.UpdateApprovalLimit(maxApprovalLimit);
+        return Result<Employee>.Success(this);
     }
 }

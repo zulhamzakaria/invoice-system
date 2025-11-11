@@ -32,4 +32,9 @@ public class FO : Employee, IApprover
     }
 
     public bool CanApprove(decimal amount) => amount <= MaxApprovalAmount;
+
+    public void UpdateApprovalLimit(decimal maxApprovalAmount)
+    {
+        MaxApprovalAmount = maxApprovalAmount;
+    }
 }

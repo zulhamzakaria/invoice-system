@@ -23,4 +23,9 @@ public class FM : Employee, IApprover
             return true;
         return amount <= MaxApprovalAmount; 
     }
+
+    public void UpdateApprovalLimit(decimal maxApprovalAmount)
+    {
+        ApprovalLimit = maxApprovalAmount;
+    }
 }
