@@ -104,4 +104,12 @@ public abstract class Employee : AuditableEntity
 
     public Result<Employee> PatchEmployee(string? name, string? email, decimal? maxApprovalLimit)
         => throw new NotImplementedException();
+
+    private Result<Employee> UpdateMaxApprovalLimit(decimal maxApprovalLimit)
+    {
+        if(this is Clerk)
+        {
+            return Result<Employee>.Failure(Error.Validation(EmployeeErrors.Creation.))
+        }
+    }
 }
