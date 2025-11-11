@@ -114,7 +114,7 @@ public abstract class Employee : AuditableEntity
         }
         if(maxApprovalLimit < 0)
         {
-            return Result<Employee>.Failure(Error.Validation(EmployeeErrors.Updating.ApproverViolation, "The Employee is not an Approver"));
+            return Result<Employee>.Failure(Error.Validation(EmployeeErrors.Updating.InvalidApprovalAmount, "Approval Limit cannot be lesser than zero"));
         }
         //update approval limit
     }
