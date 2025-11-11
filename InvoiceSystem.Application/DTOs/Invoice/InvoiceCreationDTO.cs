@@ -3,19 +3,13 @@
 namespace InvoiceSystem.Application.DTOs.Invoice;
 
 public record InvoiceCreationDTO(
-    [property: Required, StringLength(50, MinimumLength =1)]
-    string InvoiceNo,
-    [property: Required, DataType(DataType.Date)]
-    DateTime InvoiceDate,
+    [Required] string InvoiceNo,
+    [Required] DateTime InvoiceDate,
 
-    [property: Required, Range(0.0001, (double)decimal.MaxValue )]
-    decimal InvoiceAmount,
+    [Required] decimal InvoiceAmount,
 
-    [Required]
-    Guid CompanyId,
+    [Required] Guid CompanyId,
 
-    [Required]
-    Guid CreatedBy,
+    [Required] Guid CreatedBy,
 
-    [Required]
-    List<InvoiceCreationDTO> InvoiceItems);
+    [Required] List<InvoiceCreationDTO> InvoiceItems);

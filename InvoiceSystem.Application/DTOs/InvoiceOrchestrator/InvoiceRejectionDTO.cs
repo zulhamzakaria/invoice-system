@@ -2,8 +2,6 @@
 namespace InvoiceSystem.Application.DTOs.InvoiceOrchestrator;
 
 public record InvoiceRejectionDTO(
-    [Required]
-    Guid employeeId,
-    [property: Required, StringLength(500, MinimumLength = 1)]
-    string reason
+    [Required] Guid employeeId,
+    [Required, StringLength(500, MinimumLength = 1)] string reason
     );
