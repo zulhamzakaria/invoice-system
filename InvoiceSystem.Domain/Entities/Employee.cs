@@ -65,7 +65,7 @@ public abstract class Employee : AuditableEntity
     public void Activate() =>
             Status = EmployeeStatus.Active;
 
-    public Result<Employee> UpdateName(string name)
+    private Result<Employee> UpdateName(string name)
     {
         var errors = new List<Error>();
         if (string.IsNullOrWhiteSpace(name))
@@ -78,13 +78,13 @@ public abstract class Employee : AuditableEntity
             errors.Add(Error.Validation(EmployeeErrors.Creation.NameLengthViolation, $"Name length must be between {MinLength} and {MaxNameLength} characters"));
         }
 
-        if(errors.Count > 0) return Result<Employee>.Failure(errors);
+        if (errors.Count > 0) return Result<Employee>.Failure(errors);
 
         Name = trimmedName;
         return Result<Employee>.Success(this);
     }
 
-    public Result<Employee> UpdateEmail(string email)
+    private Result<Employee> UpdateEmail(string email)
     {
         var errors = new List<Error>();
         if (string.IsNullOrWhiteSpace(email))
@@ -105,22 +105,36 @@ public abstract class Employee : AuditableEntity
 
     public Result<Employee> PatchEmployee(string? name, string? email, decimal? maxApprovalLimit)
     {
-        if(maxApprovalLimit is not null) UpdateMaxApprovalLimit((decimal)maxApprovalLimit);
-    }
-
-    public Result<Employee> UpdateName(string name)
-    {
-        var trimmedName = name.Trim();
-        if()
+        var errors = new List<Error>();
+        if (name is not null)
+        {
+            var result = UpdateName(name);
+            if (result.IsFailure)
+                errors.AddRange(result.Errors);
+        }
+        if (email is not null)
+        {
+            var result = UpdateEmail(email);
+            if (result.IsFailure)
+                errors.AddRange(result.Errors);
+        }
+        if (maxApprovalLimit is not null)
+        {
+            var result = UpdateMaxApprovalLimit((decimal)maxApprovalLimit);
+            if (result.IsFailure)
+                errors.AddRange(result.Errors);
+        }
+        if (errors.Any()) { return Result<Employee>.Failure(errors); }
+        return Result<Employee>.Success(this);
     }
 
     private Result<Employee> UpdateMaxApprovalLimit(decimal maxApprovalLimit)
     {
-        if(this is not IApprover approver)
+        if (this is not IApprover approver)
         {
             return Result<Employee>.Failure(Error.Validation(EmployeeErrors.Updating.InvalidApprover, "The Employee is not an Approver"));
         }
-        if(maxApprovalLimit < 0)
+        if (maxApprovalLimit < 0)
         {
             return Result<Employee>.Failure(Error.Validation(EmployeeErrors.Updating.InvalidApprovalAmount, "Approval Limit cannot be lesser than zero"));
         }
