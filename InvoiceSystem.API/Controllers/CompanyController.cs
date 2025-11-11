@@ -26,6 +26,16 @@ namespace InvoiceSystem.API.Controllers
             return BadRequest(new ErrorResponse(result.Errors));
         }
 
+        [HttpGet]
+        public async Task<IActionResult> GetAllCompanies()
+        {
+            var result = await _companyService.GetAllCompaniesAsync();
+            if (result.IsFailure)
+            {
+                return BadRequest(new ErrorResponse(result.Errors));
+            }
+            return Ok(result.Value);
+        }
 
         [HttpPost]
         [ProducesResponseType(typeof(CompanyDetailsDTO), StatusCodes.Status201Created)]
