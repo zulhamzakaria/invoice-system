@@ -102,4 +102,6 @@ public abstract class Employee : AuditableEntity
         return Result<Employee>.Success(this);
     }
 
+    public Result<Employee> PatchEmployee(string? name, string? email, decimal? maxApprovalLimit)
+        => throw new NotImplementedException();
 }
