@@ -89,9 +89,7 @@ public class EmployeeService : IEmployeeService
             return Result<EmployeeUpdateDTO>.Failure(result.Errors);
         }
         var employee = result.Value;
-        var updatedEmployee = employee
-            .UpdateName(employeeUpdateDTO.Name)
-            .Then(e => e.UpdateEmail(employeeUpdateDTO.Email));
+        var updatedEmployee = employee.PatchEmployee(employeeUpdateDTO.Name, employeeUpdateDTO.Email, employeeUpdateDTO.ApprovalLimit);
 
         if (!updatedEmployee.IsSuccess) {
             return Result<EmployeeUpdateDTO>.Failure(updatedEmployee.Errors);
