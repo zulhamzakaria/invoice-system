@@ -1,6 +1,7 @@
 ﻿using InvoiceSystem.Domain.Common;
 using InvoiceSystem.Domain.Enums;
 using InvoiceSystem.Domain.Errors;
+using InvoiceSystem.Domain.Interfaces;
 
 namespace InvoiceSystem.Domain.Entities;
 
@@ -107,9 +108,14 @@ public abstract class Employee : AuditableEntity
 
     private Result<Employee> UpdateMaxApprovalLimit(decimal maxApprovalLimit)
     {
-        if(this is Clerk)
+        if(this is not IApprover approver)
         {
-            return Result<Employee>.Failure(Error.Validation(EmployeeErrors.Creation.))
+            return Result<Employee>.Failure(Error.Validation(EmployeeErrors.Updating.InvalidApprover, "The Employee is not an Approver"));
         }
+        if(maxApprovalLimit < 0)
+        {
+            return Result<Employee>.Failure(Error.Validation(EmployeeErrors.Updating.ApproverViolation, "The Employee is not an Approver"));
+        }
+        //update approval limit
     }
 }
