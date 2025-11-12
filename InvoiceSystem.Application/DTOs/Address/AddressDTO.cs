@@ -1,6 +1,4 @@
-﻿using System.ComponentModel.DataAnnotations;
-
-namespace InvoiceSystem.Application.DTOs.Address;
+﻿namespace InvoiceSystem.Application.DTOs.Address;
 
 public record AddressDTO(string Street,
                             string Zipcode,
