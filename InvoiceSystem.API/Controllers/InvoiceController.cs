@@ -22,7 +22,7 @@ namespace InvoiceSystem.API.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> GetInvoices()
+        public async Task<IActionResult> GetAllInvoices()
         {
             var results = await _invoiceService.GetAllInvoicesAsync();
             if (results is null)
