@@ -31,8 +31,8 @@ public class CompanyService : ICompanyService
             var error = new List<Error> { Error.Validation(CompanyErrors.Service.CompanyExists, "A company record with the provided unique identifiers already exists") };
             return Result<CompanyDetailsDTO>.Failure(error);
         }
-        var createdBillingAddress = ValidateAndCreateAddress(dto.BillingAddress);
-        var creatatedShippingAddress = ValidateAndCreateAddress(dto.ShippingAddress);
+        var createdBillingAddress = ValidateAndCreateAddress(dto.BillingAddress, AddressType.Billing);
+        var creatatedShippingAddress = ValidateAndCreateAddress(dto.ShippingAddress, AddressType.Shipping);
         var errors = new List<Error>();
         if (createdBillingAddress.IsFailure) errors.AddRange(createdBillingAddress.Errors);
         if (creatatedShippingAddress.IsFailure) errors.AddRange(creatatedShippingAddress.Errors);
@@ -53,13 +53,13 @@ public class CompanyService : ICompanyService
     }
 
 
-    private Result<Address> ValidateAndCreateAddress(AddressDTO dto)
+    private Result<Address> ValidateAndCreateAddress(AddressCreationDTO dto, AddressType addressType)
     {
-        var validateEnum = TryConvertStringToEnum<AddressType>(dto.AddressType, CompanyErrors.Service.InvalidAddressType, "Address Type", "Billing or Shipping");
-        if (validateEnum.IsFailure)
-        {
-            return Result<Address>.Failure(validateEnum.Errors);
-        }
+        //var validateEnum = TryConvertStringToEnum<AddressType>(dto.AddressType, CompanyErrors.Service.InvalidAddressType, "Address Type", "Billing or Shipping");
+        //if (validateEnum.IsFailure)
+        //{
+        //    return Result<Address>.Failure(validateEnum.Errors);
+        //}
 
         return Address.Create(
             dto.Street,
@@ -67,7 +67,8 @@ public class CompanyService : ICompanyService
             dto.State,
             dto.Zipcode,
             dto.Country,
-           validateEnum.Value
+           //validateEnum.Value
+           addressType
             );
     }
 
