@@ -9,7 +9,7 @@ public class Company : Entity
 
     private const int MinLength = 1;
     private const int MaxCompanyNameLength = 50;
-    private const int MaxRegistrationNoLength = 10;
+    private const int MaxRegistrationNoLength = 20;
 
     public string Name { get; private set; }
     public string RegistrationNumber { get; private set; }
