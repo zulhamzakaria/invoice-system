@@ -96,6 +96,18 @@ public class AppDbContext : DbContext
             .OnDelete(DeleteBehavior.Cascade); // cascade delete
 
         modelBuilder.Entity<Invoice>()
+            .HasOne(i=> i.CreatedBy)
+            .WithMany()
+            .HasForeignKey(i => i.CreatedById)
+            .OnDelete(DeleteBehavior.Restrict);
+
+        modelBuilder.Entity<Invoice>()
+            .HasOne(i => i.ApprovedBy)
+            .WithMany()
+            .HasForeignKey(i => i.ApprovedById)
+            .OnDelete(DeleteBehavior.Restrict);
+
+        modelBuilder.Entity<Invoice>()
             .Navigation("_items")
             .UsePropertyAccessMode(PropertyAccessMode.Field);
 

@@ -23,8 +23,11 @@ public class Invoice : AuditableEntity
     public decimal TotalAmount => InvoiceItems.Sum(i => i.TotalPrice);
 
     public InvoiceStatus Status { get; private set; } = InvoiceStatus.Draft;
+
     public Employee CreatedBy { get; private set; }
+
     public Employee? ApprovedBy { get; private set; }
+    public Guid? ApprovedById { get; private set; }
 
     private Invoice() { } // EF Core needs this
 
@@ -163,7 +166,7 @@ public class Invoice : AuditableEntity
     {
         if (Status == newStatus) return;
 
-        if(Status == InvoiceStatus.Approved || Status == InvoiceStatus.Voided)
+        if (Status == InvoiceStatus.Approved || Status == InvoiceStatus.Voided)
         {
             throw new DomainException("Cannot change the Status for approved and voided Invoices ", InvoiceErrors.Workflow.InvalidStatus);
         }
