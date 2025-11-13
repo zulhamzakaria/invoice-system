@@ -118,9 +118,16 @@ namespace InvoiceSystem.Application.Services
             return Result.Success();
         }
 
-        public Task<Result<IReadOnlyList<InvoiceItemDTO>>> GetAllInvoiceItemsAsync()
+        public async Task<Result<IReadOnlyList<InvoiceItemDTO>>> GetAllInvoiceItemsAsync(Guid invoiceId)
         {
-            throw new NotImplementedException();
+            var invoice = await _invoiceRepository.GetByIdAsync(invoiceId);
+            if (invoice is null)
+            {
+                return Result<IReadOnlyList<InvoiceItemDTO>>
+                    .Failure(Error.Validation(InvoiceErrors.Service.InvoiceNotFound, "No such Invoice exists"));
+            }
+            var items = _invoiceMapper.ToItemDTO(invoice.InvoiceItems);
+            return Result<IReadOnlyList<InvoiceItemDTO>>.Success(items ?? new List<InvoiceItemDTO>());
         }
 
         public async Task<Result<IReadOnlyList<InvoiceSummaryDTO>>> GetAllInvoicesAsync()
