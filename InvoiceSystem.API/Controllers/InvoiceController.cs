@@ -33,7 +33,7 @@ namespace InvoiceSystem.API.Controllers
             {
                 return BadRequest(results.Errors);
             }
-            return Ok(results);
+            return Ok(results.Value);
         }
 
 
@@ -65,6 +65,21 @@ namespace InvoiceSystem.API.Controllers
             return CreatedAtAction(nameof(GetInvoiceDetails), new { id = result.Value.Id }, result.Value);
         }
 
+        [HttpGet("{invoiceId:guid}/items")]
+        public async Task<IActionResult> GetAllInvoiceItems(Guid invoiceId)
+        {
+            var results = await _invoiceService.GetAllInvoiceItemsAsync(invoiceId);
+            if(results is null)
+            {
+                return NotFound(ErrorCodes.NotFound<IInvoiceService>());
+            }
+            if (results.IsFailure)
+            {
+                return BadRequest(results.Errors);
+            }
+            return Ok(results.Value);
+        }
+
         [HttpPost("{invoiceId}/items")]
         public async Task<IActionResult> AddInvoiceItem(Guid invoiceId, [FromBody] InvoiceItemCreationDTO dto)
         {
@@ -74,7 +89,7 @@ namespace InvoiceSystem.API.Controllers
                 return BadRequest(result.Errors);
             }
             //Created at action
-            return Ok(result);
+            return CreatedAtAction(nameof(GetAllInvoiceItems), new {id = invoiceId}, result.Value);
         }
 
         [HttpPost("{invoiceId:guid}/submit")]
