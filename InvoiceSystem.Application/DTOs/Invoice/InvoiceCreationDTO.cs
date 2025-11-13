@@ -10,6 +10,5 @@ public record InvoiceCreationDTO(
 
     [Required] Guid CompanyId,
 
-    [Required] Guid CreatedBy,
-
-    [Required] List<InvoiceCreationDTO> InvoiceItems);
+    [Required] Guid CreatedBy
+    );
