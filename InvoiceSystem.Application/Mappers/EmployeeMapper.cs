@@ -33,8 +33,8 @@ public class EmployeeMapper : IEmployeeMapper
         var summaryDTOs = employees.Select(e => new EmployeeSummaryDTO(
             e.Id,
             e.Name,
-            e.Email,
-            e switch { FM => "Finance Manager", FO => "Finance Officer", _ => "Clerk" }))
+            e switch { FM => "Finance Manager", FO => "Finance Officer", _ => "Clerk" }, 
+            e.Email))
             .ToList();
         return summaryDTOs;
     }
