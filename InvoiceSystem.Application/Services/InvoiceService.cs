@@ -118,6 +118,11 @@ namespace InvoiceSystem.Application.Services
             return Result.Success();
         }
 
+        public Task<Result<IReadOnlyList<InvoiceItemDTO>>> GetAllInvoiceItemsAsync()
+        {
+            throw new NotImplementedException();
+        }
+
         public async Task<Result<IReadOnlyList<InvoiceSummaryDTO>>> GetAllInvoicesAsync()
         {
             var results = await _invoiceRepository.GetAllAsync();

@@ -1,9 +1,9 @@
 ﻿using InvoiceSystem.API.Models;
 using InvoiceSystem.Application.DTOs.Invoice;
+using InvoiceSystem.Application.DTOs.InvoiceItem;
 using InvoiceSystem.Application.DTOs.InvoiceOrchestrator;
 using InvoiceSystem.Application.DTOs.WorkflowSteps;
 using InvoiceSystem.Application.Services.Interfaces;
-using InvoiceSystem.Domain.Common;
 using Microsoft.AspNetCore.Mvc;
 
 namespace InvoiceSystem.API.Controllers
@@ -14,7 +14,7 @@ namespace InvoiceSystem.API.Controllers
     {
         private readonly IInvoiceService _invoiceService;
         private readonly IInvoiceOrchestratorService _invoiceOrchestratorService;
-        public InvoiceController(IInvoiceService invoiceService, 
+        public InvoiceController(IInvoiceService invoiceService,
                                  IInvoiceOrchestratorService invoiceOrchestratorService)
         {
             _invoiceService = invoiceService;
@@ -58,18 +58,30 @@ namespace InvoiceSystem.API.Controllers
         public async Task<IActionResult> CreateInvoice([FromBody] InvoiceCreationDTO dto)
         {
             var result = await _invoiceService.CreateInvoiceAsync(dto);
-            if(result.IsFailure)
+            if (result.IsFailure)
             {
                 return BadRequest(result.Errors);
             }
-            return CreatedAtAction(nameof(GetInvoiceDetails), new {id = result.Value.Id}, result.Value);
+            return CreatedAtAction(nameof(GetInvoiceDetails), new { id = result.Value.Id }, result.Value);
+        }
+
+        [HttpPost("{invoiceId}/items")]
+        public async Task<IActionResult> AddInvoiceItem(Guid invoiceId, [FromBody] InvoiceItemCreationDTO dto)
+        {
+            var result = await _invoiceService.CreateInvoiceItemAsync(invoiceId, dto);
+            if (result.IsFailure)
+            {
+                return BadRequest(result.Errors);
+            }
+            //Created at action
+            return Ok(result);
         }
 
         [HttpPost("{invoiceId:guid}/submit")]
         public async Task<IActionResult> SubmitInvoice(Guid invoiceId, [FromBody] WorkflowstepsCreationDTO dto)
         {
             var result = await _invoiceOrchestratorService.SubmitInvoiceAsync(invoiceId, dto);
-            if(result.IsFailure)
+            if (result.IsFailure)
             {
                 return BadRequest(result.Errors);
             }
@@ -80,7 +92,7 @@ namespace InvoiceSystem.API.Controllers
         public async Task<IActionResult> ApproveInvoice(Guid invoiceId, [FromBody] InvoiceApprovalDTO dto)
         {
             var result = await _invoiceOrchestratorService.ApproveInvoiceAsync(invoiceId, dto.approverId);
-            if(result.IsFailure)
+            if (result.IsFailure)
             {
                 return BadRequest(result.Errors);
             }
@@ -91,9 +103,9 @@ namespace InvoiceSystem.API.Controllers
         public async Task<IActionResult> RejectInvoice(Guid invoiceId, [FromBody] InvoiceRejectionDTO dto)
         {
             var result = await _invoiceOrchestratorService.RejectInvoiceAsync(invoiceId, dto.employeeId, dto.reason.Trim());
-            if (result.IsFailure) 
-            { 
-            return BadRequest(result.Errors);
+            if (result.IsFailure)
+            {
+                return BadRequest(result.Errors);
             }
             return NoContent();
         }
