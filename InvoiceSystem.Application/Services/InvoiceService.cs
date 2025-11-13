@@ -126,7 +126,7 @@ namespace InvoiceSystem.Application.Services
                 return Result<IReadOnlyList<InvoiceItemDTO>>
                     .Failure(Error.Validation(InvoiceErrors.Service.InvoiceNotFound, "No such Invoice exists"));
             }
-            var items = _invoiceMapper.ToItemDTO(invoice.InvoiceItems);
+            var items = InvoiceItemMapper.ToListDTO(invoice.InvoiceItems);
             return Result<IReadOnlyList<InvoiceItemDTO>>.Success(items ?? new List<InvoiceItemDTO>());
         }
 
