@@ -6,7 +6,7 @@ public record InvoiceCreationDTO(
     [Required] string InvoiceNo,
     [Required] DateTime InvoiceDate,
 
-    [Required] decimal InvoiceAmount,
+    //[Required] decimal InvoiceAmount,
 
     [Required] Guid CompanyId,
 
