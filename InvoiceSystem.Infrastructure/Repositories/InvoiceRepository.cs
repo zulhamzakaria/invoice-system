@@ -19,6 +19,11 @@ namespace InvoiceSystem.Infrastructure.Repositories
             //await _context.SaveChangesAsync();
         }
 
+        public async Task AddItem(InvoiceItem item)
+        {
+            await _context.InvoiceItems.AddAsync(item);
+        }
+
         public async Task DeleteAsync(Invoice invoice)
         {
             // ⚠️ In some domains, "Delete" is really "Void" instead of removing from DB
