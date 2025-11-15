@@ -96,6 +96,7 @@ namespace InvoiceSystem.Application.Services
                 return Result<InvoiceItemDTO>.Failure(itemResult.Errors);
             }
 
+            await _invoiceRepository.AddItemAsync(itemResult.Value);
             await _invoiceRepository.SaveChangesAsync();
             return Result<InvoiceItemDTO>.Success(InvoiceItemMapper.ToDetailsDTO(itemResult.Value));
 

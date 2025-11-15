@@ -19,7 +19,7 @@ namespace InvoiceSystem.Infrastructure.Repositories
             //await _context.SaveChangesAsync();
         }
 
-        public async Task AddItem(InvoiceItem item)
+        public async Task AddItemAsync(InvoiceItem item)
         {
             await _context.InvoiceItems.AddAsync(item);
         }
