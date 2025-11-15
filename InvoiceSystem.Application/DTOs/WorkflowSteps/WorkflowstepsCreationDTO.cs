@@ -5,11 +5,7 @@ namespace InvoiceSystem.Application.DTOs.WorkflowSteps;
 
 public record WorkflowstepsCreationDTO(
     [Required] Guid InvoiceId,
-    //[Required]
-    //InvoiceStatus StatusBefore,
-    //[Required]
-    //InvoiceStatus StatusAfter,
-    [Required] WorkflowStepType ActionType,
+    [Required] WorkflowStepType WorkflowStepType,
     Guid? ApproverId,
-    [Required, StringLength(500, MinimumLength = 1)] string Reason
+    [Required, StringLength(500, MinimumLength = 1)] string? Reason
     );
