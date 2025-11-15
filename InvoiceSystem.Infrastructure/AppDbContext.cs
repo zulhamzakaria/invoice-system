@@ -156,17 +156,17 @@ public class AppDbContext : DbContext
         });
     }
 
-    public override int SaveChanges()
-    {
-        //ApplyAuditInfo();
-        return base.SaveChanges();
-    }
+    //public override int SaveChanges()
+    //{
+    //    //ApplyAuditInfo();
+    //    return base.SaveChanges();
+    //}
 
-    public override async Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
-    {
-        //ApplyAuditInfo();
-        return await base.SaveChangesAsync(cancellationToken);
-    }
+    //public override async Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
+    //{
+    //    //ApplyAuditInfo();
+    //    return await base.SaveChangesAsync(cancellationToken);
+    //}
 
     private void ApplyAuditInfo()
     {
