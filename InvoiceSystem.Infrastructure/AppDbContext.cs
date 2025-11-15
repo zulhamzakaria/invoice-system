@@ -100,7 +100,11 @@ public class AppDbContext : DbContext
 
         modelBuilder.Entity<Invoice>()
             .Navigation(i => i.InvoiceItems)
-            .UsePropertyAccessMode(PropertyAccessMode.Property);
+            .HasField("_items");
+
+        modelBuilder.Entity<Invoice>()
+            .Navigation(i => i.InvoiceItems)
+            .UsePropertyAccessMode(PropertyAccessMode.Field);
 
 
         modelBuilder.Entity<Invoice>()
