@@ -1,4 +1,5 @@
-﻿using InvoiceSystem.Domain.Entities;
+﻿using InvoiceSystem.Domain.Common;
+using InvoiceSystem.Domain.Entities;
 using Microsoft.EntityFrameworkCore;
 
 namespace InvoiceSystem.Infrastructure.Repositories
@@ -43,6 +44,13 @@ namespace InvoiceSystem.Infrastructure.Repositories
 
         public async Task<int> SaveChangesAsync(CancellationToken token = default)
         {
+
+            foreach (var entry in _context.ChangeTracker.Entries<InvoiceItem>())
+            {
+                if (entry.Entity.Quantity <= 0)
+                    throw new Exception("somn wrong");
+            }
+
             return await _context.SaveChangesAsync(token);
         }
 
