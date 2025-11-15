@@ -91,14 +91,14 @@ public class AppDbContext : DbContext
             .HasConversion<string>(); // store enum as string
 
         modelBuilder.Entity<Invoice>()
+            .Navigation("_items")
+            .UsePropertyAccessMode(PropertyAccessMode.Field);
+
+        modelBuilder.Entity<Invoice>()
             .HasMany<InvoiceItem>("_items")
             .WithOne(i => i.Invoice)
             .HasForeignKey(i => i.InvoiceId)
             .OnDelete(DeleteBehavior.Cascade); // cascade delete
-
-        modelBuilder.Entity<Invoice>()
-            .Navigation("_items")
-            .UsePropertyAccessMode(PropertyAccessMode.Field);
 
         modelBuilder.Entity<Invoice>()
             .HasOne(i => i.CreatedBy)
