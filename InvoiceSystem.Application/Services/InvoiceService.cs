@@ -90,16 +90,15 @@ namespace InvoiceSystem.Application.Services
                 return Result<InvoiceItemDTO>.Failure(Error.Validation(InvoiceErrors.Service.InvalidStatus, "Only Draft Invoice can be modified"));
             }
 
-            //var itemResult = invoice.AddItem(itemDTO.Description, itemDTO.Quantity, itemDTO.UnitPrice);
-            //if (itemResult.IsFailure)
-            //{
-            //    return Result<InvoiceItemDTO>.Failure(itemResult.Errors);
-            //}
+            var itemResult = invoice.AddItem(itemDTO.Description, itemDTO.Quantity, itemDTO.UnitPrice);
+            if (itemResult.IsFailure)
+            {
+                return Result<InvoiceItemDTO>.Failure(itemResult.Errors);
+            }
 
             await _invoiceRepository.UpdateAsync(invoice);
             await _invoiceRepository.SaveChangesAsync();
-            //return Result<InvoiceItemDTO>.Success(InvoiceItemMapper.ToDetailsDTO(itemResult.Value));
-            return Result<InvoiceItemDTO>.Success(InvoiceItemMapper.ToDetailsDTO(invoice.InvoiceItems.First()));
+            return Result<InvoiceItemDTO>.Success(InvoiceItemMapper.ToDetailsDTO(itemResult.Value));
 
         }
 
