@@ -82,9 +82,8 @@ public class Invoice : AuditableEntity
         {
             return Result<InvoiceItem>.Failure(Error.Validation(InvoiceErrors.Creation.InvalidInvoiceItems, "Invoice item validation failed."));
         }
-
+        addedItem.Value.SetInvoice(this);
         _items.Add(addedItem.Value);
-
         return Result<InvoiceItem>.Success(addedItem.Value);
     }
 

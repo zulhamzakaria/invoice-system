@@ -43,5 +43,9 @@ public class InvoiceItem
         return Result<InvoiceItem>.Success(new InvoiceItem(trimmedDescription, quantity, unitPrice));
     }
 
+    public void SetInvoice(Invoice invoice)
+    {
+        Invoice = invoice;
+    }
 
 }
