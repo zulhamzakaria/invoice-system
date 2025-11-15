@@ -30,12 +30,13 @@ public class AppDbContext : DbContext
 
     private void ConfigureLoadTracker(ModelBuilder modelBuilder)
     {
-        modelBuilder.Entity<LoadTracker>(tracker => {
+        modelBuilder.Entity<LoadTracker>(tracker =>
+        {
 
             tracker.HasKey(e => e.Id);
             tracker.HasIndex(e => e.ApproverId).IsUnique();
 
-            tracker.HasOne(lt =>lt.Approver)
+            tracker.HasOne(lt => lt.Approver)
                 .WithMany()
                 .HasForeignKey(lt => lt.ApproverId)
                 .OnDelete(DeleteBehavior.Restrict);
@@ -91,12 +92,16 @@ public class AppDbContext : DbContext
 
         modelBuilder.Entity<Invoice>()
             .HasMany<InvoiceItem>("_items")
-            .WithOne()
-            .HasForeignKey("InvoiceId")
+            .WithOne(i => i.Invoice)
+            .HasForeignKey(i => i.InvoiceId)
             .OnDelete(DeleteBehavior.Cascade); // cascade delete
 
         modelBuilder.Entity<Invoice>()
-            .HasOne(i=> i.CreatedBy)
+            .Navigation("_items")
+            .UsePropertyAccessMode(PropertyAccessMode.Field);
+
+        modelBuilder.Entity<Invoice>()
+            .HasOne(i => i.CreatedBy)
             .WithMany()
             .HasForeignKey(i => i.CreatedById)
             .OnDelete(DeleteBehavior.Restrict);
