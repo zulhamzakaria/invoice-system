@@ -43,16 +43,16 @@ public class WorkflowstepService : IWorkflowstepService
         await _loadTrackerService.RecordAssignmentAsync(approver.Value.Id);
 
         var statusBefore = invoice.Status;
-        var statusAfter = DeterminNextStatus(invoice.Status, dto.ActionType);
+        var statusAfter = DeterminNextStatus(invoice.Status, dto.WorkflowStepType);
         var timestamp = DateTimeOffset.UtcNow;
 
         var stepResult = WorkflowstepMapper.ToEntity(
             dto.InvoiceId,
             statusBefore,
             statusAfter,
-            dto.ActionType,
+            dto.WorkflowStepType,
             dto.ApproverId,
-            dto.Reason,
+            dto.Reason ?? "",
             timestamp
             );
 
