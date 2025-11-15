@@ -9,6 +9,7 @@ public class InvoiceItem
     private const int MaxDescriptionLength = 500;
     public Guid Id { get; private set; } = Guid.NewGuid();
     public Invoice Invoice { get; private set; }
+    public Guid InvoiceId { get; private set; }
     public string Description { get; private set; }
     public int Quantity { get; private set; }
     public decimal UnitPrice { get; private set; }
@@ -46,6 +47,7 @@ public class InvoiceItem
     public void SetInvoice(Invoice invoice)
     {
         Invoice = invoice;
+        InvoiceId = invoice.Id;
     }
 
 }
