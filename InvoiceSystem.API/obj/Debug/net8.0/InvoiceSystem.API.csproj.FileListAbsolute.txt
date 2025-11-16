@@ -18,13 +18,9 @@ D:\Learning1\Projects\invoice-system\InvoiceSystem.API\bin\Debug\net8.0\Microsof
 D:\Learning1\Projects\invoice-system\InvoiceSystem.API\bin\Debug\net8.0\Microsoft.EntityFrameworkCore.Design.dll
 D:\Learning1\Projects\invoice-system\InvoiceSystem.API\bin\Debug\net8.0\Microsoft.EntityFrameworkCore.Relational.dll
 D:\Learning1\Projects\invoice-system\InvoiceSystem.API\bin\Debug\net8.0\Microsoft.Extensions.DependencyModel.dll
-D:\Learning1\Projects\invoice-system\InvoiceSystem.API\bin\Debug\net8.0\Microsoft.OpenApi.dll
 D:\Learning1\Projects\invoice-system\InvoiceSystem.API\bin\Debug\net8.0\Mono.TextTemplating.dll
 D:\Learning1\Projects\invoice-system\InvoiceSystem.API\bin\Debug\net8.0\Npgsql.dll
 D:\Learning1\Projects\invoice-system\InvoiceSystem.API\bin\Debug\net8.0\Npgsql.EntityFrameworkCore.PostgreSQL.dll
-D:\Learning1\Projects\invoice-system\InvoiceSystem.API\bin\Debug\net8.0\Swashbuckle.AspNetCore.Annotations.dll
-D:\Learning1\Projects\invoice-system\InvoiceSystem.API\bin\Debug\net8.0\Swashbuckle.AspNetCore.Swagger.dll
-D:\Learning1\Projects\invoice-system\InvoiceSystem.API\bin\Debug\net8.0\Swashbuckle.AspNetCore.SwaggerGen.dll
 D:\Learning1\Projects\invoice-system\InvoiceSystem.API\bin\Debug\net8.0\System.CodeDom.dll
 D:\Learning1\Projects\invoice-system\InvoiceSystem.API\bin\Debug\net8.0\System.Composition.AttributedModel.dll
 D:\Learning1\Projects\invoice-system\InvoiceSystem.API\bin\Debug\net8.0\System.Composition.Convention.dll
@@ -95,7 +91,6 @@ D:\Learning1\Projects\invoice-system\InvoiceSystem.API\obj\Debug\net8.0\InvoiceS
 D:\Learning1\Projects\invoice-system\InvoiceSystem.API\obj\Debug\net8.0\InvoiceSystem.API.AssemblyInfoInputs.cache
 D:\Learning1\Projects\invoice-system\InvoiceSystem.API\obj\Debug\net8.0\InvoiceSystem.API.AssemblyInfo.cs
 D:\Learning1\Projects\invoice-system\InvoiceSystem.API\obj\Debug\net8.0\InvoiceSystem.API.csproj.CoreCompileInputs.cache
-D:\Learning1\Projects\invoice-system\InvoiceSystem.API\obj\Debug\net8.0\InvoiceSystem.API.MvcApplicationPartsAssemblyInfo.cs
 D:\Learning1\Projects\invoice-system\InvoiceSystem.API\obj\Debug\net8.0\InvoiceSystem.API.MvcApplicationPartsAssemblyInfo.cache
 D:\Learning1\Projects\invoice-system\InvoiceSystem.API\obj\Debug\net8.0\InvoiceSystem.API.sourcelink.json
 D:\Learning1\Projects\invoice-system\InvoiceSystem.API\obj\Debug\net8.0\rjimswa.dswa.cache.json

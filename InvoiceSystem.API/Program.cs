@@ -27,7 +27,7 @@ builder.Services.Configure<JsonOptions>(options =>
 });
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
+//builder.Services.AddSwaggerGen();
 
 builder.Services.AddDbContext<AppDbContext>(options =>
     options.UseNpgsql(builder.Configuration.GetConnectionString("Postgres"),
@@ -43,14 +43,14 @@ builder.Services.AddDbContext<AppDbContext>(options =>
 
 
 //for allowing Swagger to 'read' xml
-builder.Services.AddSwaggerGen(c =>
-{
-    c.SwaggerDoc("v1", new Microsoft.OpenApi.OpenApiInfo
-    {
-        Title = "InvoiceSystem API",
-        Version = "v1"
-    });
-});
+//builder.Services.AddSwaggerGen(c =>
+//{
+//    c.SwaggerDoc("v1", new Microsoft.OpenApi.OpenApiInfo
+//    {
+//        Title = "InvoiceSystem API",
+//        Version = "v1"
+//    });
+//});
 
 builder.Services.AddAuthorization();
 builder.Services.AddAuthentication();
@@ -81,7 +81,7 @@ var app = builder.Build();
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
-    app.UseSwagger();
+    //app.UseSwagger();
     //app.UseSwaggerUI(c =>
     //{
     //    c.SwaggerEndpoint("/swagger/v1/swagger.json", "InvoiceSystem API v1");
