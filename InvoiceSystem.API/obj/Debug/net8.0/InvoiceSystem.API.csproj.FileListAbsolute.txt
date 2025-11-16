@@ -8,7 +8,6 @@ D:\Learning1\Projects\invoice-system\InvoiceSystem.API\bin\Debug\net8.0\InvoiceS
 D:\Learning1\Projects\invoice-system\InvoiceSystem.API\bin\Debug\net8.0\InvoiceSystem.API.dll
 D:\Learning1\Projects\invoice-system\InvoiceSystem.API\bin\Debug\net8.0\InvoiceSystem.API.pdb
 D:\Learning1\Projects\invoice-system\InvoiceSystem.API\bin\Debug\net8.0\Humanizer.dll
-D:\Learning1\Projects\invoice-system\InvoiceSystem.API\bin\Debug\net8.0\Microsoft.AspNetCore.OpenApi.dll
 D:\Learning1\Projects\invoice-system\InvoiceSystem.API\bin\Debug\net8.0\Microsoft.Bcl.AsyncInterfaces.dll
 D:\Learning1\Projects\invoice-system\InvoiceSystem.API\bin\Debug\net8.0\Microsoft.CodeAnalysis.dll
 D:\Learning1\Projects\invoice-system\InvoiceSystem.API\bin\Debug\net8.0\Microsoft.CodeAnalysis.CSharp.dll
@@ -26,7 +25,6 @@ D:\Learning1\Projects\invoice-system\InvoiceSystem.API\bin\Debug\net8.0\Npgsql.E
 D:\Learning1\Projects\invoice-system\InvoiceSystem.API\bin\Debug\net8.0\Swashbuckle.AspNetCore.Annotations.dll
 D:\Learning1\Projects\invoice-system\InvoiceSystem.API\bin\Debug\net8.0\Swashbuckle.AspNetCore.Swagger.dll
 D:\Learning1\Projects\invoice-system\InvoiceSystem.API\bin\Debug\net8.0\Swashbuckle.AspNetCore.SwaggerGen.dll
-D:\Learning1\Projects\invoice-system\InvoiceSystem.API\bin\Debug\net8.0\Swashbuckle.AspNetCore.SwaggerUI.dll
 D:\Learning1\Projects\invoice-system\InvoiceSystem.API\bin\Debug\net8.0\System.CodeDom.dll
 D:\Learning1\Projects\invoice-system\InvoiceSystem.API\bin\Debug\net8.0\System.Composition.AttributedModel.dll
 D:\Learning1\Projects\invoice-system\InvoiceSystem.API\bin\Debug\net8.0\System.Composition.Convention.dll

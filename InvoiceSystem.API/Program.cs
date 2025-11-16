@@ -9,7 +9,6 @@ using InvoiceSystem.Infrastructure;
 using InvoiceSystem.Infrastructure.Repositories;
 using Microsoft.AspNetCore.Http.Json;
 using Microsoft.EntityFrameworkCore;
-using System.Reflection;
 using System.Text.Json.Serialization;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -35,6 +34,13 @@ builder.Services.AddDbContext<AppDbContext>(options =>
     npgsqlOptions => npgsqlOptions.MigrationsAssembly("InvoiceSystem.Infrastructure")
     )
 );
+
+//var assemblies = AppDomain.CurrentDomain.GetAssemblies();
+//foreach (var asm in assemblies)
+//{
+//    Console.WriteLine(asm.FullName);
+//}
+
 
 //for allowing Swagger to 'read' xml
 builder.Services.AddSwaggerGen(c =>
@@ -76,10 +82,10 @@ var app = builder.Build();
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
-    app.UseSwaggerUI(c =>
-    {
-        c.SwaggerEndpoint("/swagger/v1/swagger.json", "InvoiceSystem API v1");
-    });
+    //app.UseSwaggerUI(c =>
+    //{
+    //    c.SwaggerEndpoint("/swagger/v1/swagger.json", "InvoiceSystem API v1");
+    //});
 
     ////calling data seeder
     //using var scope = app.Services.CreateScope();
