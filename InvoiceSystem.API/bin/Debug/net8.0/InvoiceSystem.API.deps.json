@@ -11,8 +11,7 @@
           "InvoiceSystem.Application": "1.0.0",
           "InvoiceSystem.Infrastructure": "1.0.0",
           "Microsoft.EntityFrameworkCore.Design": "8.0.0",
-          "Swashbuckle.AspNetCore": "6.6.2",
-          "Swashbuckle.AspNetCore.Annotations": "10.0.1"
+          "Swashbuckle.AspNetCore": "6.6.2"
         },
         "runtime": {
           "InvoiceSystem.API.dll": {}
