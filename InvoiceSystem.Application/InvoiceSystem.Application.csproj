@@ -14,4 +14,8 @@
     <Folder Include="Services\Helpers\CommonHelpers\" />
   </ItemGroup>
 
+  <ItemGroup>
+    <PackageReference Include="Swashbuckle.AspNetCore.Annotations" Version="10.0.1" />
+  </ItemGroup>
+
 </Project>

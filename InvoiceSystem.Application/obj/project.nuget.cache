@@ -1,8 +1,14 @@
 {
   "version": 2,
-  "dgSpecHash": "hgAvs3ioGPY=",
+  "dgSpecHash": "TnrTz3/lYI4=",
   "success": true,
   "projectFilePath": "D:\\Learning1\\Projects\\invoice-system\\InvoiceSystem.Application\\InvoiceSystem.Application.csproj",
-  "expectedPackageFiles": [],
+  "expectedPackageFiles": [
+    "C:\\Users\\zulham\\.nuget\\packages\\microsoft.openapi\\2.3.0\\microsoft.openapi.2.3.0.nupkg.sha512",
+    "C:\\Users\\zulham\\.nuget\\packages\\swashbuckle.aspnetcore.annotations\\10.0.1\\swashbuckle.aspnetcore.annotations.10.0.1.nupkg.sha512",
+    "C:\\Users\\zulham\\.nuget\\packages\\swashbuckle.aspnetcore.swagger\\10.0.1\\swashbuckle.aspnetcore.swagger.10.0.1.nupkg.sha512",
+    "C:\\Users\\zulham\\.nuget\\packages\\swashbuckle.aspnetcore.swaggergen\\10.0.1\\swashbuckle.aspnetcore.swaggergen.10.0.1.nupkg.sha512",
+    "C:\\Users\\zulham\\.nuget\\packages\\system.text.json\\8.0.5\\system.text.json.8.0.5.nupkg.sha512"
+  ],
   "logs": []
 }

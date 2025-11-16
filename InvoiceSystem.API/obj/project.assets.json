@@ -990,7 +990,8 @@
         "type": "project",
         "framework": ".NETCoreApp,Version=v8.0",
         "dependencies": {
-          "InvoiceSystem.Domain": "1.0.0"
+          "InvoiceSystem.Domain": "1.0.0",
+          "Swashbuckle.AspNetCore.Annotations": "10.0.1"
         },
         "compile": {
           "bin/placeholder/InvoiceSystem.Application.dll": {}
