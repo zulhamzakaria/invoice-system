@@ -7,5 +7,5 @@ public record WorkflowstepsCreationDTO(
     [Required] Guid InvoiceId,
     [Required] WorkflowStepType WorkflowStepType,
     Guid? ApproverId,
-    [Required, StringLength(500, MinimumLength = 1)] string? Reason
+    [StringLength(500, MinimumLength = 1)] string? Reason
     );
