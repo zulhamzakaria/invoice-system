@@ -9,6 +9,7 @@ using InvoiceSystem.Infrastructure;
 using InvoiceSystem.Infrastructure.Repositories;
 using Microsoft.AspNetCore.Http.Json;
 using Microsoft.EntityFrameworkCore;
+using System.Reflection;
 using System.Text.Json.Serialization;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -34,6 +35,14 @@ builder.Services.AddDbContext<AppDbContext>(options =>
     npgsqlOptions => npgsqlOptions.MigrationsAssembly("InvoiceSystem.Infrastructure")
     )
 );
+
+//for allowing Swagger to 'read' xml
+builder.Services.AddSwaggerGen(c =>
+{
+    var xmlFile = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
+    var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);
+    c.IncludeXmlComments(xmlPath);
+});
 
 builder.Services.AddAuthorization();
 builder.Services.AddAuthentication();
