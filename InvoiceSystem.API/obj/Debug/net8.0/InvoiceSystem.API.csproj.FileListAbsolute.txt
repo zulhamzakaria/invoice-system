@@ -7,7 +7,6 @@ D:\Learning1\Projects\invoice-system\InvoiceSystem.API\bin\Debug\net8.0\InvoiceS
 D:\Learning1\Projects\invoice-system\InvoiceSystem.API\bin\Debug\net8.0\InvoiceSystem.API.runtimeconfig.json
 D:\Learning1\Projects\invoice-system\InvoiceSystem.API\bin\Debug\net8.0\InvoiceSystem.API.dll
 D:\Learning1\Projects\invoice-system\InvoiceSystem.API\bin\Debug\net8.0\InvoiceSystem.API.pdb
-D:\Learning1\Projects\invoice-system\InvoiceSystem.API\bin\Debug\net8.0\InvoiceSystem.API.xml
 D:\Learning1\Projects\invoice-system\InvoiceSystem.API\bin\Debug\net8.0\Humanizer.dll
 D:\Learning1\Projects\invoice-system\InvoiceSystem.API\bin\Debug\net8.0\Microsoft.AspNetCore.OpenApi.dll
 D:\Learning1\Projects\invoice-system\InvoiceSystem.API\bin\Debug\net8.0\Microsoft.Bcl.AsyncInterfaces.dll
@@ -113,7 +112,6 @@ D:\Learning1\Projects\invoice-system\InvoiceSystem.API\obj\Debug\net8.0\staticwe
 D:\Learning1\Projects\invoice-system\InvoiceSystem.API\obj\Debug\net8.0\InvoiceS.E282E76C.Up2Date
 D:\Learning1\Projects\invoice-system\InvoiceSystem.API\obj\Debug\net8.0\InvoiceSystem.API.dll
 D:\Learning1\Projects\invoice-system\InvoiceSystem.API\obj\Debug\net8.0\refint\InvoiceSystem.API.dll
-D:\Learning1\Projects\invoice-system\InvoiceSystem.API\obj\Debug\net8.0\InvoiceSystem.API.xml
 D:\Learning1\Projects\invoice-system\InvoiceSystem.API\obj\Debug\net8.0\InvoiceSystem.API.pdb
 D:\Learning1\Projects\invoice-system\InvoiceSystem.API\obj\Debug\net8.0\InvoiceSystem.API.genruntimeconfig.cache
 D:\Learning1\Projects\invoice-system\InvoiceSystem.API\obj\Debug\net8.0\ref\InvoiceSystem.API.dll
