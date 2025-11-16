@@ -24,9 +24,9 @@ public class WorkflowstepService : IWorkflowstepService
         _invoiceRepository = invoiceRepository;
         _loadTrackerService = loadTrackerService;
     }
-    public async Task<Result<WorkflowstepsDetailsDTO>> CreateWorkflowstepAsync(WorkflowstepsCreationDTO dto)
+    public async Task<Result<WorkflowstepsDetailsDTO>> CreateWorkflowstepAsync(Guid invoiceId, WorkflowstepsCreationDTO dto)
     {
-        var invoice = await _invoiceRepository.GetByIdAsync(dto.InvoiceId);
+        var invoice = await _invoiceRepository.GetByIdAsync(invoiceId);
         if (invoice == null)
         {
             var errors = new List<Error> { Error.Validation(InvoiceErrors.Service.InvoiceNotFound, "No invoice found for the Invoice Id") };
@@ -47,7 +47,7 @@ public class WorkflowstepService : IWorkflowstepService
         var timestamp = DateTimeOffset.UtcNow;
 
         var stepResult = WorkflowstepMapper.ToEntity(
-            dto.InvoiceId,
+            invoiceId,
             statusBefore,
             statusAfter,
             dto.WorkflowStepType,

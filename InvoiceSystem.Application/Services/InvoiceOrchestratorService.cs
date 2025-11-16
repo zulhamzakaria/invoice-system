@@ -92,7 +92,7 @@ public class InvoiceOrchestratorService : IInvoiceOrchestratorService
         }
 
         invoice.Reject(approver);
-        var resultStep = await _workflowstepService.RecordStepAsync(invoice.Id, InvoiceStatus.PendingApproval, InvoiceStatus.Rejected, 
+        var resultStep = await _workflowstepService.RecordStepAsync(invoice.Id, InvoiceStatus.PendingApproval, InvoiceStatus.Rejected,
                                                                     WorkflowStepType.Approval, approver.Id, reason);
         if (resultStep.IsFailure)
         {
@@ -126,7 +126,7 @@ public class InvoiceOrchestratorService : IInvoiceOrchestratorService
         }
 
         var nextStatus = DetermineNextStatus(statusType, dTO.WorkflowStepType);
-        await _workflowstepService.CreateWorkflowstepAsync(dTO);
+        await _workflowstepService.CreateWorkflowstepAsync(invoiceId, dTO);
         await _invoiceService.UpdateInvoiceStatusAsync(invoice.Value.Id, nextStatus);
         return Result.Success();
 
@@ -136,12 +136,12 @@ public class InvoiceOrchestratorService : IInvoiceOrchestratorService
     public async Task<Result> VoidInvoiceAsync(Guid invoiceid, Guid employeeid, string reason)
     {
         var invoice = await _invoiceRepository.GetByIdAsync(invoiceid);
-        if(invoice is null)
+        if (invoice is null)
         {
             return Result.Failure(Error.Validation(InvoiceErrors.Service.InvoiceNotFound, "No such Invoice found"));
         }
-        var employee =  await _employeeRepository.GetByIdAsync(employeeid);
-        if (employee is null) 
+        var employee = await _employeeRepository.GetByIdAsync(employeeid);
+        if (employee is null)
         {
             return Result.Failure(Error.Validation(EmployeeErrors.Service.EmployeeNotFound, "No such Employee found"));
         }
@@ -149,9 +149,9 @@ public class InvoiceOrchestratorService : IInvoiceOrchestratorService
         invoice.Void(employee);
         await _invoiceRepository.UpdateAsync(invoice);
         await _invoiceRepository.SaveChangesAsync();
-        return Result.Success();        
+        return Result.Success();
     }
-    private InvoiceStatus GetStatus (IApprover approver)
+    private InvoiceStatus GetStatus(IApprover approver)
     {
         return (approver) switch
         {
@@ -167,7 +167,7 @@ public class InvoiceOrchestratorService : IInvoiceOrchestratorService
         {
             (InvoiceStatus.PendingApproval, WorkflowStepType.Approval, FO) => InvoiceStatus.PendingManagerApproval,
             (InvoiceStatus.PendingApproval, WorkflowStepType.Approval, FM) => InvoiceStatus.Approved,
-            (InvoiceStatus.PendingApproval, WorkflowStepType.AutoApproval,_) => InvoiceStatus.Approved,
+            (InvoiceStatus.PendingApproval, WorkflowStepType.AutoApproval, _) => InvoiceStatus.Approved,
 
             (_, WorkflowStepType.Rejection, _) => InvoiceStatus.Rejected,
 
