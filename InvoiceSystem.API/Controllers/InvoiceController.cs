@@ -5,6 +5,7 @@ using InvoiceSystem.Application.DTOs.InvoiceOrchestrator;
 using InvoiceSystem.Application.DTOs.WorkflowSteps;
 using InvoiceSystem.Application.Services.Interfaces;
 using Microsoft.AspNetCore.Mvc;
+using Swashbuckle.AspNetCore.Annotations;
 
 namespace InvoiceSystem.API.Controllers
 {
@@ -81,6 +82,7 @@ namespace InvoiceSystem.API.Controllers
         }
 
         [HttpPost("{invoiceId}/items")]
+        [SwaggerOperation(Summary = "Submission doesn't need ApproverId, Reason")]
         public async Task<IActionResult> AddInvoiceItem(Guid invoiceId, [FromBody] InvoiceItemCreationDTO dto)
         {
             var result = await _invoiceService.CreateInvoiceItemAsync(invoiceId, dto);
