@@ -39,6 +39,12 @@ builder.Services.AddDbContext<AppDbContext>(options =>
 //for allowing Swagger to 'read' xml
 builder.Services.AddSwaggerGen(c =>
 {
+    c.SwaggerDoc("v1", new Microsoft.OpenApi.OpenApiInfo
+    {
+        Title = "InvoiceSystem API",
+        Version = "v1"
+    });
+
     var xmlFile = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
     var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);
     c.IncludeXmlComments(xmlPath);
@@ -74,7 +80,10 @@ var app = builder.Build();
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
-    app.UseSwaggerUI();
+    app.UseSwaggerUI(c =>
+    {
+        c.SwaggerEndpoint("/swagger/v1/swagger.json", "InvoiceSystem API v1");
+    });
 
     ////calling data seeder
     //using var scope = app.Services.CreateScope();

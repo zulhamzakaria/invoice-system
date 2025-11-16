@@ -1,4 +1,5 @@
 D:\Learning1\Projects\invoice-system\InvoiceSystem.Infrastructure\bin\Debug\net8.0\InvoiceSystem.Infrastructure.deps.json
+D:\Learning1\Projects\invoice-system\InvoiceSystem.Infrastructure\bin\Debug\net8.0\InvoiceSystem.Infrastructure.runtimeconfig.json
 D:\Learning1\Projects\invoice-system\InvoiceSystem.Infrastructure\bin\Debug\net8.0\InvoiceSystem.Infrastructure.dll
 D:\Learning1\Projects\invoice-system\InvoiceSystem.Infrastructure\bin\Debug\net8.0\InvoiceSystem.Infrastructure.pdb
 D:\Learning1\Projects\invoice-system\InvoiceSystem.Infrastructure\bin\Debug\net8.0\InvoiceSystem.Application.dll
@@ -15,6 +16,5 @@ D:\Learning1\Projects\invoice-system\InvoiceSystem.Infrastructure\obj\Debug\net8
 D:\Learning1\Projects\invoice-system\InvoiceSystem.Infrastructure\obj\Debug\net8.0\InvoiceSystem.Infrastructure.dll
 D:\Learning1\Projects\invoice-system\InvoiceSystem.Infrastructure\obj\Debug\net8.0\refint\InvoiceSystem.Infrastructure.dll
 D:\Learning1\Projects\invoice-system\InvoiceSystem.Infrastructure\obj\Debug\net8.0\InvoiceSystem.Infrastructure.pdb
-D:\Learning1\Projects\invoice-system\InvoiceSystem.Infrastructure\obj\Debug\net8.0\ref\InvoiceSystem.Infrastructure.dll
-D:\Learning1\Projects\invoice-system\InvoiceSystem.Infrastructure\bin\Debug\net8.0\InvoiceSystem.Infrastructure.runtimeconfig.json
 D:\Learning1\Projects\invoice-system\InvoiceSystem.Infrastructure\obj\Debug\net8.0\InvoiceSystem.Infrastructure.genruntimeconfig.cache
+D:\Learning1\Projects\invoice-system\InvoiceSystem.Infrastructure\obj\Debug\net8.0\ref\InvoiceSystem.Infrastructure.dll
