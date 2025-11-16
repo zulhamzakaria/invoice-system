@@ -9,6 +9,7 @@ using InvoiceSystem.Infrastructure;
 using InvoiceSystem.Infrastructure.Repositories;
 using Microsoft.AspNetCore.Http.Json;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.OpenApi.Models;
 using System.Text.Json.Serialization;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -43,14 +44,15 @@ builder.Services.AddDbContext<AppDbContext>(options =>
 
 
 //for allowing Swagger to 'read' xml
-//builder.Services.AddSwaggerGen(c =>
-//{
-//    c.SwaggerDoc("v1", new Microsoft.OpenApi.OpenApiInfo
-//    {
-//        Title = "InvoiceSystem API",
-//        Version = "v1"
-//    });
-//});
+builder.Services.AddSwaggerGen(c =>
+{
+    c.EnableAnnotations();
+    c.SwaggerDoc("v1", new OpenApiInfo
+    {
+        Title = "InvoiceSystem API",
+        Version = "v1"
+    });
+});
 
 builder.Services.AddAuthorization();
 builder.Services.AddAuthentication();
@@ -81,11 +83,11 @@ var app = builder.Build();
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
-    //app.UseSwagger();
-    //app.UseSwaggerUI(c =>
-    //{
-    //    c.SwaggerEndpoint("/swagger/v1/swagger.json", "InvoiceSystem API v1");
-    //});
+    app.UseSwagger();
+    app.UseSwaggerUI(c =>
+    {
+        c.SwaggerEndpoint("/swagger/v1/swagger.json", "InvoiceSystem API v1");
+    });
 
     ////calling data seeder
     //using var scope = app.Services.CreateScope();

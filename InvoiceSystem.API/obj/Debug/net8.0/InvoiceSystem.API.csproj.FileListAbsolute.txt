@@ -108,3 +108,9 @@ D:\Learning1\Projects\invoice-system\InvoiceSystem.API\obj\Debug\net8.0\refint\I
 D:\Learning1\Projects\invoice-system\InvoiceSystem.API\obj\Debug\net8.0\InvoiceSystem.API.pdb
 D:\Learning1\Projects\invoice-system\InvoiceSystem.API\obj\Debug\net8.0\InvoiceSystem.API.genruntimeconfig.cache
 D:\Learning1\Projects\invoice-system\InvoiceSystem.API\obj\Debug\net8.0\ref\InvoiceSystem.API.dll
+D:\Learning1\Projects\invoice-system\InvoiceSystem.API\bin\Debug\net8.0\Microsoft.OpenApi.dll
+D:\Learning1\Projects\invoice-system\InvoiceSystem.API\bin\Debug\net8.0\Swashbuckle.AspNetCore.Annotations.dll
+D:\Learning1\Projects\invoice-system\InvoiceSystem.API\bin\Debug\net8.0\Swashbuckle.AspNetCore.Swagger.dll
+D:\Learning1\Projects\invoice-system\InvoiceSystem.API\bin\Debug\net8.0\Swashbuckle.AspNetCore.SwaggerGen.dll
+D:\Learning1\Projects\invoice-system\InvoiceSystem.API\bin\Debug\net8.0\Swashbuckle.AspNetCore.SwaggerUI.dll
+D:\Learning1\Projects\invoice-system\InvoiceSystem.API\obj\Debug\net8.0\InvoiceSystem.API.MvcApplicationPartsAssemblyInfo.cs
