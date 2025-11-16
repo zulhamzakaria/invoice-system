@@ -1,11 +1,10 @@
 {
   "version": 2,
-  "dgSpecHash": "lzQB9vZ3ciQ=",
+  "dgSpecHash": "m8GW1sNgcF4=",
   "success": true,
   "projectFilePath": "D:\\Learning1\\Projects\\invoice-system\\InvoiceSystem.API\\InvoiceSystem.API.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\zulham\\.nuget\\packages\\humanizer.core\\2.14.1\\humanizer.core.2.14.1.nupkg.sha512",
-    "C:\\Users\\zulham\\.nuget\\packages\\microsoft.aspnetcore.openapi\\8.0.10\\microsoft.aspnetcore.openapi.8.0.10.nupkg.sha512",
     "C:\\Users\\zulham\\.nuget\\packages\\microsoft.bcl.asyncinterfaces\\6.0.0\\microsoft.bcl.asyncinterfaces.6.0.0.nupkg.sha512",
     "C:\\Users\\zulham\\.nuget\\packages\\microsoft.codeanalysis.analyzers\\3.3.3\\microsoft.codeanalysis.analyzers.3.3.3.nupkg.sha512",
     "C:\\Users\\zulham\\.nuget\\packages\\microsoft.codeanalysis.common\\4.5.0\\microsoft.codeanalysis.common.4.5.0.nupkg.sha512",
