@@ -2,4 +2,4 @@
 
 namespace InvoiceSystem.Application.DTOs.InvoiceItem;
 
-public record InvoiceItemsDelete([Required]Guid EmployeeId, [Required] List<Guid> ItemIds);
+public record InvoiceItemsDelete([Required]Guid EmployeeId, [Required, MinLength(1)] IEnumerable<Guid> ItemIds);
