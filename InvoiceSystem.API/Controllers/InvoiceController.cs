@@ -94,6 +94,15 @@ namespace InvoiceSystem.API.Controllers
         }
 
         [HttpPost("{invoiceId:guid}/deleteitem")]
+        public async Task<IActionResult> DeleteInvoiceItem(Guid invoiceId, [FromBody] InvoiceItemDeleteDTO dto)
+        {
+            var result = await _invoiceService.DeleteInvoiceItemAsync(invoiceId, dto.ItemId, dto.EmployeeId);
+            if (result.IsFailure)
+            {
+                return BadRequest(result.Errors);
+            }
+            return NoContent();
+        }
        
 
         [HttpPost("{invoiceId:guid}/submit")]
