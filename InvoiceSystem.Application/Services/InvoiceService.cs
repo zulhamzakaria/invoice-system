@@ -114,6 +114,11 @@ namespace InvoiceSystem.Application.Services
             {
                 return Result.Failure(Error.Validation(InvoiceItemErrors.Common.InvoiceItemNotFound, "No such Invoice Item exists"));
             }
+            bool exists = invoice.InvoiceItems.Any(it =>  it.Id == itemId);
+            if (!exists)
+            {
+                return Result.Failure(Error.Validation(InvoiceErrors.InvoiceItems.ItemIdsMismatched, "Provided Item Id does not belong the Invoice"));
+            }
             var employee = await _employeeRepository.GetByIdAsync(employeeId);
             if (employee is null)
             {
