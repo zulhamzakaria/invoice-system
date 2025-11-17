@@ -105,13 +105,13 @@ namespace InvoiceSystem.Application.Services
         public async Task<Result> DeleteInvoiceItemAsync(Guid invoiceId, Guid itemId, Employee employee)
         {
             var invoice = await _invoiceRepository.GetByIdAsync(invoiceId);
-            if(invoice is null)
+            if (invoice is null)
             {
                 return Result.Failure(Error.Validation(InvoiceErrors.Service.InvoiceNotFound, "No such Invoice exists"));
             }
-            var invoiceItem = invoice.InvoiceItems.FirstOrDefault(it =>  it.Id == itemId);
-            if (invoiceItem is null) 
-            { 
+            var invoiceItem = invoice.InvoiceItems.FirstOrDefault(it => it.Id == itemId);
+            if (invoiceItem is null)
+            {
                 return Result.Failure(Error.Validation(InvoiceItemErrors.Common.InvoiceItemNotFound, "No such Invoice Item exists"));
             }
             invoice.DeleteItem(invoiceItem.Id, employee);
@@ -119,19 +119,32 @@ namespace InvoiceSystem.Application.Services
             return Result.Success();
         }
 
-        public async Task<Result> DeleteInvoiceItemsAsync(Guid invoiceId, Guid employeeId)
+        public async Task<Result> DeleteInvoiceItemsAsync(Guid invoiceId, IEnumerable<Guid> itemIds, Guid employeeId)
         {
             var invoice = await _invoiceRepository.GetByIdAsync(invoiceId);
             if (invoice is null)
             {
                 return Result.Failure(Error.Validation(InvoiceErrors.Service.InvoiceNotFound, "No such Invoice exists"));
             }
+
+            //select the itemsId for this invoice
+            var invoiceItemsId = invoice.InvoiceItems.Select(item => item.Id).ToList();
+            //convert to hashset
+            var providedItemIds = itemIds.ToHashSet();
+            //validate; hashed itemIds against polled data from invoice
+            var invalidIds = providedItemIds.Except(invoiceItemsId);
+
+            if (invalidIds.Any())
+            {
+                return Result.Failure(Error.Validation(InvoiceErrors.Service.InvoiceNotFound, "No such Invoice exists"));
+            }
+
             var employee = await _employeeRepository.GetByIdAsync(employeeId);
             if (employee is null)
             {
                 return Result.Failure(Error.Validation(EmployeeErrors.Service.EmployeeNotFound, "No such Employee exists"));
             }
-            var invoiceItemsId = invoice.InvoiceItems.Select(item => item.Id).ToList();
+
             invoice.DeleteAllItems(invoiceItemsId, employee);
             await _invoiceRepository.SaveChangesAsync();
             return Result.Success();
@@ -193,7 +206,7 @@ namespace InvoiceSystem.Application.Services
         public async Task<Result> UpdateInvoiceStatusAsync(Guid invoiceId, InvoiceStatus nextStatus)
         {
             var invoice = await _invoiceRepository.GetByIdAsync(invoiceId);
-            if(invoice is null)
+            if (invoice is null)
             {
                 return Result.Failure(Error.Validation(InvoiceErrors.Service.InvoiceNotFound, "No such Invoice found"));
             }
