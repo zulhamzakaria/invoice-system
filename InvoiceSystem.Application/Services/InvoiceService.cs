@@ -128,11 +128,11 @@ namespace InvoiceSystem.Application.Services
             }
 
             //select the itemsId for this invoice
-            var invoiceItemsId = invoice.InvoiceItems.Select(item => item.Id).ToList();
+            var invoiceItemsId = invoice.InvoiceItems.Select(item => item.Id).ToHashSet();
             //convert to hashset
             var providedItemIds = itemIds.ToHashSet();
             //validate; hashed itemIds against polled data from invoice
-            var invalidIds = providedItemIds.Except(invoiceItemsId);
+            var invalidIds = providedItemIds.Except(invoiceItemsId).ToList();
 
             if (invalidIds.Any())
             {
