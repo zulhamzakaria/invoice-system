@@ -102,7 +102,7 @@ namespace InvoiceSystem.Application.Services
 
         }
 
-        public async Task<Result> DeleteInvoiceItemsAsync(Guid invoiceId, Guid itemId, Employee employee)
+        public async Task<Result> DeleteInvoiceItemAsync(Guid invoiceId, Guid itemId, Employee employee)
         {
             var invoice = await _invoiceRepository.GetByIdAsync(invoiceId);
             if(invoice is null)
@@ -118,6 +118,26 @@ namespace InvoiceSystem.Application.Services
             await _invoiceRepository.SaveChangesAsync();
             return Result.Success();
         }
+
+        public async Task<Result> DeleteInvoiceItemsAsync(Guid invoiceId, Guid employeeId)
+        {
+            var invoice = await _invoiceRepository.GetByIdAsync(invoiceId);
+            if (invoice is null)
+            {
+                return Result.Failure(Error.Validation(InvoiceErrors.Service.InvoiceNotFound, "No such Invoice exists"));
+            }
+            var employee = await _employeeRepository.GetByIdAsync(employeeId);
+            if (employee is null)
+            {
+                return Result.Failure(Error.Validation(EmployeeErrors.Service.EmployeeNotFound, "No such Employee exists"));
+            }
+            var invoiceItemsId = invoice.InvoiceItems.Select(item => item.Id).ToList();
+            invoice.DeleteAllItems(invoiceItemsId, employee);
+            await _invoiceRepository.SaveChangesAsync();
+            return Result.Success();
+        }
+
+        //public async Task<Result> DeleteInvoiceItems
 
         public async Task<Result<IReadOnlyList<InvoiceItemDTO>>> GetAllInvoiceItemsAsync(Guid invoiceId)
         {

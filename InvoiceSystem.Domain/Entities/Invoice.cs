@@ -161,6 +161,22 @@ public class Invoice : AuditableEntity
         _items.Remove(invoiceItem);
     }
 
+    public void DeleteAllItems(IEnumerable<Guid> itemIds, Employee employee)
+    {
+        if (employee is not Clerk)
+        {
+            throw new DomainException("Only Clerk can delete an item", InvoiceItemErrors.Deletion.InvalidActor);
+        }
+        if (Status != InvoiceStatus.Draft)
+        {
+            throw new DomainException("Cannot modify items after submission", InvoiceItemErrors.Deletion.InvalidStatus);
+        }
+
+        var itemIdsSet = itemIds.ToHashSet();
+
+        _items.RemoveAll(item => itemIdsSet.Contains(item.Id));
+    }
+
     public void UpdateStatus(InvoiceStatus newStatus)
     {
         if (Status == newStatus) return;
