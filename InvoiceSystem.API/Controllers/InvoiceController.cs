@@ -81,7 +81,7 @@ namespace InvoiceSystem.API.Controllers
             return Ok(results.Value);
         }
 
-        [HttpPost("{invoiceId}/items")]
+        [HttpPost("{invoiceId:guid}/items")]
         public async Task<IActionResult> AddInvoiceItem(Guid invoiceId, [FromBody] InvoiceItemCreationDTO dto)
         {
             var result = await _invoiceService.CreateInvoiceItemAsync(invoiceId, dto);
@@ -89,8 +89,8 @@ namespace InvoiceSystem.API.Controllers
             {
                 return BadRequest(result.Errors);
             }
-            //Created at action
-            return CreatedAtAction(nameof(GetAllInvoiceItems), new { id = invoiceId }, result.Value);
+            //Created at action;
+            return CreatedAtAction(nameof(GetAllInvoiceItems), new {invoiceId}, result.Value);
         }
 
         [HttpPost("{invoiceId:guid}/items/delete")]
