@@ -70,7 +70,7 @@ namespace InvoiceSystem.API.Controllers
         public async Task<IActionResult> GetAllInvoiceItems(Guid invoiceId)
         {
             var results = await _invoiceService.GetAllInvoiceItemsAsync(invoiceId);
-            if(results is null)
+            if (results is null)
             {
                 return NotFound(ErrorCodes.NotFound<IInvoiceService>());
             }
@@ -90,10 +90,10 @@ namespace InvoiceSystem.API.Controllers
                 return BadRequest(result.Errors);
             }
             //Created at action
-            return CreatedAtAction(nameof(GetAllInvoiceItems), new {id = invoiceId}, result.Value);
+            return CreatedAtAction(nameof(GetAllInvoiceItems), new { id = invoiceId }, result.Value);
         }
 
-        [HttpPost("{invoiceId:guid}/deleteitem")]
+        [HttpPost("{invoiceId:guid}/items/delete")]
         public async Task<IActionResult> DeleteInvoiceItem(Guid invoiceId, [FromBody] InvoiceItemDeleteDTO dto)
         {
             var result = await _invoiceService.DeleteInvoiceItemAsync(invoiceId, dto.ItemId, dto.EmployeeId);
@@ -103,7 +103,17 @@ namespace InvoiceSystem.API.Controllers
             }
             return NoContent();
         }
-       
+
+        [HttpPost("{invoiceId:guid}/items/batch-delete")]
+        public async Task<IActionResult> DeleteInvoiceItemsByBatch(Guid invoiceId, InvoiceItemsDeleteDTO dto)
+        {
+            var result = await _invoiceService.DeleteInvoiceItemsAsync(invoiceId, dto.ItemIds, dto.EmployeeId);
+            if (result.IsFailure)
+            {
+                return BadRequest(result.Errors);
+            }
+            return NoContent();
+        }
 
         [HttpPost("{invoiceId:guid}/submit")]
         [SwaggerOperation(Summary = "Note: Submission doesn't need ApproverId, Reason")]
