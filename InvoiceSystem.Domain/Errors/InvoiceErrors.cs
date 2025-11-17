@@ -45,7 +45,8 @@ public static class InvoiceErrors
     public static class  InvoiceItems
     {
         public const string NoInvoiceItem = "INV.NO_INVOICE_ITEMS";
-        public const string CannotModifyItems = "INV.CANNOT_MODIFY_ITEMS";   
+        public const string CannotModifyItems = "INV.CANNOT_MODIFY_ITEMS";
+        public const string ItemIdsMismatched = "INV.PROVIDED_ITEM_IDS_INVALID";
     }
     public static class Service
     {
