@@ -2,6 +2,6 @@
 
 namespace InvoiceSystem.Application.DTOs.InvoiceItem;
 
-public record InvoiceItemDeleteDTO([Required]Guid ItemId, 
-                                   [Required]Guid EmployeeId);
+public record InvoiceItemDeleteDTO([Required] Guid EmployeeId,
+                                   [Required] Guid ItemId);
 
