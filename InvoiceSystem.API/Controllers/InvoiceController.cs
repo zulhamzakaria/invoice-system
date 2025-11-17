@@ -93,6 +93,9 @@ namespace InvoiceSystem.API.Controllers
             return CreatedAtAction(nameof(GetAllInvoiceItems), new {id = invoiceId}, result.Value);
         }
 
+        [HttpPost("{invoiceId:guid}/deleteitem")]
+       
+
         [HttpPost("{invoiceId:guid}/submit")]
         [SwaggerOperation(Summary = "Note: Submission doesn't need ApproverId, Reason")]
         public async Task<IActionResult> SubmitInvoice(Guid invoiceId, [FromBody] WorkflowstepsCreationDTO dto)
