@@ -136,7 +136,7 @@ namespace InvoiceSystem.Application.Services
 
             if (invalidIds.Any())
             {
-                return Result.Failure(Error.Validation(InvoiceErrors.Service.InvoiceNotFound, "No such Invoice exists"));
+                return Result.Failure(Error.Validation(InvoiceErrors.InvoiceItems.ItemIdsMismatched, "Provided Item Id(s) does/do not belong the Invoice"));
             }
 
             var employee = await _employeeRepository.GetByIdAsync(employeeId);
@@ -145,7 +145,7 @@ namespace InvoiceSystem.Application.Services
                 return Result.Failure(Error.Validation(EmployeeErrors.Service.EmployeeNotFound, "No such Employee exists"));
             }
 
-            invoice.DeleteAllItems(invoiceItemsId, employee);
+            invoice.DeleteAllItems(providedItemIds, employee);
             await _invoiceRepository.SaveChangesAsync();
             return Result.Success();
         }
