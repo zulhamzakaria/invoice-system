@@ -102,7 +102,7 @@ namespace InvoiceSystem.Application.Services
 
         }
 
-        public async Task<Result> DeleteInvoiceItemAsync(Guid invoiceId, Guid itemId, Employee employee)
+        public async Task<Result> DeleteInvoiceItemAsync(Guid invoiceId, Guid itemId, Guid employeeId)
         {
             var invoice = await _invoiceRepository.GetByIdAsync(invoiceId);
             if (invoice is null)
@@ -113,6 +113,11 @@ namespace InvoiceSystem.Application.Services
             if (invoiceItem is null)
             {
                 return Result.Failure(Error.Validation(InvoiceItemErrors.Common.InvoiceItemNotFound, "No such Invoice Item exists"));
+            }
+            var employee = await _employeeRepository.GetByIdAsync(employeeId);
+            if (employee is null)
+            {
+                return Result.Failure(Error.Validation(EmployeeErrors.Service.EmployeeNotFound, "No such Employee exists"));
             }
             invoice.DeleteItem(invoiceItem.Id, employee);
             await _invoiceRepository.SaveChangesAsync();
