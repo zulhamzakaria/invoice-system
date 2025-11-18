@@ -14,10 +14,8 @@ public class InvoiceOrchestratorService : IInvoiceOrchestratorService
     private readonly IInvoiceService _invoiceService;
     private readonly IEmployeeRepository _employeeRepository;
     private readonly IInvoiceRepository _invoiceRepository;
-    private readonly IWorkflowStepRepository _workflowStepRepository;
     private readonly IWorkflowstepService _workflowstepService;
     private readonly ILoadTrackerService _loadTrackerService;
-    private readonly ILoadTrackerRepository _loadTrackerRepository;
     public InvoiceOrchestratorService(IInvoiceService invoiceService,
         IWorkflowstepService workflowstepService,
         ILoadTrackerService loadTrackerService,
@@ -31,8 +29,6 @@ public class InvoiceOrchestratorService : IInvoiceOrchestratorService
         _loadTrackerService = loadTrackerService;
         _invoiceRepository = invoiceRepository;
         _employeeRepository = employeeRepository;
-        _workflowStepRepository = workflowStepRepository;
-        _loadTrackerRepository = loadTrackerRepository;
     }
 
     public async Task<Result> ApproveInvoiceAsync(Guid invoiceId, Guid approverId)
@@ -150,7 +146,7 @@ public class InvoiceOrchestratorService : IInvoiceOrchestratorService
         }
         //await _loadTrackerRepository.SaveChangesAsync();
         //await _workflowStepRepository.SaveChangesAsync();
-        //await _invoiceRepository.SaveChangesAsync();
+        await _invoiceRepository.SaveChangesAsync();
         return Result.Success();
     }
 
