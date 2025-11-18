@@ -110,7 +110,11 @@ public class InvoiceOrchestratorService : IInvoiceOrchestratorService
         {
             return Result.Failure(Error.Validation(InvoiceErrors.Service.InvoiceNotFound, "No such Invoice found"));
         }
-
+        var employee = await _employeeRepository.GetByIdAsync(dTO.EmployeeId);
+        if (employee is null)
+        {
+            return Result.Failure(Error.Validation(EmployeeErrors.Service.EmployeeNotFound, "No such Employee found"));
+        }
         var approver = await _loadTrackerService.GetNextApproverAsync(invoice.Value.InvoiceAmount);
         if (approver.IsFailure)
         {
