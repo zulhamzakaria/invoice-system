@@ -165,6 +165,8 @@ public class InvoiceOrchestratorService : IInvoiceOrchestratorService
     {
         return (currentStatus, stepType, approver) switch
         {
+            (InvoiceStatus.Draft, WorkflowStepType.Submission, Clerk) => InvoiceStatus.PendingApproval,
+
             (InvoiceStatus.PendingApproval, WorkflowStepType.Approval, FO) => InvoiceStatus.PendingManagerApproval,
             (InvoiceStatus.PendingApproval, WorkflowStepType.Approval, FM) => InvoiceStatus.Approved,
             (InvoiceStatus.PendingApproval, WorkflowStepType.AutoApproval, _) => InvoiceStatus.Approved,
