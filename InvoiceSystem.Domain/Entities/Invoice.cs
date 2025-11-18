@@ -87,11 +87,12 @@ public class Invoice : AuditableEntity
         return Result<InvoiceItem>.Success(addedItem.Value);
     }
 
-    public void SubmitForApproval()
+    public void SubmitForApproval(Employee employee)
     {
+        if (employee is not Clerk)
+            throw new DomainException("Only Clerk can void an invoice.", InvoiceErrors.Submission.InvalidEmployeeRole);
         if (Status != InvoiceStatus.Draft)
             throw new DomainException("Only draft invoices can be submitted for approval.", InvoiceErrors.Approval.InvalidStatus);
-
         if (!InvoiceItems.Any())
             throw new DomainException("Cannot submit an invoice without items.", InvoiceErrors.InvoiceItems.NoInvoiceItem);
 
