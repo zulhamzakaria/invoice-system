@@ -155,7 +155,14 @@ namespace InvoiceSystem.Application.Services
                 return Result.Failure(Error.Validation(EmployeeErrors.Service.EmployeeNotFound, "No such Employee exists"));
             }
 
-            invoice.DeleteAllItems(providedItemIds, employee);
+            try
+            {
+                invoice.DeleteAllItems(providedItemIds, employee);
+            }
+            catch (DomainException ex) 
+            { 
+            return Result.Failure(Error.Validation(ex.ErrorCode, ex.Message));
+            }
             await _invoiceRepository.SaveChangesAsync();
             return Result.Success();
         }
