@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("InvoiceSystem.Infrastructure")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+a0aaa37588f83ad83c856646cf5ab5d31d737c60")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+a4eb4ad8554132a1152dd0597e1fe50ba7696a4f")]
 [assembly: System.Reflection.AssemblyProductAttribute("InvoiceSystem.Infrastructure")]
 [assembly: System.Reflection.AssemblyTitleAttribute("InvoiceSystem.Infrastructure")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
