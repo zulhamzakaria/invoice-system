@@ -5,6 +5,7 @@ using InvoiceSystem.Domain.Entities;
 using InvoiceSystem.Domain.Enums;
 using InvoiceSystem.Domain.Errors;
 using InvoiceSystem.Domain.Interfaces;
+using InvoiceSystem.Domain.Repositories;
 
 namespace InvoiceSystem.Application.Services;
 
@@ -13,19 +14,22 @@ public class InvoiceOrchestratorService : IInvoiceOrchestratorService
     private readonly IInvoiceService _invoiceService;
     private readonly IEmployeeRepository _employeeRepository;
     private readonly IInvoiceRepository _invoiceRepository;
+    private readonly IWorkflowStepRepository _workflowStepRepository;
     private readonly IWorkflowstepService _workflowstepService;
     private readonly ILoadTrackerService _loadTrackerService;
     public InvoiceOrchestratorService(IInvoiceService invoiceService,
         IWorkflowstepService workflowstepService,
         ILoadTrackerService loadTrackerService,
         IInvoiceRepository invoiceRepository,
-        IEmployeeRepository employeeRepository)
+        IEmployeeRepository employeeRepository,
+        IWorkflowStepRepository workflowStepRepository)
     {
         _invoiceService = invoiceService;
         _workflowstepService = workflowstepService;
         _loadTrackerService = loadTrackerService;
         _invoiceRepository = invoiceRepository;
         _employeeRepository = employeeRepository;
+        _workflowStepRepository = workflowStepRepository;
     }
 
     public async Task<Result> ApproveInvoiceAsync(Guid invoiceId, Guid approverId)
@@ -130,19 +134,20 @@ public class InvoiceOrchestratorService : IInvoiceOrchestratorService
         }
 
         var nextStatus = DetermineNextStatus(statusType, dTO.WorkflowStepType);
-        try
-        {
-            await _workflowstepService.CreateWorkflowstepAsync(invoiceId, dTO);
-            await _invoiceService.SubmitInvoiceAsync(invoiceId, employee);
-        }
-        catch (DomainException ex)
-        {
-            return Result.Failure(Error.Validation(ex.ErrorCode, ex.Message));
-        }
 
+        var createWorkflowResult = await _workflowstepService.CreateWorkflowstepAsync(invoiceId, dTO);
+        if (createWorkflowResult.IsFailure)
+        {
+            return Result.Failure(createWorkflowResult.Errors);
+        }
+        var submitResult = await _invoiceService.SubmitInvoiceAsync(invoiceId, employee);
+        if(submitResult.IsFailure)
+        {
+            return Result.Failure(submitResult.Errors);
+        }
+        await _workflowStepRepository.SaveChangesAsync();
+        await _invoiceRepository.SaveChangesAsync();
         return Result.Success();
-
-
     }
 
     public async Task<Result> VoidInvoiceAsync(Guid invoiceid, Guid employeeid, string reason)
