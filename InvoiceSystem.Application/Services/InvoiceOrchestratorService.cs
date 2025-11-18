@@ -131,7 +131,7 @@ public class InvoiceOrchestratorService : IInvoiceOrchestratorService
 
         var nextStatus = DetermineNextStatus(statusType, dTO.WorkflowStepType);
         await _workflowstepService.CreateWorkflowstepAsync(invoiceId, dTO);
-        await _invoiceService.UpdateInvoiceStatusAsync(invoice.Value.Id, nextStatus);
+        await _invoiceService.SubmitInvoiceAsync(invoiceId, employee);
         return Result.Success();
 
 
