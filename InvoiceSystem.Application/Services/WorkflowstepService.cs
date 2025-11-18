@@ -51,7 +51,7 @@ public class WorkflowstepService : IWorkflowstepService
             statusBefore,
             statusAfter,
             dto.WorkflowStepType,
-            dto.ApproverId,
+            dto.EmployeeId,
             dto.Reason ?? "",
             timestamp
             );
