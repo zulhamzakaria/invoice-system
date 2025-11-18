@@ -149,8 +149,8 @@ public class InvoiceOrchestratorService : IInvoiceOrchestratorService
             return Result.Failure(submitResult.Errors);
         }
         await _loadTrackerRepository.SaveChangesAsync();
-        await _workflowStepRepository.SaveChangesAsync();
-        await _invoiceRepository.SaveChangesAsync();
+        //await _workflowStepRepository.SaveChangesAsync();
+        //await _invoiceRepository.SaveChangesAsync();
         return Result.Success();
     }
 
