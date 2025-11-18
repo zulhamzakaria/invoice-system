@@ -39,6 +39,6 @@ public class LoadTrackerRepository : ILoadTrackerRepository
 
     public void Update(LoadTracker loadTracker)
     {
-        _dbContext.Update(loadTracker);
+        _dbContext.LoadTrackers.Update(loadTracker);
     }
 }
