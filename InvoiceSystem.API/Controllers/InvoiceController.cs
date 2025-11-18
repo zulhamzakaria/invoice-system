@@ -116,7 +116,7 @@ namespace InvoiceSystem.API.Controllers
         }
 
         [HttpPost("{invoiceId:guid}/submit")]
-        [SwaggerOperation(Summary = "Note: Submission doesn't need ApproverId, Reason")]
+        [SwaggerOperation(Summary = "Note: Reason is for Voiding, Rejecting Invoice")]
         public async Task<IActionResult> SubmitInvoice(Guid invoiceId, [FromBody] WorkflowstepsCreationDTO dto)
         {
             var result = await _invoiceOrchestratorService.SubmitInvoiceAsync(invoiceId, dto);

@@ -130,8 +130,16 @@ public class InvoiceOrchestratorService : IInvoiceOrchestratorService
         }
 
         var nextStatus = DetermineNextStatus(statusType, dTO.WorkflowStepType);
-        await _workflowstepService.CreateWorkflowstepAsync(invoiceId, dTO);
-        await _invoiceService.SubmitInvoiceAsync(invoiceId, employee);
+        try
+        {
+            await _workflowstepService.CreateWorkflowstepAsync(invoiceId, dTO);
+            await _invoiceService.SubmitInvoiceAsync(invoiceId, employee);
+        }
+        catch (DomainException ex)
+        {
+            return Result.Failure(Error.Validation(ex.ErrorCode, ex.Message));
+        }
+
         return Result.Success();
 
 
