@@ -61,8 +61,6 @@ public class WorkflowStep
             errors.Add(Error.Validation(WorkflowStepErrors.Creation.InvalidInvoiceId, "Invoice ID cannot be empty."));
         }
 
-
-
         // Check 2: Logical Invariant (Must be a change)
         if (statusBefore == statusAfter && actionType != WorkflowStepType.Routing)
         {
