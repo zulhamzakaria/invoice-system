@@ -114,7 +114,7 @@ namespace InvoiceSystem.Application.Services
             {
                 return Result.Failure(Error.Validation(InvoiceItemErrors.Common.InvoiceItemNotFound, "No such Invoice Item exists"));
             }
-            bool exists = invoice.InvoiceItems.Any(it =>  it.Id == itemId);
+            bool exists = invoice.InvoiceItems.Any(it => it.Id == itemId);
             if (!exists)
             {
                 return Result.Failure(Error.Validation(InvoiceErrors.InvoiceItems.ItemIdsMismatched, "Provided Item Id does not belong the Invoice"));
@@ -159,9 +159,9 @@ namespace InvoiceSystem.Application.Services
             {
                 invoice.DeleteAllItems(providedItemIds, employee);
             }
-            catch (DomainException ex) 
-            { 
-            return Result.Failure(Error.Validation(ex.ErrorCode, ex.Message));
+            catch (DomainException ex)
+            {
+                return Result.Failure(Error.Validation(ex.ErrorCode, ex.Message));
             }
             await _invoiceRepository.SaveChangesAsync();
             return Result.Success();
@@ -193,6 +193,26 @@ namespace InvoiceSystem.Application.Services
             if (result is null)
                 return Result<InvoiceDetailsDTO>.Failure(Error.Validation(InvoiceErrors.Service.InvoiceNotFound, "No such invoice exists"));
             return Result<InvoiceDetailsDTO>.Success(_invoiceMapper.ToDetailsDTO(result));
+        }
+
+        public async Task<Result> SubmitInvoiceAsync(Guid invoiceId, Employee employee)
+        {
+            var invoice = await _invoiceRepository.GetByIdAsync(invoiceId);
+            if (invoice is null)
+            {
+                return Result.Failure(Error.Validation(InvoiceErrors.Service.InvoiceNotFound, "No such Invoice exists"));
+            }
+
+            try
+            {
+                invoice.SubmitForApproval(employee);
+            }
+            catch (DomainException ex)
+            {
+                return Result.Failure(Error.Validation(ex.ErrorCode, ex.Message));
+            }
+            await _invoiceRepository.SaveChangesAsync();
+            return Result.Success();
         }
 
         public async Task<Result> UpdateInvoiceAsync(Guid invoiceId, InvoiceUpdateDTO updateDTO, Guid userId)

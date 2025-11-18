@@ -16,10 +16,10 @@ public interface IInvoiceService
 
     public Task<Result> UpdateInvoiceStatusAsync(Guid invoiceId, InvoiceStatus nextStatus);
     public Task<Result> VoidInvoiceAsync(Guid invoiceId, Employee employee);
+    public Task<Result> SubmitInvoiceAsync(Guid invoiceId, Employee employee);
 
 
     public Task<Result<InvoiceItemDTO>> CreateInvoiceItemAsync(Guid invoiceId, InvoiceItemCreationDTO itemDTO);
-
     public Task<Result<IReadOnlyList<InvoiceItemDTO>>> GetAllInvoiceItemsAsync(Guid invoiceId);
     public Task<Result> DeleteInvoiceItemAsync(Guid invoiceId, Guid itemId, Guid employeeId);
     public Task<Result> DeleteInvoiceItemsAsync(Guid invoiceId, IEnumerable<Guid> itemIds , Guid employeeId);
