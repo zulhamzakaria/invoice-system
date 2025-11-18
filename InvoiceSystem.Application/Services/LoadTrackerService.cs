@@ -42,7 +42,7 @@ public class LoadTrackerService : ILoadTrackerService
         }
         FO.MarkAssigned();
         _loadTrackerRepository.Update(FO);
-        await _loadTrackerRepository.SaveChangesAsync();
+        //await _loadTrackerRepository.SaveChangesAsync();
         return Result.Success();
     }
 }

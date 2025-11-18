@@ -93,8 +93,8 @@ public class WorkflowStep
                 $"Action type {actionType} must not be tied to a specific human Approver ID."));
         }
 
-        // Check 4: Reason/Audit Invariant
-        if (string.IsNullOrEmpty(trimmedReason))
+        // Check 4: Reason/Audit Invariant for Rejecting only
+        if (string.IsNullOrEmpty(trimmedReason) && (statusAfter == InvoiceStatus.Rejected || statusAfter == InvoiceStatus.Voided))
         {
             errors.Add(Error.Validation(WorkflowStepErrors.Creation.MissingReason,
                "An audit reason is required for every workflow step."));
