@@ -137,16 +137,16 @@ public class InvoiceOrchestratorService : IInvoiceOrchestratorService
 
         var nextStatus = DetermineNextStatus(statusType, dTO.WorkflowStepType);
 
-        var createWorkflowResult = await _workflowstepService.CreateWorkflowstepAsync(invoiceId, dTO);
-        if (createWorkflowResult.IsFailure)
-        {
-            return Result.Failure(createWorkflowResult.Errors);
-        }
-        var submitResult = await _invoiceService.SubmitInvoiceAsync(invoiceId, employee);
-        if(submitResult.IsFailure)
-        {
-            return Result.Failure(submitResult.Errors);
-        }
+        //var createWorkflowResult = await _workflowstepService.CreateWorkflowstepAsync(invoiceId, dTO);
+        //if (createWorkflowResult.IsFailure)
+        //{
+        //    return Result.Failure(createWorkflowResult.Errors);
+        //}
+        //var submitResult = await _invoiceService.SubmitInvoiceAsync(invoiceId, employee);
+        //if(submitResult.IsFailure)
+        //{
+        //    return Result.Failure(submitResult.Errors);
+        //}
 
         // atomic save
         await _uow.SaveChangesAsync();
