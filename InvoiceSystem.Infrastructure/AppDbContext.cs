@@ -58,10 +58,13 @@ public class AppDbContext : DbContext
 
             step.Property(wfs => wfs.Timestamp).IsRequired();
 
-            step.Property(wfs => wfs.ApproverId).HasColumnName("ApproverId").IsRequired(false);
+            //step.Property(wfs => wfs.ApproverId).HasColumnName("ApproverId").IsRequired(false);
 
-            step.Metadata.FindProperty(nameof(WorkflowStep.ApproverId))!
-            .SetPropertyAccessMode(PropertyAccessMode.FieldDuringConstruction);
+            step.HasOne<Employee>()
+            .WithMany()
+            .HasForeignKey(wfs => wfs.ApproverId)
+            .IsRequired()
+            .OnDelete(DeleteBehavior.Restrict);
 
             step.HasOne<Invoice>()
             .WithMany()
