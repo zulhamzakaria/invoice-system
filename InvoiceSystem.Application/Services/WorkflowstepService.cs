@@ -43,7 +43,7 @@ public class WorkflowstepService : IWorkflowstepService
         await _loadTrackerService.RecordAssignmentAsync(approver.Value.Id);
 
         var statusBefore = invoice.Status;
-        var statusAfter = DeterminNextStatus(invoice.Status, dto.WorkflowStepType);
+        var statusAfter = DetermineNextStatus(invoice.Status, dto.WorkflowStepType);
         var timestamp = DateTimeOffset.UtcNow;
 
         var stepResult = WorkflowstepMapper.ToEntity(
@@ -86,7 +86,7 @@ public class WorkflowstepService : IWorkflowstepService
 
     }
 
-    private InvoiceStatus DeterminNextStatus(InvoiceStatus currentStatus, WorkflowStepType stepType)
+    private InvoiceStatus DetermineNextStatus(InvoiceStatus currentStatus, WorkflowStepType stepType)
     {
         return (currentStatus, stepType) switch
         {
