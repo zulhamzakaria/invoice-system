@@ -64,6 +64,7 @@ builder.Services.AddScoped<IInvoiceService, InvoiceService>();
 builder.Services.AddScoped<ILoadTrackerService, LoadTrackerService>();
 builder.Services.AddScoped<IInvoiceOrchestratorService, InvoiceOrchestratorService>();
 
+builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 builder.Services.AddScoped<IInvoiceRepository, InvoiceRepository>();
 builder.Services.AddScoped<IWorkflowStepRepository, WorkflowStepRepository>();
 builder.Services.AddScoped<ICompanyRepository, CompanyRepository>();
