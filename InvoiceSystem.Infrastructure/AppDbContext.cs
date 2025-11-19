@@ -60,6 +60,9 @@ public class AppDbContext : DbContext
 
             step.Property(wfs => wfs.ApproverId).HasColumnName("ApproverId").IsRequired(false);
 
+            step.Metadata.FindProperty(nameof(WorkflowStep.ApproverId))!
+            .SetPropertyAccessMode(PropertyAccessMode.FieldDuringConstruction);
+
             step.HasOne<Invoice>()
             .WithMany()
             .HasForeignKey(wfs => wfs.InvoiceId)
