@@ -90,14 +90,14 @@ public class WorkflowstepService : IWorkflowstepService
     {
         return (currentStatus, stepType) switch
         {
-            (InvoiceStatus.Draft, WorkflowStepType.Submission) => InvoiceStatus.PendingApproval,
+            (InvoiceStatus.Draft, WorkflowStepType.Submission) => InvoiceStatus.PendingOfficerApproval,
 
-            (InvoiceStatus.PendingApproval, WorkflowStepType.Approval) => InvoiceStatus.Approved,
-            (InvoiceStatus.PendingApproval, WorkflowStepType.AutoApproval) => InvoiceStatus.Approved,
+            (InvoiceStatus.PendingOfficerApproval, WorkflowStepType.Approval) => InvoiceStatus.Approved,
+            (InvoiceStatus.PendingOfficerApproval, WorkflowStepType.AutoApproval) => InvoiceStatus.Approved,
 
             (_, WorkflowStepType.Rejection) => InvoiceStatus.Rejected,
 
-            (InvoiceStatus.PendingApproval, WorkflowStepType.Routing) => InvoiceStatus.PendingApproval,
+            (InvoiceStatus.PendingOfficerApproval, WorkflowStepType.Routing) => InvoiceStatus.PendingOfficerApproval,
             (InvoiceStatus.Approved, WorkflowStepType.PaymentProcessing) => InvoiceStatus.Paid,
 
             (_, WorkflowStepType.Recall) => InvoiceStatus.Draft,

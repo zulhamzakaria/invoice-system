@@ -96,12 +96,12 @@ public class Invoice : AuditableEntity
         if (!InvoiceItems.Any())
             throw new DomainException("Cannot submit an invoice without items.", InvoiceErrors.InvoiceItems.NoInvoiceItem);
 
-        Status = InvoiceStatus.PendingApproval;
+        Status = InvoiceStatus.PendingOfficerApproval;
     }
 
     public void Approve(Employee approver, decimal approvalLimit)
     {
-        if (Status != InvoiceStatus.PendingApproval)
+        if (Status != InvoiceStatus.PendingOfficerApproval)
             throw new DomainException("Only pending invoices can be approved.", InvoiceErrors.Approval.InvalidStatus);
 
         if (approver is null)
@@ -118,7 +118,7 @@ public class Invoice : AuditableEntity
 
     public void Reject(Employee employee)
     {
-        if (Status != InvoiceStatus.PendingApproval)
+        if (Status != InvoiceStatus.PendingOfficerApproval)
             throw new DomainException("Only pending invoices can be rejected.", InvoiceErrors.Approval.InvalidStatus);
         if (employee is null)
             throw new DomainException("An employee must be provided to reject the invoice.", InvoiceErrors.Approval.MissingApprover);

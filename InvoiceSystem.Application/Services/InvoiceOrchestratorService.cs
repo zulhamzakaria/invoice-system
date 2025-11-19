@@ -42,7 +42,7 @@ public class InvoiceOrchestratorService : IInvoiceOrchestratorService
             return Result.Failure(Error.Validation(InvoiceErrors.Service.InvoiceNotFound, "No such Invoice found"));
         }
 
-        if (invoice.Status != InvoiceStatus.PendingApproval)
+        if (invoice.Status != InvoiceStatus.PendingOfficerApproval)
         {
             return Result.Failure(Error.Validation(InvoiceErrors.Approval.InvalidStatus, "Only Invoices pending for approval can be approved"));
         }
@@ -64,7 +64,7 @@ public class InvoiceOrchestratorService : IInvoiceOrchestratorService
 
         // status: approved
         var resultStep = await _workflowstepService.RecordStepAsync(
-            invoice.Id, InvoiceStatus.PendingApproval, status, WorkflowStepType.Approval, approver.Id, "Approved Invoice");
+            invoice.Id, InvoiceStatus.PendingOfficerApproval, status, WorkflowStepType.Approval, approver.Id, "Approved Invoice");
 
         if (resultStep.IsFailure)
         {
@@ -83,7 +83,7 @@ public class InvoiceOrchestratorService : IInvoiceOrchestratorService
         {
             return Result.Failure(Error.Validation(InvoiceErrors.Service.InvoiceNotFound, "No such Invoice found"));
         }
-        if (invoice.Status != InvoiceStatus.PendingApproval)
+        if (invoice.Status != InvoiceStatus.PendingOfficerApproval)
         {
             return Result.Failure(Error.Validation(InvoiceErrors.Approval.InvalidStatus, "Only Invoices pending for approval can be rejected"));
         }
@@ -99,7 +99,7 @@ public class InvoiceOrchestratorService : IInvoiceOrchestratorService
         }
 
         invoice.Reject(approver);
-        var resultStep = await _workflowstepService.RecordStepAsync(invoice.Id, InvoiceStatus.PendingApproval, InvoiceStatus.Rejected,
+        var resultStep = await _workflowstepService.RecordStepAsync(invoice.Id, InvoiceStatus.PendingOfficerApproval, InvoiceStatus.Rejected,
                                                                     WorkflowStepType.Approval, approver.Id, reason);
         if (resultStep.IsFailure)
         {
@@ -180,7 +180,7 @@ public class InvoiceOrchestratorService : IInvoiceOrchestratorService
         {
             FO => InvoiceStatus.PendingManagerApproval,
             FM => InvoiceStatus.Approved,
-            _ => InvoiceStatus.PendingApproval,
+            _ => InvoiceStatus.PendingOfficerApproval,
         };
     }
 
@@ -188,15 +188,15 @@ public class InvoiceOrchestratorService : IInvoiceOrchestratorService
     {
         return (currentStatus, stepType, approver) switch
         {
-            (InvoiceStatus.Draft, WorkflowStepType.Submission, Clerk) => InvoiceStatus.PendingApproval,
+            (InvoiceStatus.Draft, WorkflowStepType.Submission, Clerk) => InvoiceStatus.PendingOfficerApproval,
 
-            (InvoiceStatus.PendingApproval, WorkflowStepType.Approval, FO) => InvoiceStatus.PendingManagerApproval,
-            (InvoiceStatus.PendingApproval, WorkflowStepType.Approval, FM) => InvoiceStatus.Approved,
-            (InvoiceStatus.PendingApproval, WorkflowStepType.AutoApproval, _) => InvoiceStatus.Approved,
+            (InvoiceStatus.PendingOfficerApproval, WorkflowStepType.Approval, FO) => InvoiceStatus.PendingManagerApproval,
+            (InvoiceStatus.PendingOfficerApproval, WorkflowStepType.Approval, FM) => InvoiceStatus.Approved,
+            (InvoiceStatus.PendingOfficerApproval, WorkflowStepType.AutoApproval, _) => InvoiceStatus.Approved,
 
             (_, WorkflowStepType.Rejection, _) => InvoiceStatus.Rejected,
 
-            (InvoiceStatus.PendingApproval, WorkflowStepType.Routing, _) => InvoiceStatus.PendingApproval,
+            (InvoiceStatus.PendingOfficerApproval, WorkflowStepType.Routing, _) => InvoiceStatus.PendingOfficerApproval,
             (InvoiceStatus.Approved, WorkflowStepType.PaymentProcessing, _) => InvoiceStatus.Paid,
 
             (_, WorkflowStepType.Recall, _) => InvoiceStatus.Draft,
