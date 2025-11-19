@@ -58,7 +58,7 @@ public class AppDbContext : DbContext
 
             step.Property(wfs => wfs.Timestamp).IsRequired();
 
-            step.Property(wfs => wfs.ApproverId);
+            step.Property(wfs => wfs.ApproverId).HasColumnName("ApproverId").IsRequired(false);
 
             step.HasOne<Invoice>()
             .WithMany()

@@ -3,6 +3,7 @@ using System;
 using InvoiceSystem.Infrastructure;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
@@ -11,9 +12,11 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace InvoiceSystem.Infrastructure.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20251119045335_add-approverid-column")]
+    partial class addapproveridcolumn
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -200,8 +203,7 @@ namespace InvoiceSystem.Infrastructure.Migrations
                         .HasColumnType("text");
 
                     b.Property<Guid?>("ApproverId")
-                        .HasColumnType("uuid")
-                        .HasColumnName("ApproverId");
+                        .HasColumnType("uuid");
 
                     b.Property<Guid>("InvoiceId")
                         .HasColumnType("uuid");
