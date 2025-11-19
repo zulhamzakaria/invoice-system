@@ -11,6 +11,7 @@ namespace InvoiceSystem.Application.Services;
 
 public class InvoiceOrchestratorService : IInvoiceOrchestratorService
 {
+    private readonly IUnitOfWork _uow;
     private readonly IInvoiceService _invoiceService;
     private readonly IEmployeeRepository _employeeRepository;
     private readonly IInvoiceRepository _invoiceRepository;
@@ -22,13 +23,15 @@ public class InvoiceOrchestratorService : IInvoiceOrchestratorService
         IInvoiceRepository invoiceRepository,
         IEmployeeRepository employeeRepository,
         IWorkflowStepRepository workflowStepRepository,
-        ILoadTrackerRepository loadTrackerRepository)
+        ILoadTrackerRepository loadTrackerRepository,
+        IUnitOfWork uow)
     {
         _invoiceService = invoiceService;
         _workflowstepService = workflowstepService;
         _loadTrackerService = loadTrackerService;
         _invoiceRepository = invoiceRepository;
         _employeeRepository = employeeRepository;
+        _uow = uow;
     }
 
     public async Task<Result> ApproveInvoiceAsync(Guid invoiceId, Guid approverId)
@@ -144,9 +147,10 @@ public class InvoiceOrchestratorService : IInvoiceOrchestratorService
         {
             return Result.Failure(submitResult.Errors);
         }
-        //await _loadTrackerRepository.SaveChangesAsync();
-        //await _workflowStepRepository.SaveChangesAsync();
-        await _invoiceRepository.SaveChangesAsync();
+
+        // atomic save
+        await _uow.SaveChangesAsync();
+
         return Result.Success();
     }
 
