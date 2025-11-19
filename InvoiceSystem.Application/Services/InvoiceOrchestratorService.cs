@@ -53,6 +53,7 @@ public class InvoiceOrchestratorService : IInvoiceOrchestratorService
             return Result.Failure(Error.Validation(EmployeeErrors.Service.EmployeeNotFound, "No such Employee found"));
 
         }
+        
         if (approver is not IApprover approvingOfficer)
         {
             return Result.Failure(Error.Validation(EmployeeErrors.Service.InvalidApprover, "Provided Employee is not a valid Approver"));
@@ -172,6 +173,7 @@ public class InvoiceOrchestratorService : IInvoiceOrchestratorService
         await _invoiceRepository.SaveChangesAsync();
         return Result.Success();
     }
+
     private InvoiceStatus GetStatus(IApprover approver)
     {
         return (approver) switch
