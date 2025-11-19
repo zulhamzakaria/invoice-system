@@ -200,8 +200,8 @@ namespace InvoiceSystem.Infrastructure.Migrations
                         .HasColumnType("text");
 
                     b.Property<Guid?>("ApproverId")
-                        .HasColumnType("uuid")
-                        .HasColumnName("ApproverId");
+                        .IsRequired()
+                        .HasColumnType("uuid");
 
                     b.Property<Guid>("InvoiceId")
                         .HasColumnType("uuid");
@@ -223,6 +223,8 @@ namespace InvoiceSystem.Infrastructure.Migrations
                         .HasColumnType("timestamp with time zone");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("ApproverId");
 
                     b.HasIndex("InvoiceId");
 
@@ -446,6 +448,12 @@ namespace InvoiceSystem.Infrastructure.Migrations
 
             modelBuilder.Entity("InvoiceSystem.Domain.Entities.WorkflowStep", b =>
                 {
+                    b.HasOne("InvoiceSystem.Domain.Entities.Employee", null)
+                        .WithMany()
+                        .HasForeignKey("ApproverId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
                     b.HasOne("InvoiceSystem.Domain.Entities.Invoice", null)
                         .WithMany()
                         .HasForeignKey("InvoiceId")

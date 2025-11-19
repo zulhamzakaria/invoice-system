@@ -12,8 +12,8 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace InvoiceSystem.Infrastructure.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20251115061941_2nd-try-updating-db")]
-    partial class _2ndtryupdatingdb
+    [Migration("20251119053328_explicitly-create-approverid-column-test")]
+    partial class explicitlycreateapproveridcolumntest
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -202,6 +202,10 @@ namespace InvoiceSystem.Infrastructure.Migrations
                         .IsRequired()
                         .HasColumnType("text");
 
+                    b.Property<Guid?>("ApproverId")
+                        .IsRequired()
+                        .HasColumnType("uuid");
+
                     b.Property<Guid>("InvoiceId")
                         .HasColumnType("uuid");
 
@@ -222,6 +226,8 @@ namespace InvoiceSystem.Infrastructure.Migrations
                         .HasColumnType("timestamp with time zone");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("ApproverId");
 
                     b.HasIndex("InvoiceId");
 
@@ -445,6 +451,12 @@ namespace InvoiceSystem.Infrastructure.Migrations
 
             modelBuilder.Entity("InvoiceSystem.Domain.Entities.WorkflowStep", b =>
                 {
+                    b.HasOne("InvoiceSystem.Domain.Entities.Employee", null)
+                        .WithMany()
+                        .HasForeignKey("ApproverId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
                     b.HasOne("InvoiceSystem.Domain.Entities.Invoice", null)
                         .WithMany()
                         .HasForeignKey("InvoiceId")
