@@ -101,7 +101,6 @@ D:\Learning1\Projects\invoice-system\InvoiceSystem.API\obj\Debug\net8.0\staticwe
 D:\Learning1\Projects\invoice-system\InvoiceSystem.API\obj\Debug\net8.0\staticwebassets.build.json.cache
 D:\Learning1\Projects\invoice-system\InvoiceSystem.API\obj\Debug\net8.0\staticwebassets.development.json
 D:\Learning1\Projects\invoice-system\InvoiceSystem.API\obj\Debug\net8.0\staticwebassets.build.endpoints.json
-D:\Learning1\Projects\invoice-system\InvoiceSystem.API\obj\Debug\net8.0\staticwebassets.upToDateCheck.txt
 D:\Learning1\Projects\invoice-system\InvoiceSystem.API\obj\Debug\net8.0\InvoiceS.E282E76C.Up2Date
 D:\Learning1\Projects\invoice-system\InvoiceSystem.API\obj\Debug\net8.0\InvoiceSystem.API.dll
 D:\Learning1\Projects\invoice-system\InvoiceSystem.API\obj\Debug\net8.0\refint\InvoiceSystem.API.dll
@@ -114,3 +113,4 @@ D:\Learning1\Projects\invoice-system\InvoiceSystem.API\bin\Debug\net8.0\Swashbuc
 D:\Learning1\Projects\invoice-system\InvoiceSystem.API\bin\Debug\net8.0\Swashbuckle.AspNetCore.SwaggerGen.dll
 D:\Learning1\Projects\invoice-system\InvoiceSystem.API\bin\Debug\net8.0\Swashbuckle.AspNetCore.SwaggerUI.dll
 D:\Learning1\Projects\invoice-system\InvoiceSystem.API\obj\Debug\net8.0\InvoiceSystem.API.MvcApplicationPartsAssemblyInfo.cs
+D:\Learning1\Projects\invoice-system\InvoiceSystem.API\obj\Debug\net8.0\staticwebassets.upToDateCheck.txt
