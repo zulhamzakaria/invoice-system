@@ -58,6 +58,8 @@ public class AppDbContext : DbContext
 
             step.Property(wfs => wfs.Timestamp).IsRequired();
 
+            step.Property(wfs => wfs.ApproverId);
+
             step.HasOne<Invoice>()
             .WithMany()
             .HasForeignKey(wfs => wfs.InvoiceId)
