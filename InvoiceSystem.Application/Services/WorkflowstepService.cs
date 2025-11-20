@@ -33,12 +33,12 @@ public class WorkflowstepService : IWorkflowstepService
             return Result<WorkflowstepsDetailsDTO>.Failure(errors);
         }
 
-        //LoadTracker
-        var approver = await _loadTrackerService.GetNextApproverAsync(invoice.TotalAmount);
-        if (approver.IsFailure)
-        {
-            return Result<WorkflowstepsDetailsDTO>.Failure(approver.Errors);
-        }
+        ////LoadTracker
+        //var approver = await _loadTrackerService.GetNextApproverAsync(invoice.TotalAmount);
+        //if (approver.IsFailure)
+        //{
+        //    return Result<WorkflowstepsDetailsDTO>.Failure(approver.Errors);
+        //}
 
         //await _loadTrackerService.RecordAssignmentAsync(approver.Value.Id);
 
@@ -51,7 +51,7 @@ public class WorkflowstepService : IWorkflowstepService
             statusBefore,
             statusAfter,
             dto.WorkflowStepType,
-            approver.Value.Id,
+            approverId,
             dto.Reason ?? "",
             timestamp,
             dto.EmployeeId
