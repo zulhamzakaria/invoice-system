@@ -24,7 +24,7 @@ public class LoadTrackerRepository : ILoadTrackerRepository
     public async Task<LoadTracker?> GetApproverByIdAsync(Guid id)
     {
 
-        return await _dbContext.LoadTrackers.FirstOrDefaultAsync(lt => lt.ApproverId == id);
+        return await _dbContext.LoadTrackers.Include(lt => lt.Approver).FirstOrDefaultAsync(lt => lt.ApproverId == id);
     }
 
     public IQueryable<LoadTracker> Query()
