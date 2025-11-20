@@ -51,9 +51,10 @@ public class WorkflowstepService : IWorkflowstepService
             statusBefore,
             statusAfter,
             dto.WorkflowStepType,
-            dto.EmployeeId,
+            approver.Value.Id,
             dto.Reason ?? "",
-            timestamp
+            timestamp,
+            dto.EmployeeId
             );
 
         if (stepResult.IsFailure)
@@ -71,9 +72,9 @@ public class WorkflowstepService : IWorkflowstepService
                                         InvoiceStatus after,
                                         WorkflowStepType stepType,
                                         Guid? approverId,
-                                        string reason)
+                                        string reason, Guid createdBy)
     {
-        var stepResult = WorkflowStep.Create(invoiceId, before, after, stepType, approverId, reason, DateTimeOffset.UtcNow);
+        var stepResult = WorkflowStep.Create(invoiceId, before, after, stepType, approverId, reason, DateTimeOffset.UtcNow, createdBy);
 
         if (stepResult.IsFailure)
         {

@@ -14,7 +14,7 @@ public class WorkflowstepMapper
         WorkflowStepType actionType,
         Guid? approverId,
         string reason,
-        DateTimeOffset timestamp)
+        DateTimeOffset timestamp, Guid createdById)
     {
         return WorkflowStep.Create(
             invoiceId,
@@ -23,7 +23,7 @@ public class WorkflowstepMapper
             actionType,
             approverId,
             reason,
-            timestamp // The system-determined time
+            timestamp, createdById // The system-determined time
         );
     }
 
@@ -37,7 +37,7 @@ public class WorkflowstepMapper
             entity.ActionType.ToString(),
             entity.ApproverId,
             entity.Reason,
-            entity.Timestamp 
+            entity.Timestamp
         );
     }
 }

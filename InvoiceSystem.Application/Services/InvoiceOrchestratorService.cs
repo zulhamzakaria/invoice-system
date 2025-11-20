@@ -64,7 +64,7 @@ public class InvoiceOrchestratorService : IInvoiceOrchestratorService
 
         // status: approved
         var resultStep = await _workflowstepService.RecordStepAsync(
-            invoice.Id, InvoiceStatus.PendingOfficerApproval, status, WorkflowStepType.Approval, approver.Id, "Approved Invoice");
+            invoice.Id, InvoiceStatus.PendingOfficerApproval, status, WorkflowStepType.Approval, approver.Id, "Approved Invoice",approverId);
 
         if (resultStep.IsFailure)
         {
@@ -99,8 +99,9 @@ public class InvoiceOrchestratorService : IInvoiceOrchestratorService
         }
 
         invoice.Reject(approver);
+        // should be re-sent to the Clerk
         var resultStep = await _workflowstepService.RecordStepAsync(invoice.Id, InvoiceStatus.PendingOfficerApproval, InvoiceStatus.Rejected,
-                                                                    WorkflowStepType.Approval, approver.Id, reason);
+                                                                    WorkflowStepType.Approval, invoice.CreatedById, reason, approver.Id);
         if (resultStep.IsFailure)
         {
             return Result.Failure(resultStep.Errors);
