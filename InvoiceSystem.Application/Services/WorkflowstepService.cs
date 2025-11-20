@@ -24,7 +24,7 @@ public class WorkflowstepService : IWorkflowstepService
         _invoiceRepository = invoiceRepository;
         _loadTrackerService = loadTrackerService;
     }
-    public async Task<Result<WorkflowstepsDetailsDTO>> CreateWorkflowstepAsync(Guid invoiceId, WorkflowstepsCreationDTO dto)
+    public async Task<Result<WorkflowstepsDetailsDTO>> CreateWorkflowstepAsync(Guid invoiceId, Guid approverId, WorkflowstepsCreationDTO dto)
     {
         var invoice = await _invoiceRepository.GetByIdAsync(invoiceId);
         if (invoice == null)
@@ -40,7 +40,7 @@ public class WorkflowstepService : IWorkflowstepService
             return Result<WorkflowstepsDetailsDTO>.Failure(approver.Errors);
         }
 
-        await _loadTrackerService.RecordAssignmentAsync(approver.Value.Id);
+        //await _loadTrackerService.RecordAssignmentAsync(approver.Value.Id);
 
         var statusBefore = invoice.Status;
         var statusAfter = DetermineNextStatus(invoice.Status, dto.WorkflowStepType);

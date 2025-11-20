@@ -6,7 +6,7 @@ namespace InvoiceSystem.Application.Services.Interfaces;
 
 public interface IWorkflowstepService
 {
-    Task<Result<WorkflowstepsDetailsDTO>> CreateWorkflowstepAsync(Guid invoiceId, WorkflowstepsCreationDTO dto);
+    Task<Result<WorkflowstepsDetailsDTO>> CreateWorkflowstepAsync(Guid invoiceId, Guid approverId, WorkflowstepsCreationDTO dto);
 
     Task<Result> RecordStepAsync(Guid invoiceId,
                                 InvoiceStatus before,
