@@ -4,7 +4,7 @@ using InvoiceSystem.Domain.Errors;
 
 namespace InvoiceSystem.Domain.Entities;
 
-public class WorkflowStep
+public class WorkflowStep : AuditableEntity
 {
     private const int MaxReasonlength = 500;
 
@@ -28,7 +28,8 @@ public class WorkflowStep
         WorkflowStepType actionType,
         Guid? approverId,
         string reason,
-        DateTimeOffset timestamp)
+        DateTimeOffset timestamp,
+        Guid createdById)
     {
         // Assignment to read-only properties is allowed here
         Id = id;
@@ -39,6 +40,8 @@ public class WorkflowStep
         ApproverId = approverId;
         Reason = reason;
         Timestamp = timestamp;
+        CreatedById = createdById;
+        CreatedAt = DateTimeOffset.UtcNow;
     }
 
     // The Static Factory Method (Making the Entity Rich)
@@ -49,7 +52,8 @@ public class WorkflowStep
         WorkflowStepType actionType,
         Guid? approverId,
         string reason,
-        DateTimeOffset timestamp)
+        DateTimeOffset timestamp,
+        Guid createdById)
     {
         // --- 1. Centralized Invariant and Validation Checks ---
         string trimmedReason = reason?.Trim() ?? string.Empty;
@@ -119,7 +123,8 @@ public class WorkflowStep
             actionType,
             approverId,
             trimmedReason,
-            timestamp);
+            timestamp,
+            createdById);
 
         return Result<WorkflowStep>.Success(newStep);
     }
