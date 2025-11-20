@@ -150,8 +150,8 @@ public class InvoiceOrchestratorService : IInvoiceOrchestratorService
             return Result.Failure(submitResult.Errors);
         }
 
-        // atomic save
-        await _uow.SaveChangesAsync();
+        //// atomic save
+        //await _uow.SaveChangesAsync();
 
         return Result.Success();
     }
