@@ -18,7 +18,7 @@ public class LoadTrackerRepository : ILoadTrackerRepository
 
     public async Task<List<LoadTracker>> GetAllWithApproverAsync()
     {
-       return await _dbContext.LoadTrackers.Include(lt =>  lt.Approver).ToListAsync();
+       return await _dbContext.LoadTrackers.Include(lt =>  lt.Approver).AsNoTracking().ToListAsync();
     }
 
     public async Task<LoadTracker?> GetApproverByIdAsync(Guid id)
