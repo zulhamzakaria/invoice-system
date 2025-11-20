@@ -41,7 +41,7 @@ public class LoadTrackerService : ILoadTrackerService
             return Result.Failure(Error.Validation(LoadTrackerErrors.Service.ApproverNotFound, "No such Approver exists"));
         }
         FO.MarkAssigned();
-        _loadTrackerRepository.Update(FO);
+        //_loadTrackerRepository.Update(FO);
         //await _loadTrackerRepository.SaveChangesAsync();
         return Result.Success();
     }
