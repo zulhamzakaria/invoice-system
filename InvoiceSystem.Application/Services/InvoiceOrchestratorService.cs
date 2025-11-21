@@ -62,7 +62,7 @@ public class InvoiceOrchestratorService : IInvoiceOrchestratorService
         invoice.Approve(approver, approvingOfficer.MaxApprovalAmount);
         var status = GetStatus(approvingOfficer);
 
-        // status: approved
+        // status: ApprovedByOfficer
         var resultStep = await _workflowstepService.RecordStepAsync(
             invoice.Id, InvoiceStatus.PendingOfficerApproval, status, WorkflowStepType.Approval, approver.Id, "Approved Invoice",approverId);
 
