@@ -4,6 +4,7 @@ using InvoiceSystem.Application.Services.Helpers.EmployeeHelpers;
 using InvoiceSystem.Application.Services.Interfaces;
 using InvoiceSystem.Domain.Common;
 using InvoiceSystem.Domain.Entities;
+using InvoiceSystem.Domain.Enums;
 using InvoiceSystem.Domain.Errors;
 using InvoiceSystem.Domain.Interfaces;
 using InvoiceSystem.Domain.Repositories;
@@ -79,6 +80,19 @@ public class EmployeeService : IEmployeeService
             return Result<EmployeeDetailsDTO>.Failure(result.Errors);
         }
         return Result<EmployeeDetailsDTO>.Success(_employeeMapper.ToDetailsDTO(result.Value));
+    }
+
+    public async Task<Result<IReadOnlyList<Employee>>> GetEmployeesByType(EmployeeType employeeType)
+    {
+        var results = await _employeeRepository.GetByTypeAsync(employeeType);
+
+        if (results is null || !results.Any())
+        {
+            return Result<IReadOnlyList<Employee>>.Failure(
+                Error.Validation(EmployeeErrors.Service.NoEmployees, $"No Employee Found for type {employeeType.ToString()}"));
+        }
+
+        return Result<IReadOnlyList<Employee>>.Success(results);    
     }
 
     public async Task<Result<EmployeeUpdateDTO>> UpdateEmployeeAsync(Guid id, EmployeeUpdateDTO employeeUpdateDTO)

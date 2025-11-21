@@ -13,6 +13,7 @@ public class InvoiceOrchestratorService : IInvoiceOrchestratorService
 {
     private readonly IUnitOfWork _uow;
     private readonly IInvoiceService _invoiceService;
+    private readonly IEmployeeService _employeeService;
     private readonly IEmployeeRepository _employeeRepository;
     private readonly IInvoiceRepository _invoiceRepository;
     private readonly IWorkflowstepService _workflowstepService;
@@ -23,7 +24,8 @@ public class InvoiceOrchestratorService : IInvoiceOrchestratorService
         IInvoiceRepository invoiceRepository,
         IEmployeeRepository employeeRepository,
         ILoadTrackerRepository loadTrackerRepository,
-        IUnitOfWork uow)
+        IUnitOfWork uow,
+        IEmployeeService employeeService)
     {
         _invoiceService = invoiceService;
         _workflowstepService = workflowstepService;
@@ -31,6 +33,7 @@ public class InvoiceOrchestratorService : IInvoiceOrchestratorService
         _invoiceRepository = invoiceRepository;
         _employeeRepository = employeeRepository;
         _uow = uow;
+        _employeeService = employeeService;
     }
 
     public async Task<Result> ApproveInvoiceAsync(Guid invoiceId, Guid approverId)
@@ -73,9 +76,16 @@ public class InvoiceOrchestratorService : IInvoiceOrchestratorService
         invoice.Approve(approver, approvingOfficer.MaxApprovalAmount, InvoiceStatus.PendingManagerApproval);
 
         //NOT GETTING NEXT APPROVER
+        //get the sole FM. 
+        var FM = await _employeeService.GetEmployeesByType(EmployeeType.FM);
+        if (FM.IsFailure)
+        {
+            return Result.Failure(FM.Errors);
+        }
+       
         var status = GetStatus(approvingOfficer);
         var resultStep = await _workflowstepService.RecordStepAsync(
-            invoice.Id, InvoiceStatus.PendingOfficerApproval, status, WorkflowStepType.Approval, approver.Id, 
+            invoice.Id, InvoiceStatus.PendingOfficerApproval, status, WorkflowStepType.Approval, FM.Value.FirstOrDefault().Id, 
             $"{approver.GetType().Name} Approved Invoice", approverId);
 
         if (resultStep.IsFailure)
