@@ -99,7 +99,7 @@ public class Invoice : AuditableEntity
         Status = InvoiceStatus.PendingOfficerApproval;
     }
 
-    public void Approve(Employee approver, decimal approvalLimit)
+    public void Approve(Employee approver, decimal approvalLimit, InvoiceStatus invoiceStatus)
     {
         if (Status != InvoiceStatus.PendingOfficerApproval)
             throw new DomainException("Only pending invoices can be approved.", InvoiceErrors.Approval.InvalidStatus);
@@ -113,7 +113,7 @@ public class Invoice : AuditableEntity
         ApprovedBy = approver;
         UpdatedById = approver.Id;
         UpdatedAt = DateTime.UtcNow;
-        Status = InvoiceStatus.Approved;
+        Status = invoiceStatus;
     }
 
     public void Reject(Employee employee)
@@ -135,7 +135,7 @@ public class Invoice : AuditableEntity
             throw new DomainException("Only Clerk can void an invoice.", InvoiceErrors.Voiding.InvalidRole);
         }
 
-        if (Status == InvoiceStatus.Approved || Status == InvoiceStatus.Rejected)
+        if (Status != InvoiceStatus.Draft)
         {
             throw new DomainException("Processed invoices cannot be voided.", InvoiceErrors.Voiding.Processed);
         }
@@ -182,7 +182,7 @@ public class Invoice : AuditableEntity
     {
         if (Status == newStatus) return;
 
-        if (Status == InvoiceStatus.Approved || Status == InvoiceStatus.Voided)
+        if (Status != InvoiceStatus.Draft)
         {
             throw new DomainException("Cannot change the Status for approved and voided Invoices ", InvoiceErrors.Workflow.InvalidStatus);
         }

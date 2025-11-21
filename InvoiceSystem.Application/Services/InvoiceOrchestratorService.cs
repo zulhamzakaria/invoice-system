@@ -180,7 +180,7 @@ public class InvoiceOrchestratorService : IInvoiceOrchestratorService
         return (approver) switch
         {
             FO => InvoiceStatus.PendingManagerApproval,
-            FM => InvoiceStatus.Approved,
+            FM => InvoiceStatus.ApprovedByManager,
             _ => InvoiceStatus.PendingOfficerApproval,
         };
     }
@@ -192,13 +192,13 @@ public class InvoiceOrchestratorService : IInvoiceOrchestratorService
             (InvoiceStatus.Draft, WorkflowStepType.Submission, Clerk) => InvoiceStatus.PendingOfficerApproval,
 
             (InvoiceStatus.PendingOfficerApproval, WorkflowStepType.Approval, FO) => InvoiceStatus.PendingManagerApproval,
-            (InvoiceStatus.PendingOfficerApproval, WorkflowStepType.Approval, FM) => InvoiceStatus.Approved,
-            (InvoiceStatus.PendingOfficerApproval, WorkflowStepType.AutoApproval, _) => InvoiceStatus.Approved,
+            (InvoiceStatus.PendingOfficerApproval, WorkflowStepType.Approval, FM) => InvoiceStatus.ApprovedByManager,
+            (InvoiceStatus.PendingOfficerApproval, WorkflowStepType.AutoApproval, _) => InvoiceStatus.ApprovedByManager,
 
             (_, WorkflowStepType.Rejection, _) => InvoiceStatus.Rejected,
 
             (InvoiceStatus.PendingOfficerApproval, WorkflowStepType.Routing, _) => InvoiceStatus.PendingOfficerApproval,
-            (InvoiceStatus.Approved, WorkflowStepType.PaymentProcessing, _) => InvoiceStatus.Paid,
+            (InvoiceStatus.ApprovedByManager, WorkflowStepType.PaymentProcessing, _) => InvoiceStatus.Paid,
 
             (_, WorkflowStepType.Recall, _) => InvoiceStatus.Draft,
             (_, WorkflowStepType.Delegation, _) => currentStatus,
