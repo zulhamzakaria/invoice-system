@@ -51,20 +51,23 @@ public class InvoiceOrchestratorService : IInvoiceOrchestratorService
         if (approver is null)
         {
             return Result.Failure(Error.Validation(EmployeeErrors.Service.EmployeeNotFound, "No such Employee found"));
-
         }
-        
+
         if (approver is not IApprover approvingOfficer)
         {
             return Result.Failure(Error.Validation(EmployeeErrors.Service.InvalidApprover, "Provided Employee is not a valid Approver"));
         }
 
+        //can only Approve the designated Invoices
+
+
         invoice.Approve(approver, approvingOfficer.MaxApprovalAmount, InvoiceStatus.PendingManagerApproval);
 
-        // status: PendingManagerApproval
+        //NOT GETTING NEXT APPROVER
         var status = GetStatus(approvingOfficer);
         var resultStep = await _workflowstepService.RecordStepAsync(
-            invoice.Id, InvoiceStatus.PendingOfficerApproval, status, WorkflowStepType.Approval, approver.Id, "Approved Invoice",approverId);
+            invoice.Id, InvoiceStatus.PendingOfficerApproval, status, WorkflowStepType.Approval, approver.Id, 
+            $"{approver.GetType().Name} Approved Invoice", approverId);
 
         if (resultStep.IsFailure)
         {
