@@ -59,7 +59,7 @@ public class InvoiceOrchestratorService : IInvoiceOrchestratorService
             return Result.Failure(Error.Validation(EmployeeErrors.Service.InvalidApprover, "Provided Employee is not a valid Approver"));
         }
 
-        invoice.Approve(approver, approvingOfficer.MaxApprovalAmount);
+        invoice.Approve(approver, approvingOfficer.MaxApprovalAmount, InvoiceStatus.PendingManagerApproval);
         var status = GetStatus(approvingOfficer);
 
         // status: ApprovedByOfficer
@@ -192,7 +192,7 @@ public class InvoiceOrchestratorService : IInvoiceOrchestratorService
             (InvoiceStatus.Draft, WorkflowStepType.Submission, Clerk) => InvoiceStatus.PendingOfficerApproval,
 
             (InvoiceStatus.PendingOfficerApproval, WorkflowStepType.Approval, FO) => InvoiceStatus.PendingManagerApproval,
-            (InvoiceStatus.PendingOfficerApproval, WorkflowStepType.Approval, FM) => InvoiceStatus.ApprovedByManager,
+            (InvoiceStatus.PendingManagerApproval, WorkflowStepType.Approval, FM) => InvoiceStatus.ApprovedByManager,
             (InvoiceStatus.PendingOfficerApproval, WorkflowStepType.AutoApproval, _) => InvoiceStatus.ApprovedByManager,
 
             (_, WorkflowStepType.Rejection, _) => InvoiceStatus.Rejected,
