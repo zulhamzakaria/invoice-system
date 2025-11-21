@@ -40,6 +40,21 @@ namespace InvoiceSystem.Infrastructure.Repositories
             return await _context.Employees.FindAsync(id);
         }
 
+        public async Task<IReadOnlyList<Employee>> GetByTypeAsync(EmployeeType type)
+        {
+            IQueryable<Employee> query = _context.Employees;
+
+            query = type switch
+            {
+                EmployeeType.Clerk => query.OfType<Clerk>(),
+                EmployeeType.FO => query.OfType<FO>(),
+                EmployeeType.FM => query.OfType<FM>(),
+                _ => throw new ArgumentOutOfRangeException(nameof(type), "Undefined EmployeeType")
+            };
+
+            return await query.AsNoTracking().ToListAsync();
+        }
+
         public async Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
         {
             return await _context.SaveChangesAsync(cancellationToken);
