@@ -22,7 +22,7 @@ public class WorkflowStepRepository : IWorkflowStepRepository
         return await _context.WorkflowSteps.ToListAsync();
     }
 
-    public async Task<IReadOnlyList<Guid?>> GetByApproverId(Guid employeeId)
+    public async Task<IReadOnlyList<Guid?>> GetByApproverIdAsync(Guid employeeId)
     {
         return await _context.WorkflowSteps
             .AsNoTracking()
