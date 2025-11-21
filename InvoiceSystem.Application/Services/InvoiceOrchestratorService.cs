@@ -22,7 +22,6 @@ public class InvoiceOrchestratorService : IInvoiceOrchestratorService
         ILoadTrackerService loadTrackerService,
         IInvoiceRepository invoiceRepository,
         IEmployeeRepository employeeRepository,
-        IWorkflowStepRepository workflowStepRepository,
         ILoadTrackerRepository loadTrackerRepository,
         IUnitOfWork uow)
     {
@@ -59,6 +58,8 @@ public class InvoiceOrchestratorService : IInvoiceOrchestratorService
         }
 
         //can only Approve the designated Invoices
+        //call FROM the workflowstep service
+
 
 
         invoice.Approve(approver, approvingOfficer.MaxApprovalAmount, InvoiceStatus.PendingManagerApproval);

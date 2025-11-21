@@ -13,16 +13,13 @@ public class WorkflowstepService : IWorkflowstepService
 {
     private readonly IWorkflowStepRepository _workflowStepRepository;
     private readonly IInvoiceRepository _invoiceRepository;
-    private readonly ILoadTrackerService _loadTrackerService;
 
     public WorkflowstepService(
         IWorkflowStepRepository workflowStepRepository,
-        IInvoiceRepository invoiceRepository,
-        ILoadTrackerService loadTrackerService)
+        IInvoiceRepository invoiceRepository)
     {
         _workflowStepRepository = workflowStepRepository;
         _invoiceRepository = invoiceRepository;
-        _loadTrackerService = loadTrackerService;
     }
     public async Task<Result<WorkflowstepsDetailsDTO>> CreateWorkflowstepAsync(Guid invoiceId, Guid approverId, WorkflowstepsCreationDTO dto)
     {
@@ -32,15 +29,6 @@ public class WorkflowstepService : IWorkflowstepService
             var errors = new List<Error> { Error.Validation(InvoiceErrors.Service.InvoiceNotFound, "No invoice found for the Invoice Id") };
             return Result<WorkflowstepsDetailsDTO>.Failure(errors);
         }
-
-        ////LoadTracker
-        //var approver = await _loadTrackerService.GetNextApproverAsync(invoice.TotalAmount);
-        //if (approver.IsFailure)
-        //{
-        //    return Result<WorkflowstepsDetailsDTO>.Failure(approver.Errors);
-        //}
-
-        //await _loadTrackerService.RecordAssignmentAsync(approver.Value.Id);
 
         var statusBefore = invoice.Status;
         var statusAfter = DetermineNextStatus(invoice.Status, dto.WorkflowStepType);
