@@ -5,7 +5,8 @@ public enum InvoiceStatus
     Draft,
     PendingOfficerApproval,
     PendingManagerApproval,
-    Approved,
+    ApprovedByOfficer,
+    ApprovedByManager,
     Rejected,
     Voided,
     Paid
