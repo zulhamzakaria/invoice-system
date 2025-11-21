@@ -8,6 +8,7 @@ public interface IWorkflowstepService
 {
     Task<Result<WorkflowstepsDetailsDTO>> CreateWorkflowstepAsync(Guid invoiceId, Guid approverId, WorkflowstepsCreationDTO dto);
 
+    Task<IReadOnlyList<Guid?>> GetInvoicesByApproverId(Guid approverId);
     Task<Result> RecordStepAsync(Guid invoiceId,
                                 InvoiceStatus before,
                                 InvoiceStatus after,

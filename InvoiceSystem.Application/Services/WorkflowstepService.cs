@@ -55,7 +55,7 @@ public class WorkflowstepService : IWorkflowstepService
         return Result<WorkflowstepsDetailsDTO>.Success(WorkflowstepMapper.ToDetailsDTO(newStep));
     }
 
-    public async Task<Result<Guid?>> GetInvoicesByApproverId(Guid approverId)
+    public async Task<IReadOnlyList<Guid?>> GetInvoicesByApproverId(Guid approverId)
     {
         return await _workflowStepRepository.GetByApproverIdAsync(approverId);
     }
