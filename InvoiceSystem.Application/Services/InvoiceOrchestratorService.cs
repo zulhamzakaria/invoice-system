@@ -60,9 +60,9 @@ public class InvoiceOrchestratorService : IInvoiceOrchestratorService
         }
 
         invoice.Approve(approver, approvingOfficer.MaxApprovalAmount, InvoiceStatus.PendingManagerApproval);
-        var status = GetStatus(approvingOfficer);
 
-        // status: ApprovedByOfficer
+        // status: PendingManagerApproval
+        var status = GetStatus(approvingOfficer);
         var resultStep = await _workflowstepService.RecordStepAsync(
             invoice.Id, InvoiceStatus.PendingOfficerApproval, status, WorkflowStepType.Approval, approver.Id, "Approved Invoice",approverId);
 
@@ -71,7 +71,8 @@ public class InvoiceOrchestratorService : IInvoiceOrchestratorService
             return Result.Failure(resultStep.Errors);
         }
 
-        await _invoiceRepository.UpdateAsync(invoice);
+        //no need to call UpdateAsync cause EF Core keeps track of the result
+        //await _invoiceRepository.UpdateAsync(invoice);
         await _invoiceRepository.SaveChangesAsync();
         return Result.Success();
     }
