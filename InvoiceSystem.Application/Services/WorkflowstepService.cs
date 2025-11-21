@@ -55,6 +55,11 @@ public class WorkflowstepService : IWorkflowstepService
         return Result<WorkflowstepsDetailsDTO>.Success(WorkflowstepMapper.ToDetailsDTO(newStep));
     }
 
+    public async Task<Result<Guid?>> GetInvoicesByApproverId(Guid approverId)
+    {
+        return await _workflowStepRepository.GetByApproverIdAsync(approverId);
+    }
+
     public async Task<Result> RecordStepAsync(Guid invoiceId,
                                         InvoiceStatus before,
                                         InvoiceStatus after,
@@ -81,7 +86,8 @@ public class WorkflowstepService : IWorkflowstepService
         {
             (InvoiceStatus.Draft, WorkflowStepType.Submission) => InvoiceStatus.PendingOfficerApproval,
 
-            (InvoiceStatus.PendingOfficerApproval, WorkflowStepType.Approval) => InvoiceStatus.ApprovedByManager,
+            (InvoiceStatus.PendingOfficerApproval, WorkflowStepType.Approval) => InvoiceStatus.PendingManagerApproval,
+            (InvoiceStatus.PendingManagerApproval, WorkflowStepType.Approval) => InvoiceStatus.ApprovedByManager,
             (InvoiceStatus.PendingOfficerApproval, WorkflowStepType.AutoApproval) => InvoiceStatus.ApprovedByManager,
 
             (_, WorkflowStepType.Rejection) => InvoiceStatus.Rejected,
