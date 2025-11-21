@@ -144,11 +144,11 @@ public class InvoiceOrchestratorService : IInvoiceOrchestratorService
         {
             return Result.Failure(createWorkflowResult.Errors);
         }
-        //var submitResult = await _invoiceService.SubmitInvoiceAsync(invoiceId, employee);
-        //if (submitResult.IsFailure)
-        //{
-        //    return Result.Failure(submitResult.Errors);
-        //}
+        var submitResult = await _invoiceService.SubmitInvoiceAsync(invoiceId, employee);
+        if (submitResult.IsFailure)
+        {
+            return Result.Failure(submitResult.Errors);
+        }
 
         // atomic save
         await _uow.SaveChangesAsync();
