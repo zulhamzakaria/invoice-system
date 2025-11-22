@@ -95,12 +95,8 @@ public class InvoiceOrchestratorService : IInvoiceOrchestratorService
 
         invoice.Approve(approver, approvingOfficer.MaxApprovalAmount, nextStatus);
 
-        //no need to call UpdateAsync cause EF Core keeps track of the result
-        //await _invoiceRepository.UpdateAsync(invoice);
-        //await _invoiceRepository.SaveChangesAsync();
-
-        ////Atomic save
-        //await _uow.SaveChangesAsync();
+        //Atomic save
+        await _uow.SaveChangesAsync();
 
         return Result.Success();
     }
