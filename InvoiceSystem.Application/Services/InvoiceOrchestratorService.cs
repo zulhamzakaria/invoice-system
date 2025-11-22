@@ -73,8 +73,6 @@ public class InvoiceOrchestratorService : IInvoiceOrchestratorService
             return Result.Failure(Error.Validation(InvoiceErrors.Service.NotAssignedInvoice, "Approver cannot act on this invoice"));
         }
 
-        invoice.Approve(approver, approvingOfficer.MaxApprovalAmount, InvoiceStatus.PendingManagerApproval);
-
         //NOT GETTING NEXT APPROVER
         //get the sole FM. 
         var FM = await _employeeService.GetEmployeesByType(EmployeeType.FM);
@@ -82,16 +80,20 @@ public class InvoiceOrchestratorService : IInvoiceOrchestratorService
         {
             return Result.Failure(FM.Errors);
         }
-       
-        var status = GetStatus(approvingOfficer);
+
+        var nextStatus = DetermineNextStatus(invoice.Status, WorkflowStepType.Approval, approvingOfficer);
+        //workflowstep follows current invoice.status.
+        //then invoice.status gets updated
         var resultStep = await _workflowstepService.RecordStepAsync(
-            invoice.Id, InvoiceStatus.PendingOfficerApproval, status, WorkflowStepType.Approval, FM.Value.FirstOrDefault().Id, 
+            invoice.Id, invoice.Status, nextStatus, WorkflowStepType.Approval, FM.Value.FirstOrDefault().Id, 
             $"{approver.GetType().Name} Approved Invoice", approverId);
 
         if (resultStep.IsFailure)
         {
             return Result.Failure(resultStep.Errors);
         }
+
+        invoice.Approve(approver, approvingOfficer.MaxApprovalAmount, nextStatus);
 
         //no need to call UpdateAsync cause EF Core keeps track of the result
         //await _invoiceRepository.UpdateAsync(invoice);
@@ -200,16 +202,6 @@ public class InvoiceOrchestratorService : IInvoiceOrchestratorService
         await _invoiceRepository.UpdateAsync(invoice);
         await _invoiceRepository.SaveChangesAsync();
         return Result.Success();
-    }
-
-    private InvoiceStatus GetStatus(IApprover approver)
-    {
-        return (approver) switch
-        {
-            FO => InvoiceStatus.PendingManagerApproval,
-            FM => InvoiceStatus.ApprovedByManager,
-            _ => InvoiceStatus.PendingOfficerApproval,
-        };
     }
 
     private InvoiceStatus DetermineNextStatus(InvoiceStatus currentStatus, WorkflowStepType stepType, IApprover approver = null)
