@@ -44,7 +44,7 @@ public class InvoiceOrchestratorService : IInvoiceOrchestratorService
             return Result.Failure(Error.Validation(InvoiceErrors.Service.InvoiceNotFound, "No such Invoice found"));
         }
 
-        if (invoice.Status != InvoiceStatus.PendingOfficerApproval || invoice.Status != InvoiceStatus.PendingManagerApproval)
+        if (invoice.Status != InvoiceStatus.PendingOfficerApproval && invoice.Status != InvoiceStatus.PendingManagerApproval)
         {
             return Result.Failure(Error.Validation(InvoiceErrors.Approval.InvalidStatus, "Only Invoices pending for approval can be approved"));
         }
