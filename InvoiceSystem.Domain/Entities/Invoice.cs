@@ -101,7 +101,7 @@ public class Invoice : AuditableEntity
 
     public void Approve(Employee approver, decimal approvalLimit, InvoiceStatus invoiceStatus)
     {
-        if (Status != InvoiceStatus.PendingOfficerApproval)
+        if (Status != InvoiceStatus.PendingOfficerApproval || Status != InvoiceStatus.PendingManagerApproval)
             throw new DomainException("Only pending invoices can be approved.", InvoiceErrors.Approval.InvalidStatus);
 
         if (approver is null)
