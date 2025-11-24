@@ -17,15 +17,18 @@ namespace InvoiceSystem.Application.Services
         private readonly IEmployeeRepository _employeeRepository;
         private readonly ICompanyRepository _companyRepository;
         private readonly IInvoiceMapper _invoiceMapper;
+        private readonly IUnitOfWork _uow;
         public InvoiceService(IEmployeeRepository employeeRepository,
             IInvoiceRepository invoiceRepository,
             ICompanyRepository companyRepository,
-            IInvoiceMapper invoiceMapper)
+            IInvoiceMapper invoiceMapper,
+            IUnitOfWork uow)
         {
             _employeeRepository = employeeRepository;
             _invoiceRepository = invoiceRepository;
             _companyRepository = companyRepository;
             _invoiceMapper = invoiceMapper;
+            _uow = uow;
         }
         public async Task<Result<InvoiceDetailsDTO>> CreateInvoiceAsync(InvoiceCreationDTO creationDTO)
         {
@@ -261,8 +264,14 @@ namespace InvoiceSystem.Application.Services
                 return Result.Failure(Error.Validation(InvoiceErrors.Service.InvoiceNotFound, "No such Invoice exists"));
             }
 
-            invoice.Void(employee);
-            await _invoiceRepository.SaveChangesAsync();
+            try
+            {
+                invoice.Void(employee);
+            }
+            catch (DomainException ex) {
+                return Result.Failure(Error.Validation(ex.ErrorCode, ex.Message));
+            }
+            await _uow.SaveChangesAsync();
             return Result.Success();
         }
     }
