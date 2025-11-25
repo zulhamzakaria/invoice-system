@@ -48,7 +48,7 @@
               "RelativeDocumentMoniker": "..\\InvoiceSystem.Application\\Services\\InvoiceService.cs",
               "ToolTip": "D:\\Learning1\\Projects\\invoice-system\\InvoiceSystem.Application\\Services\\InvoiceService.cs",
               "RelativeToolTip": "..\\InvoiceSystem.Application\\Services\\InvoiceService.cs",
-              "ViewState": "AgIAAPUAAAAAAAAAAAAuwAYBAAANAAAAAAAAAA==",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA0AAAAxAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-11-24T10:06:57.255Z",
               "EditorCaption": ""
@@ -63,8 +63,7 @@
               "RelativeToolTip": "..\\InvoiceSystem.Domain\\Entities\\Invoice.cs",
               "ViewState": "AgIAAFcAAAAAAAAAAAAAAGgAAAAcAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-11-22T00:50:47.794Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-11-22T00:50:47.794Z"
             },
             {
               "$type": "Document",
@@ -76,8 +75,7 @@
               "RelativeToolTip": "..\\InvoiceSystem.Application\\Services\\EmployeeService.cs",
               "ViewState": "AgIAAEYAAAAAAAAAAAAiwFgAAAAfAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-11-21T07:52:12.747Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-11-21T07:52:12.747Z"
             },
             {
               "$type": "Document",
@@ -89,8 +87,7 @@
               "RelativeToolTip": "..\\InvoiceSystem.Application\\Services\\InvoiceOrchestratorService.cs",
               "ViewState": "AgIAAE8AAAAAAAAAAAAIwGEAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-11-20T01:08:49.961Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-11-20T01:08:49.961Z"
             }
           ]
         }
