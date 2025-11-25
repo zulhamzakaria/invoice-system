@@ -1,20 +1,7 @@
 {
   "Version": 1,
   "WorkspaceRootPath": "D:\\Learning1\\Projects\\invoice-system\\InvoiceSystem.API\\",
-  "Documents": [
-    {
-      "AbsoluteMoniker": "D:0:0:{75669D0E-FF10-431A-9DD3-7C24DDA855AE}|..\\InvoiceSystem.Application\\InvoiceSystem.Application.csproj|d:\\learning1\\projects\\invoice-system\\invoicesystem.application\\services\\invoiceservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{16CA3BFB-D56E-49CE-9E89-2719355BC7C8}|..\\InvoiceSystem.Domain\\InvoiceSystem.Domain.csproj|d:\\learning1\\projects\\invoice-system\\invoicesystem.domain\\entities\\invoice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{75669D0E-FF10-431A-9DD3-7C24DDA855AE}|..\\InvoiceSystem.Application\\InvoiceSystem.Application.csproj|d:\\learning1\\projects\\invoice-system\\invoicesystem.application\\services\\invoiceorchestratorservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{75669D0E-FF10-431A-9DD3-7C24DDA855AE}|..\\InvoiceSystem.Application\\InvoiceSystem.Application.csproj|d:\\learning1\\projects\\invoice-system\\invoicesystem.application\\services\\employeeservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    }
-  ],
+  "Documents": [],
   "DocumentGroupContainers": [
     {
       "Orientation": 0,
@@ -22,7 +9,7 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 4,
+          "SelectedChildIndex": -1,
           "Children": [
             {
               "$type": "Bookmark",
@@ -39,55 +26,6 @@
             {
               "$type": "Bookmark",
               "Name": "ST:0:0:{0174dea2-fdbe-4ef1-8f99-c0beae78880f}"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 0,
-              "Title": "InvoiceService.cs",
-              "DocumentMoniker": "D:\\Learning1\\Projects\\invoice-system\\InvoiceSystem.Application\\Services\\InvoiceService.cs",
-              "RelativeDocumentMoniker": "..\\InvoiceSystem.Application\\Services\\InvoiceService.cs",
-              "ToolTip": "D:\\Learning1\\Projects\\invoice-system\\InvoiceSystem.Application\\Services\\InvoiceService.cs",
-              "RelativeToolTip": "..\\InvoiceSystem.Application\\Services\\InvoiceService.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA0AAAAxAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-11-24T10:06:57.255Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 1,
-              "Title": "Invoice.cs",
-              "DocumentMoniker": "D:\\Learning1\\Projects\\invoice-system\\InvoiceSystem.Domain\\Entities\\Invoice.cs",
-              "RelativeDocumentMoniker": "..\\InvoiceSystem.Domain\\Entities\\Invoice.cs",
-              "ToolTip": "D:\\Learning1\\Projects\\invoice-system\\InvoiceSystem.Domain\\Entities\\Invoice.cs",
-              "RelativeToolTip": "..\\InvoiceSystem.Domain\\Entities\\Invoice.cs",
-              "ViewState": "AgIAAFcAAAAAAAAAAAAAAGgAAAAcAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-11-22T00:50:47.794Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 3,
-              "Title": "EmployeeService.cs",
-              "DocumentMoniker": "D:\\Learning1\\Projects\\invoice-system\\InvoiceSystem.Application\\Services\\EmployeeService.cs",
-              "RelativeDocumentMoniker": "..\\InvoiceSystem.Application\\Services\\EmployeeService.cs",
-              "ToolTip": "D:\\Learning1\\Projects\\invoice-system\\InvoiceSystem.Application\\Services\\EmployeeService.cs",
-              "RelativeToolTip": "..\\InvoiceSystem.Application\\Services\\EmployeeService.cs",
-              "ViewState": "AgIAAEYAAAAAAAAAAAAiwFgAAAAfAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-11-21T07:52:12.747Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 2,
-              "Title": "InvoiceOrchestratorService.cs",
-              "DocumentMoniker": "D:\\Learning1\\Projects\\invoice-system\\InvoiceSystem.Application\\Services\\InvoiceOrchestratorService.cs",
-              "RelativeDocumentMoniker": "..\\InvoiceSystem.Application\\Services\\InvoiceOrchestratorService.cs",
-              "ToolTip": "D:\\Learning1\\Projects\\invoice-system\\InvoiceSystem.Application\\Services\\InvoiceOrchestratorService.cs",
-              "RelativeToolTip": "..\\InvoiceSystem.Application\\Services\\InvoiceOrchestratorService.cs",
-              "ViewState": "AgIAAE8AAAAAAAAAAAAIwGEAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-11-20T01:08:49.961Z"
             }
           ]
         }
