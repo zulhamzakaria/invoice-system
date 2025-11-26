@@ -23,12 +23,13 @@ public static class InvoiceErrors
     {
         public const string Processed = "INV.INVOICE_PROCESSED_ALREADY";
         public const string Voided = "INV.INVOICE_VOIDED_ALREADY";
-        public const string InvalidRole = "INV.INVALID_ROLE";
+        public const string InvalidEmployeeRole = "INV.EMPLOYEE_NOT_A_CLERK";
     }
     public static class Submission
     {
         public const string InvalidEmployeeRole = "INV.EMPLOYEE_NOT_A_CLERK";
     }
+
     public static class Approval
     {
         public const string InvalidStatus = "INV.INVALID_STATUS"; 

@@ -63,7 +63,7 @@ public class InvoiceOrchestratorService : IInvoiceOrchestratorService
         //can only Approve the designated Invoices
         //call FROM the workflowstep service
         var assignInvoices = await _workflowstepService.GetInvoicesByApproverId(approverId);
-        if(assignInvoices is null || !assignInvoices.Any())
+        if (assignInvoices is null || !assignInvoices.Any())
         {
             return Result.Failure(Error.Validation(InvoiceErrors.Service.NoAssignedInvoice, "Provided Approver has no assigned Invoices"));
         }
@@ -85,7 +85,7 @@ public class InvoiceOrchestratorService : IInvoiceOrchestratorService
         //workflowstep follows current invoice.status.
         //then invoice.status gets updated
         var resultStep = await _workflowstepService.RecordStepAsync(
-            invoice.Id, invoice.Status, nextStatus, WorkflowStepType.Approval, FM.Value.FirstOrDefault().Id, 
+            invoice.Id, invoice.Status, nextStatus, WorkflowStepType.Approval, FM.Value.FirstOrDefault().Id,
             $"{approver.GetType().Name} Approved Invoice", approverId);
 
         if (resultStep.IsFailure)
@@ -194,7 +194,14 @@ public class InvoiceOrchestratorService : IInvoiceOrchestratorService
             return Result.Failure(Error.Validation(EmployeeErrors.Service.EmployeeNotFound, "No such Employee found"));
         }
         // no Reason added yet
-        invoice.Void(employee);
+        try
+        {
+            invoice.Void(employee);
+        }
+        catch (DomainException e)
+        {
+            return Result.Failure(Error.Validation(e.ErrorCode, e.Message));
+        }
         //await _invoiceRepository.UpdateAsync(invoice);
         await _uow.SaveChangesAsync();
         return Result.Success();

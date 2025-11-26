@@ -133,7 +133,7 @@ public class Invoice : AuditableEntity
     {
         if (employee is not ICanVoidInvoice)
         {
-            throw new DomainException("Only Clerk can void an invoice.", InvoiceErrors.Voiding.InvalidRole);
+            throw new DomainException("Only Clerk can void an invoice.", InvoiceErrors.Voiding.InvalidEmployeeRole);
         }
 
         if (Status != InvoiceStatus.Draft)
