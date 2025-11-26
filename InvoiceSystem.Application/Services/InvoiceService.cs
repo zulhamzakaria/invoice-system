@@ -32,6 +32,11 @@ namespace InvoiceSystem.Application.Services
         }
         public async Task<Result<InvoiceDetailsDTO>> CreateInvoiceAsync(InvoiceCreationDTO creationDTO)
         {
+            var invoiceExists = await _invoiceRepository.ExistsByInvoiceNoAsync(creationDTO.InvoiceNo);
+            if (invoiceExists)
+            {
+                return Result<InvoiceDetailsDTO>.Failure(Error.Validation(InvoiceErrors.Service.InvoiceExists, "An active Invoice with similar number exists."));
+            }
             var employee = await _employeeRepository.GetByIdAsync(creationDTO.CreatedBy);
             if (employee == null || employee is not Clerk)
             {
