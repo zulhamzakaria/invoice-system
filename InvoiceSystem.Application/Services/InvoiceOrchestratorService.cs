@@ -144,12 +144,8 @@ public class InvoiceOrchestratorService : IInvoiceOrchestratorService
             return Result.Failure(Error.Validation(InvoiceErrors.Service.InvoiceNotFound, "No such Invoice found"));
         }
 
-        var allowedHashSet = new HashSet<string>
-        {
-            InvoiceStatus.Draft.ToString(),
-            InvoiceStatus.Rejected.ToString()
-        };
-        if(!allowedHashSet.Contains(invoice.Value.Status))
+        var status = Enum.Parse<InvoiceStatus>(invoice.Value.Status);
+        if(!InvoiceStatusRules.CanSubmit.Contains(status))
         {
             return Result.Failure(Error.Validation(InvoiceErrors.Service.InvalidStatus, "Only Draft/Rejected Invoice can be submitted"));
         }
