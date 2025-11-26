@@ -143,6 +143,10 @@ public class InvoiceOrchestratorService : IInvoiceOrchestratorService
         {
             return Result.Failure(Error.Validation(InvoiceErrors.Service.InvoiceNotFound, "No such Invoice found"));
         }
+        if(invoice.Value.Status != InvoiceStatus.Draft.ToString())
+        {
+            return Result.Failure(Error.Validation(InvoiceErrors.Service.InvalidStatus, "Only Draft can be submitted"));
+        }
         var employee = await _employeeRepository.GetByIdAsync(dTO.EmployeeId);
         if (employee is null)
         {
