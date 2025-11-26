@@ -264,9 +264,9 @@ namespace InvoiceSystem.Application.Services
         public async Task<Result> VoidInvoiceAsync(Guid invoiceId, Employee employee)
         {
             var invoice = await _invoiceRepository.GetByIdAsync(invoiceId);
-            if (invoice is null)
+            if(invoice is null)
             {
-                return Result.Failure(Error.Validation(InvoiceErrors.Service.InvoiceNotFound, "No such Invoice exists"));
+                return Result.Failure(Error.Validation(InvoiceErrors.Service.InvoiceNotFound, "No such Invoice found"));
             }
 
             try

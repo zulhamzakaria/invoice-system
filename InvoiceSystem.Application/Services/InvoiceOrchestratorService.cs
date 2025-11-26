@@ -188,9 +188,9 @@ public class InvoiceOrchestratorService : IInvoiceOrchestratorService
         return Result.Success();
     }
 
-    public async Task<Result> VoidInvoiceAsync(Guid invoiceid, Guid employeeid, string reason)
+    public async Task<Result> VoidInvoiceAsync(Guid invoiceId, Guid employeeid, string reason)
     {
-        var invoice = await _invoiceRepository.GetByIdAsync(invoiceid);
+        var invoice = await _invoiceService.GetInvoiceByIdAsync(invoiceId);
         if (invoice is null)
         {
             return Result.Failure(Error.Validation(InvoiceErrors.Service.InvoiceNotFound, "No such Invoice found"));
@@ -201,7 +201,12 @@ public class InvoiceOrchestratorService : IInvoiceOrchestratorService
             return Result.Failure(Error.Validation(EmployeeErrors.Service.EmployeeNotFound, "No such Employee found"));
         }
         //calls the InvoiceService Void() instead
-        var voidInvoice = await _invoiceService.VoidInvoiceAsync(invoiceid, employee);
+        var status = Enum.Parse<InvoiceStatus>(invoice.Value.Status);
+        if (!InvoiceStatusRules.CanVoid.Contains(status)) 
+        {
+            return Result.Failure(Error.Validation(InvoiceErrors.Service.InvalidStatus, "Only Draft/Rejected Invoice can be submitted"));
+        }
+        var voidInvoice = await _invoiceService.VoidInvoiceAsync(invoice.Value.Id, employee);
         if (voidInvoice.IsFailure)
         {
             return Result.Failure(voidInvoice.Errors);
