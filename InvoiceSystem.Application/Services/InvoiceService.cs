@@ -269,6 +269,11 @@ namespace InvoiceSystem.Application.Services
                 return Result.Failure(Error.Validation(InvoiceErrors.Service.InvoiceNotFound, "No such Invoice found"));
             }
 
+            //no parsing since CanVoid accepts InvoiceStatus
+            if (!InvoiceStatusRules.CanVoid.Contains(invoice.Status))
+            {
+                return Result.Failure(Error.Validation(InvoiceErrors.Service.InvalidStatus, "Only Draft/Rejected Invoice can be submitted"));
+            }
             try
             {
                 invoice.Void(employee);

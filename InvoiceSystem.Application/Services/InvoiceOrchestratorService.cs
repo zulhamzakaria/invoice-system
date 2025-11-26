@@ -201,11 +201,6 @@ public class InvoiceOrchestratorService : IInvoiceOrchestratorService
             return Result.Failure(Error.Validation(EmployeeErrors.Service.EmployeeNotFound, "No such Employee found"));
         }
         //calls the InvoiceService Void() instead
-        var status = Enum.Parse<InvoiceStatus>(invoice.Value.Status);
-        if (!InvoiceStatusRules.CanVoid.Contains(status)) 
-        {
-            return Result.Failure(Error.Validation(InvoiceErrors.Service.InvalidStatus, "Only Draft/Rejected Invoice can be submitted"));
-        }
         var voidInvoice = await _invoiceService.VoidInvoiceAsync(invoice.Value.Id, employee);
         if (voidInvoice.IsFailure)
         {
