@@ -1,5 +1,6 @@
 ﻿using InvoiceSystem.Domain.Common;
 using InvoiceSystem.Domain.Entities;
+using InvoiceSystem.Domain.Enums;
 using Microsoft.EntityFrameworkCore;
 
 namespace InvoiceSystem.Infrastructure.Repositories
@@ -29,6 +30,12 @@ namespace InvoiceSystem.Infrastructure.Repositories
             // ⚠️ In some domains, "Delete" is really "Void" instead of removing from DB
             _context.Invoices.Remove(invoice);
             //await _context.SaveChangesAsync();
+        }
+
+        public async Task<bool> ExistsByInvoiceNoAsync(string invoiceNo)
+        {
+            return await _context.Invoices.
+                AnyAsync(i => i.InvoiceNumber == invoiceNo && i.Status != InvoiceStatus.Voided);
         }
 
         public async Task<IReadOnlyList<Invoice>> GetAllAsync()
