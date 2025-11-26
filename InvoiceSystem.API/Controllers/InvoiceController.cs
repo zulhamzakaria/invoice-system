@@ -149,7 +149,7 @@ namespace InvoiceSystem.API.Controllers
             return NoContent();
         }
 
-        [HttpPost("{invoiceId:guid}/voiding")]
+        [HttpPost("{invoiceId:guid}/void")]
         public async Task<IActionResult> VoidInvoice(Guid invoiceId, [FromBody] InvoiceRejectionDTO dto)
         {
             var result = await _invoiceOrchestratorService.VoidInvoiceAsync(invoiceId, dto.employeeId, dto.reason.Trim());
