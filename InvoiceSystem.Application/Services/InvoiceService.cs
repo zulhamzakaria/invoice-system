@@ -276,7 +276,7 @@ namespace InvoiceSystem.Application.Services
             catch (DomainException ex) {
                 return Result.Failure(Error.Validation(ex.ErrorCode, ex.Message));
             }
-            await _uow.SaveChangesAsync();
+
             return Result.Success();
         }
     }

@@ -200,17 +200,16 @@ public class InvoiceOrchestratorService : IInvoiceOrchestratorService
         {
             return Result.Failure(Error.Validation(EmployeeErrors.Service.EmployeeNotFound, "No such Employee found"));
         }
-        // no Reason added yet
-        try
+        //calls the InvoiceService Void() instead
+        var voidInvoice = await _invoiceService.VoidInvoiceAsync(invoiceid, employee);
+        if (voidInvoice.IsFailure)
         {
-            invoice.Void(employee);
+            return Result.Failure(voidInvoice.Errors);
         }
-        catch (DomainException e)
-        {
-            return Result.Failure(Error.Validation(e.ErrorCode, e.Message));
-        }
-        //await _invoiceRepository.UpdateAsync(invoice);
+
+        //atomic save cause we're calling both Invoice and WorkflowStep
         await _uow.SaveChangesAsync();
+
         return Result.Success();
     }
 
