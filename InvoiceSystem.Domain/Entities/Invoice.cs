@@ -91,7 +91,7 @@ public class Invoice : AuditableEntity
     public void SubmitForApproval(Employee employee)
     {
         if (employee is not Clerk)
-            throw new DomainException("Only Clerk can void an invoice.", InvoiceErrors.Submission.InvalidEmployeeRole);
+            throw new DomainException("Only Clerk can submit an invoice.", InvoiceErrors.Submission.InvalidEmployeeRole);
         if (Status != InvoiceStatus.Draft)
             throw new DomainException("Only draft invoices can be submitted for approval.", InvoiceErrors.Approval.InvalidStatus);
         if (!InvoiceItems.Any())
