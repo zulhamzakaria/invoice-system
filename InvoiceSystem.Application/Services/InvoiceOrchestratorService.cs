@@ -224,7 +224,9 @@ public class InvoiceOrchestratorService : IInvoiceOrchestratorService
             (InvoiceStatus.PendingManagerApproval, WorkflowStepType.Approval, FM) => InvoiceStatus.ApprovedByManager,
             (InvoiceStatus.PendingOfficerApproval, WorkflowStepType.AutoApproval, _) => InvoiceStatus.ApprovedByManager,
 
-            (_, WorkflowStepType.Rejection, _) => InvoiceStatus.Rejected,
+            // REJECTIONS — only valid at approval stages
+            (InvoiceStatus.PendingOfficerApproval, WorkflowStepType.Rejection, FO) => InvoiceStatus.Rejected,
+            (InvoiceStatus.PendingManagerApproval, WorkflowStepType.Rejection, FM) => InvoiceStatus.Rejected,
 
             (InvoiceStatus.PendingOfficerApproval, WorkflowStepType.Routing, _) => InvoiceStatus.PendingOfficerApproval,
             (InvoiceStatus.ApprovedByManager, WorkflowStepType.PaymentProcessing, _) => InvoiceStatus.Paid,
