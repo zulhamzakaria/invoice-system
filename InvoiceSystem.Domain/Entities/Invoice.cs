@@ -39,6 +39,7 @@ public class Invoice : AuditableEntity
         ShippingAddress = shippingAddress;
         InvoiceDate = invoiceDate;
         CreatedBy = createdBy;
+        CreatedAt = DateTimeOffset.UtcNow;
     }
 
 
