@@ -3,19 +3,20 @@
   "WorkspaceRootPath": "D:\\Learning1\\Projects\\invoice-system\\InvoiceSystem.API\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{75669D0E-FF10-431A-9DD3-7C24DDA855AE}|..\\InvoiceSystem.Application\\InvoiceSystem.Application.csproj|d:\\learning1\\projects\\invoice-system\\invoicesystem.application\\services\\invoiceservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{75669D0E-FF10-431A-9DD3-7C24DDA855AE}|..\\InvoiceSystem.Application\\InvoiceSystem.Application.csproj|d:\\learning1\\projects\\invoice-system\\invoicesystem.application\\services\\invoiceorchestratorservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{16CA3BFB-D56E-49CE-9E89-2719355BC7C8}|..\\InvoiceSystem.Domain\\InvoiceSystem.Domain.csproj|d:\\learning1\\projects\\invoice-system\\invoicesystem.domain\\errors\\invoiceerrors.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{F35F738C-7C9B-49BE-BAE5-9F36AA0EFFAF}|InvoiceSystem.API.csproj|d:\\learning1\\projects\\invoice-system\\invoicesystem.api\\controllers\\invoicecontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{F35F738C-7C9B-49BE-BAE5-9F36AA0EFFAF}|InvoiceSystem.API.csproj|solutionrelative:controllers\\invoicecontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{75669D0E-FF10-431A-9DD3-7C24DDA855AE}|..\\InvoiceSystem.Application\\InvoiceSystem.Application.csproj|d:\\learning1\\projects\\invoice-system\\invoicesystem.application\\services\\invoiceservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{24C62EA7-6535-4EFD-B5A1-C0EB68924D59}|..\\InvoiceSystem.Infrastructure\\InvoiceSystem.Infrastructure.csproj|d:\\learning1\\projects\\invoice-system\\invoicesystem.infrastructure\\repositories\\invoicerepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{16CA3BFB-D56E-49CE-9E89-2719355BC7C8}|..\\InvoiceSystem.Domain\\InvoiceSystem.Domain.csproj|d:\\learning1\\projects\\invoice-system\\invoicesystem.domain\\repositories\\iinvoicerepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{24C62EA7-6535-4EFD-B5A1-C0EB68924D59}|..\\InvoiceSystem.Infrastructure\\InvoiceSystem.Infrastructure.csproj|d:\\learning1\\projects\\invoice-system\\invoicesystem.infrastructure\\invoicesystem.infrastructure.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|"
     }
   ],
   "DocumentGroupContainers": [
@@ -25,21 +26,8 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 8,
+          "SelectedChildIndex": 4,
           "Children": [
-            {
-              "$type": "Document",
-              "DocumentIndex": 1,
-              "Title": "InvoiceErrors.cs",
-              "DocumentMoniker": "D:\\Learning1\\Projects\\invoice-system\\InvoiceSystem.Domain\\Errors\\InvoiceErrors.cs",
-              "RelativeDocumentMoniker": "..\\InvoiceSystem.Domain\\Errors\\InvoiceErrors.cs",
-              "ToolTip": "D:\\Learning1\\Projects\\invoice-system\\InvoiceSystem.Domain\\Errors\\InvoiceErrors.cs",
-              "RelativeToolTip": "..\\InvoiceSystem.Domain\\Errors\\InvoiceErrors.cs",
-              "ViewState": "AgIAACEAAAAAAAAAAAAnwDsAAAA4AAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-11-26T04:24:15.634Z",
-              "EditorCaption": ""
-            },
             {
               "$type": "Bookmark",
               "Name": "ST:0:0:{1c4feeaa-4718-4aa9-859d-94ce25d182ba}"
@@ -58,33 +46,46 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 4,
-              "Title": "InvoiceSystem.Infrastructure",
-              "DocumentMoniker": "D:\\Learning1\\Projects\\invoice-system\\InvoiceSystem.Infrastructure\\InvoiceSystem.Infrastructure.csproj",
-              "RelativeDocumentMoniker": "..\\InvoiceSystem.Infrastructure\\InvoiceSystem.Infrastructure.csproj",
-              "ToolTip": "D:\\Learning1\\Projects\\invoice-system\\InvoiceSystem.Infrastructure\\InvoiceSystem.Infrastructure.csproj",
-              "RelativeToolTip": "..\\InvoiceSystem.Infrastructure\\InvoiceSystem.Infrastructure.csproj",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000758|",
-              "WhenOpened": "2025-11-26T04:16:49.559Z",
+              "DocumentIndex": 0,
+              "Title": "InvoiceOrchestratorService.cs",
+              "DocumentMoniker": "D:\\Learning1\\Projects\\invoice-system\\InvoiceSystem.Application\\Services\\InvoiceOrchestratorService.cs",
+              "RelativeDocumentMoniker": "..\\InvoiceSystem.Application\\Services\\InvoiceOrchestratorService.cs",
+              "ToolTip": "D:\\Learning1\\Projects\\invoice-system\\InvoiceSystem.Application\\Services\\InvoiceOrchestratorService.cs",
+              "RelativeToolTip": "..\\InvoiceSystem.Application\\Services\\InvoiceOrchestratorService.cs",
+              "ViewState": "AgIAACUAAAAAAAAAAAAWwMQAAAAfAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-11-26T10:11:31.192Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 2,
+              "DocumentIndex": 1,
+              "Title": "InvoiceController.cs",
+              "DocumentMoniker": "D:\\Learning1\\Projects\\invoice-system\\InvoiceSystem.API\\Controllers\\InvoiceController.cs",
+              "RelativeDocumentMoniker": "Controllers\\InvoiceController.cs",
+              "ToolTip": "D:\\Learning1\\Projects\\invoice-system\\InvoiceSystem.API\\Controllers\\InvoiceController.cs",
+              "RelativeToolTip": "Controllers\\InvoiceController.cs",
+              "ViewState": "AgIAAIMAAAAAAAAAAAAUwJ4AAAANAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-11-26T10:08:48.618Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
               "Title": "InvoiceRepository.cs",
               "DocumentMoniker": "D:\\Learning1\\Projects\\invoice-system\\InvoiceSystem.Infrastructure\\Repositories\\InvoiceRepository.cs",
               "RelativeDocumentMoniker": "..\\InvoiceSystem.Infrastructure\\Repositories\\InvoiceRepository.cs",
               "ToolTip": "D:\\Learning1\\Projects\\invoice-system\\InvoiceSystem.Infrastructure\\Repositories\\InvoiceRepository.cs",
               "RelativeToolTip": "..\\InvoiceSystem.Infrastructure\\Repositories\\InvoiceRepository.cs",
-              "ViewState": "AgIAABYAAAAAAAAAAAAYwCUAAAAuAAAAAAAAAA==",
+              "ViewState": "AgIAABAAAAAAAAAAAAA1wCUAAAAuAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-11-26T04:15:04.337Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 3,
+              "DocumentIndex": 4,
               "Title": "IInvoiceRepository.cs",
               "DocumentMoniker": "D:\\Learning1\\Projects\\invoice-system\\InvoiceSystem.Domain\\Repositories\\IInvoiceRepository.cs",
               "RelativeDocumentMoniker": "..\\InvoiceSystem.Domain\\Repositories\\IInvoiceRepository.cs",
@@ -97,13 +98,13 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 0,
+              "DocumentIndex": 2,
               "Title": "InvoiceService.cs",
               "DocumentMoniker": "D:\\Learning1\\Projects\\invoice-system\\InvoiceSystem.Application\\Services\\InvoiceService.cs",
               "RelativeDocumentMoniker": "..\\InvoiceSystem.Application\\Services\\InvoiceService.cs",
               "ToolTip": "D:\\Learning1\\Projects\\invoice-system\\InvoiceSystem.Application\\Services\\InvoiceService.cs",
               "RelativeToolTip": "..\\InvoiceSystem.Application\\Services\\InvoiceService.cs",
-              "ViewState": "AgIAABwAAAAAAAAAAAAQwCMAAAAeAAAAAAAAAA==",
+              "ViewState": "AgIAAMUAAAAAAAAAAAAwwAcBAABVAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-11-26T03:01:08.111Z",
               "EditorCaption": ""

@@ -195,8 +195,8 @@ public class InvoiceOrchestratorService : IInvoiceOrchestratorService
         }
         // no Reason added yet
         invoice.Void(employee);
-        await _invoiceRepository.UpdateAsync(invoice);
-        await _invoiceRepository.SaveChangesAsync();
+        //await _invoiceRepository.UpdateAsync(invoice);
+        await _uow.SaveChangesAsync();
         return Result.Success();
     }
 
