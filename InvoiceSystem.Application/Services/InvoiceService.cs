@@ -175,8 +175,6 @@ namespace InvoiceSystem.Application.Services
             return Result.Success();
         }
 
-        //public async Task<Result> DeleteInvoiceItems
-
         public async Task<Result<IReadOnlyList<InvoiceItemDTO>>> GetAllInvoiceItemsAsync(Guid invoiceId)
         {
             var invoice = await _invoiceRepository.GetByIdAsync(invoiceId);
