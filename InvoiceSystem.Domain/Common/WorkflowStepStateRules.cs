@@ -18,6 +18,10 @@ public static class WorkflowStepStateRules
             (InvoiceStatus.PendingOfficerApproval, WorkflowStepType.Rejection, EmployeeType.FO) => InvoiceStatus.Rejected,
             (InvoiceStatus.PendingManagerApproval, WorkflowStepType.Rejection, EmployeeType.FM) => InvoiceStatus.Rejected,
 
+            //VOID
+            (InvoiceStatus.Draft, WorkflowStepType.Void, EmployeeType.Clerk) => InvoiceStatus.Voided,
+            (InvoiceStatus.Rejected, WorkflowStepType.Void, EmployeeType.Clerk) => InvoiceStatus.Voided,
+
             (InvoiceStatus.PendingOfficerApproval, WorkflowStepType.Routing, _) => InvoiceStatus.PendingOfficerApproval,
             (InvoiceStatus.ApprovedByManager, WorkflowStepType.PaymentProcessing, _) => InvoiceStatus.Paid,
 

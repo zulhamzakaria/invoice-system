@@ -195,6 +195,10 @@ public class InvoiceOrchestratorService : IInvoiceOrchestratorService
         {
             return Result.Failure(Error.Validation(InvoiceErrors.Service.InvoiceNotFound, "No such Invoice found"));
         }
+        if(string.IsNullOrWhiteSpace(reason))
+        {
+            return Result.Failure(Error.Validation(WorkflowStepErrors.Creation.MissingReason, "Reason must be provided to Void an Invoice"));
+        }
         var employee = await _employeeRepository.GetByIdAsync(employeeid);
         if (employee is null)
         {
