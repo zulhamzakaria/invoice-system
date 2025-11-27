@@ -169,7 +169,7 @@ public class InvoiceOrchestratorService : IInvoiceOrchestratorService
             return Result.Failure(Error.Validation("InvoiceStatusUndefined", "Invalid Invoice status"));
         }
 
-        var nextStatus = DetermineNextStatus(statusType, dTO.WorkflowStepType);
+        //var nextStatus = DetermineNextStatus(statusType, dTO.WorkflowStepType);
 
         var createWorkflowResult = await _workflowstepService.CreateWorkflowstepAsync(invoiceId, approver.Value.Id, dTO);
         if (createWorkflowResult.IsFailure)

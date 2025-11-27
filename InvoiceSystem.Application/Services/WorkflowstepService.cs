@@ -90,7 +90,9 @@ public class WorkflowstepService : IWorkflowstepService
             (InvoiceStatus.PendingManagerApproval, WorkflowStepType.Approval) => InvoiceStatus.ApprovedByManager,
             (InvoiceStatus.PendingOfficerApproval, WorkflowStepType.AutoApproval) => InvoiceStatus.ApprovedByManager,
 
-            (_, WorkflowStepType.Rejection) => InvoiceStatus.Rejected,
+            // REJECTIONS — only valid at approval stages
+            (InvoiceStatus.PendingOfficerApproval, WorkflowStepType.Rejection) => InvoiceStatus.Rejected,
+            (InvoiceStatus.PendingManagerApproval, WorkflowStepType.Rejection) => InvoiceStatus.Rejected,
 
             (InvoiceStatus.PendingOfficerApproval, WorkflowStepType.Routing) => InvoiceStatus.PendingOfficerApproval,
             (InvoiceStatus.ApprovedByManager, WorkflowStepType.PaymentProcessing) => InvoiceStatus.Paid,
