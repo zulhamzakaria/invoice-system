@@ -150,7 +150,7 @@ namespace InvoiceSystem.API.Controllers
         }
 
         [HttpPost("{invoiceId:guid}/void")]
-        public async Task<IActionResult> VoidInvoice(Guid invoiceId, [FromBody] WorkflowstepsCreationDTO dto)
+        public async Task<IActionResult> VoidInvoice(Guid invoiceId, [FromBody] WorkflowstepsActionDTO dto)
         {
             var result = await _invoiceOrchestratorService.VoidInvoiceAsync(invoiceId, dto.EmployeeId, dto.Reason.Trim());
             if (result.IsFailure)
