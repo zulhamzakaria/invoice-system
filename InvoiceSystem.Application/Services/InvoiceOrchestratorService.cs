@@ -6,6 +6,7 @@ using InvoiceSystem.Domain.Enums;
 using InvoiceSystem.Domain.Errors;
 using InvoiceSystem.Domain.Interfaces;
 using InvoiceSystem.Domain.Repositories;
+using static InvoiceSystem.Domain.Errors.InvoiceErrors;
 
 namespace InvoiceSystem.Application.Services;
 
@@ -101,8 +102,12 @@ public class InvoiceOrchestratorService : IInvoiceOrchestratorService
         return Result.Success();
     }
 
-    public async Task<Result> RejectInvoiceAsync(Guid invoiceId, Guid employeeId, string reason)
+    public async Task<Result> RejectInvoiceAsync(Guid invoiceId, WorkflowstepsActionDTO dto)
     {
+        if (string.IsNullOrWhiteSpace(dto.Reason))
+        {
+            return Result.Failure(Error.Validation(WorkflowStepErrors.Creation.MissingReason, "Reason must be provided to Void an Invoice"));
+        }
         var invoice = await _invoiceRepository.GetByIdAsync(invoiceId);
         if (invoice is null)
         {
@@ -113,7 +118,7 @@ public class InvoiceOrchestratorService : IInvoiceOrchestratorService
             return Result.Failure(Error.Validation(InvoiceErrors.Approval.InvalidStatus, "Only Invoices pending for approval can be rejected"));
         }
 
-        var approver = await _employeeRepository.GetByIdAsync(employeeId);
+        var approver = await _employeeRepository.GetByIdAsync(dto.EmployeeId);
         if (approver is null)
         {
             return Result.Failure(Error.Validation(EmployeeErrors.Service.EmployeeNotFound, "No such Employee found"));
@@ -126,7 +131,7 @@ public class InvoiceOrchestratorService : IInvoiceOrchestratorService
         invoice.Reject(approver);
         // should be re-sent to the Clerk
         var resultStep = await _workflowstepService.RecordStepAsync(invoice.Id, InvoiceStatus.PendingOfficerApproval, InvoiceStatus.Rejected,
-                                                                    WorkflowStepType.Approval, invoice.CreatedById, reason, approver.Id);
+                                                                    WorkflowStepType.Approval, invoice.CreatedById, dto.Reason, approver.Id);
         if (resultStep.IsFailure)
         {
             return Result.Failure(resultStep.Errors);
@@ -136,7 +141,7 @@ public class InvoiceOrchestratorService : IInvoiceOrchestratorService
         return Result.Success();
     }
 
-    public async Task<Result> SubmitInvoiceAsync(Guid invoiceId, WorkflowstepsCreationDTO dTO)
+    public async Task<Result> SubmitInvoiceAsync(Guid invoiceId, WorkflowstepsActionDTO dTO)
     {
         var invoice = await _invoiceService.GetInvoiceByIdAsync(invoiceId);
         if (invoice is null)
@@ -145,7 +150,7 @@ public class InvoiceOrchestratorService : IInvoiceOrchestratorService
         }
 
         var status = Enum.Parse<InvoiceStatus>(invoice.Value.Status);
-        if(!InvoiceStatusRules.CanSubmit.Contains(status))
+        if (!InvoiceStatusRules.CanSubmit.Contains(status))
         {
             return Result.Failure(Error.Validation(InvoiceErrors.Service.InvalidStatus, "Only Draft/Rejected Invoice can be submitted"));
         }
@@ -170,12 +175,13 @@ public class InvoiceOrchestratorService : IInvoiceOrchestratorService
         }
 
         //var nextStatus = DetermineNextStatus(statusType, dTO.WorkflowStepType);
-
-        var createWorkflowResult = await _workflowstepService.CreateWorkflowstepAsync(invoiceId, approver.Value.Id, dTO);
+        WorkflowstepsCreationDTO creationDTO = new WorkflowstepsCreationDTO(WorkflowStepType.Submission, dTO.EmployeeId, dTO.Reason);
+        var createWorkflowResult = await _workflowstepService.CreateWorkflowstepAsync(invoiceId, approver.Value.Id, creationDTO);
         if (createWorkflowResult.IsFailure)
         {
             return Result.Failure(createWorkflowResult.Errors);
         }
+
         var submitResult = await _invoiceService.SubmitInvoiceAsync(invoiceId, employee);
         if (submitResult.IsFailure)
         {
@@ -188,29 +194,37 @@ public class InvoiceOrchestratorService : IInvoiceOrchestratorService
         return Result.Success();
     }
 
-    public async Task<Result> VoidInvoiceAsync(Guid invoiceId, Guid employeeid, string reason)
+    public async Task<Result> VoidInvoiceAsync(Guid invoiceId, WorkflowstepsActionDTO dto)
     {
         var invoice = await _invoiceService.GetInvoiceByIdAsync(invoiceId);
         if (invoice is null)
         {
             return Result.Failure(Error.Validation(InvoiceErrors.Service.InvoiceNotFound, "No such Invoice found"));
         }
-        if(string.IsNullOrWhiteSpace(reason))
+        if (string.IsNullOrWhiteSpace(dto.Reason))
         {
             return Result.Failure(Error.Validation(WorkflowStepErrors.Creation.MissingReason, "Reason must be provided to Void an Invoice"));
         }
-        var employee = await _employeeRepository.GetByIdAsync(employeeid);
+        var employee = await _employeeRepository.GetByIdAsync(dto.EmployeeId);
         if (employee is null)
         {
             return Result.Failure(Error.Validation(EmployeeErrors.Service.EmployeeNotFound, "No such Employee found"));
         }
+
         //calls the InvoiceService Void() instead
         var voidInvoice = await _invoiceService.VoidInvoiceAsync(invoice.Value.Id, employee);
         if (voidInvoice.IsFailure)
         {
             return Result.Failure(voidInvoice.Errors);
         }
+
         //TODO: Workflowstep for Void
+        WorkflowstepsCreationDTO creationDTO = new WorkflowstepsCreationDTO(WorkflowStepType.Void, dto.EmployeeId, dto.Reason);
+        var createWorkflowResult = await _workflowstepService.CreateWorkflowstepAsync(invoiceId, dto.EmployeeId, creationDTO);
+        if (createWorkflowResult.IsFailure)
+        {
+            return Result.Failure(createWorkflowResult.Errors);
+        }
 
         //atomic save cause we're calling both Invoice and WorkflowStep
         await _uow.SaveChangesAsync();

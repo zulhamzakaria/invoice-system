@@ -117,7 +117,7 @@ namespace InvoiceSystem.API.Controllers
 
         [HttpPost("{invoiceId:guid}/submit")]
         [SwaggerOperation(Summary = "Note: Reason is for Voiding, Rejecting Invoice")]
-        public async Task<IActionResult> SubmitInvoice(Guid invoiceId, [FromBody] WorkflowstepsCreationDTO dto)
+        public async Task<IActionResult> SubmitInvoice(Guid invoiceId, [FromBody] WorkflowstepsActionDTO dto)
         {
             var result = await _invoiceOrchestratorService.SubmitInvoiceAsync(invoiceId, dto);
             if (result.IsFailure)
@@ -139,9 +139,9 @@ namespace InvoiceSystem.API.Controllers
         }
 
         [HttpPost("{invoiceId:guid}/reject")]
-        public async Task<IActionResult> RejectInvoice(Guid invoiceId, [FromBody] InvoiceRejectionDTO dto)
+        public async Task<IActionResult> RejectInvoice(Guid invoiceId, [FromBody] WorkflowstepsActionDTO dto)
         {
-            var result = await _invoiceOrchestratorService.RejectInvoiceAsync(invoiceId, dto.employeeId, dto.reason.Trim());
+            var result = await _invoiceOrchestratorService.RejectInvoiceAsync(invoiceId, dto);
             if (result.IsFailure)
             {
                 return BadRequest(result.Errors);
@@ -152,7 +152,7 @@ namespace InvoiceSystem.API.Controllers
         [HttpPost("{invoiceId:guid}/void")]
         public async Task<IActionResult> VoidInvoice(Guid invoiceId, [FromBody] WorkflowstepsActionDTO dto)
         {
-            var result = await _invoiceOrchestratorService.VoidInvoiceAsync(invoiceId, dto.EmployeeId, dto.Reason.Trim());
+            var result = await _invoiceOrchestratorService.VoidInvoiceAsync(invoiceId, dto);
             if (result.IsFailure)
             {
                 return BadRequest(result.Errors);
