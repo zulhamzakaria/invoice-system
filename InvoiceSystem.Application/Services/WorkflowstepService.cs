@@ -32,6 +32,8 @@ public class WorkflowstepService : IWorkflowstepService
 
         var statusBefore = invoice.Status;
         var statusAfter = DetermineNextStatus(invoice.Status, dto.WorkflowStepType);
+        // TODO: might wanna test this later
+        var statusAfter2 = WorkflowStepStateRules.DetermineNextStatus(invoice.Status, dto.WorkflowStepType, EmployeeType.Clerk);
         var timestamp = DateTimeOffset.UtcNow;
 
         var stepResult = WorkflowstepMapper.ToEntity(
