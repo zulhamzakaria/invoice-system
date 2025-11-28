@@ -11,6 +11,8 @@ public class FM : Employee, IApprover
 
     public decimal MaxApprovalAmount => decimal.MaxValue;
 
+    public EmployeeType EmployeeType => EmployeeType.FM;
+
     private FM() { } // For EF Core
 
     /// <summary>FM can approve any amount by default, or a custom limit if specified.</summary>

@@ -9,6 +9,9 @@ public class FO : Employee, IApprover
 {
     public decimal MaxApprovalAmount { get; private set; }
     public bool IsLimitlessApprover => false;
+
+    public EmployeeType EmployeeType => EmployeeType.FO;
+
     public static Result<FO> Create(string name, string email, decimal approvalLimit)
     {
         var baseResult = CreateBase(name, email);
