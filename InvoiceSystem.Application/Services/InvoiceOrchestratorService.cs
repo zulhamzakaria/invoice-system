@@ -83,6 +83,9 @@ public class InvoiceOrchestratorService : IInvoiceOrchestratorService
         }
 
         var nextStatus = DetermineNextStatus(invoice.Status, WorkflowStepType.Approval, approvingOfficer);
+        //TODO: check the value here later
+        var nextStatus2 = WorkflowStepStateRules.DetermineNextStatus(invoice.Status, WorkflowStepType.Approval, approvingOfficer.EmployeeType);
+
         //workflowstep follows current invoice.status.
         //then invoice.status gets updated
         var resultStep = await _workflowstepService.RecordStepAsync(
