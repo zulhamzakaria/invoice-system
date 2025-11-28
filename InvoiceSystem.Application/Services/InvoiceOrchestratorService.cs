@@ -131,16 +131,31 @@ public class InvoiceOrchestratorService : IInvoiceOrchestratorService
             return Result.Failure(Error.Validation(EmployeeErrors.Service.InvalidApprover, "Only Approver can reject an Invoice"));
         }
 
-        invoice.Reject(approver);
         // should be re-sent to the Clerk
-        var resultStep = await _workflowstepService.RecordStepAsync(invoice.Id, InvoiceStatus.PendingOfficerApproval, InvoiceStatus.Rejected,
-                                                                    WorkflowStepType.Approval, invoice.CreatedById, dto.Reason, approver.Id);
-        if (resultStep.IsFailure)
+        //var resultStep = await _workflowstepService.RecordStepAsync(invoice.Id, InvoiceStatus.PendingOfficerApproval, InvoiceStatus.Rejected,
+        //                                                            WorkflowStepType.Approval, invoice.CreatedById, dto.Reason, approver.Id);
+
+        //using CreateWorkflowStepAsync instead
+        WorkflowstepsCreationDTO creationDTO = new WorkflowstepsCreationDTO(WorkflowStepType.Submission, dto.EmployeeId, dto.Reason);
+        var createWorkflowResult = await _workflowstepService.CreateWorkflowstepAsync(invoiceId, approver.Id, creationDTO);
+
+        if (createWorkflowResult.IsFailure)
         {
-            return Result.Failure(resultStep.Errors);
+            return Result.Failure(createWorkflowResult.Errors);
         }
-        await _invoiceRepository.UpdateAsync(invoice);
-        await _invoiceRepository.SaveChangesAsync();
+
+        try
+        {
+            invoice.Reject(approver);
+        }
+        catch (DomainException ex)
+        {
+            return Result.Failure(Error.Validation(ex.ErrorCode, ex.Message));
+        }
+
+        //await _invoiceRepository.UpdateAsync(invoice);
+        //await _invoiceRepository.SaveChangesAsync();
+        await _uow.SaveChangesAsync();
         return Result.Success();
     }
 
