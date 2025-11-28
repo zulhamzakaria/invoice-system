@@ -1,4 +1,5 @@
-﻿using InvoiceSystem.Domain.Interfaces;
+﻿using InvoiceSystem.Domain.Enums;
+using InvoiceSystem.Domain.Interfaces;
 
 namespace InvoiceSystem.Domain.Entities;
 
@@ -9,6 +10,8 @@ public class FM : Employee, IApprover
     public bool IsLimitlessApprover => true;
 
     public decimal MaxApprovalAmount => decimal.MaxValue;
+
+    public EmployeeType EmployeeType => EmployeeType.FM;
 
     private FM() { } // For EF Core
 
