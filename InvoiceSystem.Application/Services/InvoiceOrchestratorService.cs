@@ -136,7 +136,8 @@ public class InvoiceOrchestratorService : IInvoiceOrchestratorService
         //                                                            WorkflowStepType.Approval, invoice.CreatedById, dto.Reason, approver.Id);
 
         //using CreateWorkflowStepAsync instead
-        WorkflowstepsCreationDTO creationDTO = new WorkflowstepsCreationDTO(WorkflowStepType.Submission, dto.EmployeeId, dto.Reason);
+        WorkflowstepsCreationDTO creationDTO = 
+            new WorkflowstepsCreationDTO(WorkflowStepType.Submission, dto.EmployeeId, approvingOfficer.EmployeeType, dto.Reason);
         var createWorkflowResult = await _workflowstepService.CreateWorkflowstepAsync(invoiceId, approver.Id, creationDTO);
 
         if (createWorkflowResult.IsFailure)
@@ -193,7 +194,8 @@ public class InvoiceOrchestratorService : IInvoiceOrchestratorService
         }
 
         //var nextStatus = DetermineNextStatus(statusType, dTO.WorkflowStepType);
-        WorkflowstepsCreationDTO creationDTO = new WorkflowstepsCreationDTO(WorkflowStepType.Submission, dTO.EmployeeId, dTO.Reason);
+        WorkflowstepsCreationDTO creationDTO = 
+            new WorkflowstepsCreationDTO(WorkflowStepType.Submission, dTO.EmployeeId, EmployeeType.Clerk, dTO.Reason);
         var createWorkflowResult = await _workflowstepService.CreateWorkflowstepAsync(invoiceId, approver.Value.Id, creationDTO);
         if (createWorkflowResult.IsFailure)
         {
@@ -237,7 +239,8 @@ public class InvoiceOrchestratorService : IInvoiceOrchestratorService
         }
 
         //TODO: Workflowstep for Void
-        WorkflowstepsCreationDTO creationDTO = new WorkflowstepsCreationDTO(WorkflowStepType.Void, dto.EmployeeId, dto.Reason);
+        WorkflowstepsCreationDTO creationDTO = 
+            new WorkflowstepsCreationDTO(WorkflowStepType.Void, dto.EmployeeId, EmployeeType.Clerk, dto.Reason);
         var createWorkflowResult = await _workflowstepService.CreateWorkflowstepAsync(invoiceId, dto.EmployeeId, creationDTO);
         if (createWorkflowResult.IsFailure)
         {
