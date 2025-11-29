@@ -63,12 +63,12 @@ public class InvoiceOrchestratorService : IInvoiceOrchestratorService
 
         //can only Approve the designated Invoices
         //call FROM the workflowstep service
-        var assignInvoices = await _workflowstepService.GetInvoicesByApproverId(approverId);
-        if (assignInvoices is null || !assignInvoices.Any())
+        var assignedInvoices = await _workflowstepService.GetInvoicesByApproverId(approverId);
+        if (assignedInvoices is null || !assignedInvoices.Any())
         {
             return Result.Failure(Error.Validation(InvoiceErrors.Service.NoAssignedInvoice, "Provided Approver has no assigned Invoices"));
         }
-        bool exists = assignInvoices.Contains(invoiceId);
+        bool exists = assignedInvoices.Contains(invoiceId);
         if (!exists)
         {
             return Result.Failure(Error.Validation(InvoiceErrors.Service.NotAssignedInvoice, "Approver cannot act on this invoice"));
