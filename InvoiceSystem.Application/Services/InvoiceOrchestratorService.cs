@@ -133,24 +133,16 @@ public class InvoiceOrchestratorService : IInvoiceOrchestratorService
 
         //can only Reject the designated Invoices
         //call FROM the workflowstep service
-        var assignedInvoices = await _workflowstepService.GetInvoicesByApproverId(approver.Id);
-        if (assignedInvoices is null || !assignedInvoices.Any())
+        var assignedInvoices = await EnsureInvoiceOwnershipAsync(approver.Id, invoiceId);
+        if (assignedInvoices.IsFailure)
         {
-            return Result.Failure(Error.Validation(InvoiceErrors.Service.NoAssignedInvoice, "Provided Approver has no assigned Invoices"));
-        }
-        bool exists = assignedInvoices.Contains(invoiceId);
-        if (!exists)
-        {
-            return Result.Failure(Error.Validation(InvoiceErrors.Service.NotAssignedInvoice, "This Approver cannot act on this invoice"));
+            return Result.Failure(assignedInvoices.Errors);
         }
 
-        // should be re-sent to the Clerk
-        //var resultStep = await _workflowstepService.RecordStepAsync(invoice.Id, InvoiceStatus.PendingOfficerApproval, InvoiceStatus.Rejected,
-        //                                                            WorkflowStepType.Approval, invoice.CreatedById, dto.Reason, approver.Id);
-
-        //using CreateWorkflowStepAsync instead
+        //should be re-sent back to the Clerk
+        //using CreateWorkflowStepAsync 
         WorkflowstepsCreationDTO creationDTO = 
-            new WorkflowstepsCreationDTO(WorkflowStepType.Submission, dto.EmployeeId, approvingOfficer.EmployeeType, dto.Reason);
+            new WorkflowstepsCreationDTO(WorkflowStepType.Rejection, dto.EmployeeId, approvingOfficer.EmployeeType, dto.Reason);
         var createWorkflowResult = await _workflowstepService.CreateWorkflowstepAsync(invoiceId, approver.Id, creationDTO);
 
         if (createWorkflowResult.IsFailure)
@@ -291,5 +283,19 @@ public class InvoiceOrchestratorService : IInvoiceOrchestratorService
         };
     }
 
+    private async Task<Result> EnsureInvoiceOwnershipAsync(Guid approverId, Guid invoiceId)
+    {
+        var assignedInvoices = await _workflowstepService.GetInvoicesByApproverId(approverId);
+        if (assignedInvoices is null || !assignedInvoices.Any())
+        {
+            return Result.Failure(Error.Validation(InvoiceErrors.Service.NoAssignedInvoice, "Provided Approver has no assigned Invoices"));
+        }
+        bool exists = assignedInvoices.Contains(invoiceId);
+        if (!exists)
+        {
+            return Result.Failure(Error.Validation(InvoiceErrors.Service.NotAssignedInvoice, "This Approver cannot act on this invoice"));
+        }
+        return Result.Success();
+    }
 
 }
