@@ -71,7 +71,7 @@ public class InvoiceOrchestratorService : IInvoiceOrchestratorService
         bool exists = assignedInvoices.Contains(invoiceId);
         if (!exists)
         {
-            return Result.Failure(Error.Validation(InvoiceErrors.Service.NotAssignedInvoice, "Approver cannot act on this invoice"));
+            return Result.Failure(Error.Validation(InvoiceErrors.Service.NotAssignedInvoice, "This Approver cannot act on this invoice"));
         }
 
         //NOT GETTING NEXT APPROVER
@@ -129,6 +129,19 @@ public class InvoiceOrchestratorService : IInvoiceOrchestratorService
         if (approver is not IApprover approvingOfficer)
         {
             return Result.Failure(Error.Validation(EmployeeErrors.Service.InvalidApprover, "Only Approver can reject an Invoice"));
+        }
+
+        //can only Reject the designated Invoices
+        //call FROM the workflowstep service
+        var assignedInvoices = await _workflowstepService.GetInvoicesByApproverId(approver.Id);
+        if (assignedInvoices is null || !assignedInvoices.Any())
+        {
+            return Result.Failure(Error.Validation(InvoiceErrors.Service.NoAssignedInvoice, "Provided Approver has no assigned Invoices"));
+        }
+        bool exists = assignedInvoices.Contains(invoiceId);
+        if (!exists)
+        {
+            return Result.Failure(Error.Validation(InvoiceErrors.Service.NotAssignedInvoice, "This Approver cannot act on this invoice"));
         }
 
         // should be re-sent to the Clerk
