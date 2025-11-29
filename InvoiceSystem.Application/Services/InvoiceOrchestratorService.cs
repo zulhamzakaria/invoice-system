@@ -139,11 +139,12 @@ public class InvoiceOrchestratorService : IInvoiceOrchestratorService
             return Result.Failure(assignedInvoices.Errors);
         }
 
-        //should be re-sent back to the Clerk
+        //should be re-sent back to the Clerk (Invoice Creator)
+        var clerkId = invoice.CreatedById;
         //using CreateWorkflowStepAsync 
         WorkflowstepsCreationDTO creationDTO = 
             new WorkflowstepsCreationDTO(WorkflowStepType.Rejection, dto.EmployeeId, approvingOfficer.EmployeeType, dto.Reason);
-        var createWorkflowResult = await _workflowstepService.CreateWorkflowstepAsync(invoiceId, approver.Id, creationDTO);
+        var createWorkflowResult = await _workflowstepService.CreateWorkflowstepAsync(invoiceId, clerkId, creationDTO);
 
         if (createWorkflowResult.IsFailure)
         {
