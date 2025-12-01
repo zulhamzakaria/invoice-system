@@ -245,12 +245,6 @@ public class InvoiceOrchestratorService : IInvoiceOrchestratorService
         }
 
 
-        //calls the InvoiceService Void() instead
-        var voidInvoice = await _invoiceService.VoidInvoiceAsync(invoice.Value.Id, employee);
-        if (voidInvoice.IsFailure)
-        {
-            return Result.Failure(voidInvoice.Errors);
-        }
         WorkflowstepsCreationDTO creationDTO =
             new WorkflowstepsCreationDTO(WorkflowStepType.Void, dto.EmployeeId, EmployeeType.Clerk, dto.Reason);
         var createWorkflowResult = await _workflowstepService.CreateWorkflowstepAsync(invoiceId, dto.EmployeeId, creationDTO);
@@ -258,7 +252,12 @@ public class InvoiceOrchestratorService : IInvoiceOrchestratorService
         {
             return Result.Failure(createWorkflowResult.Errors);
         }
-
+        //calls the InvoiceService Void() instead
+        var voidInvoice = await _invoiceService.VoidInvoiceAsync(invoice.Value.Id, employee);
+        if (voidInvoice.IsFailure)
+        {
+            return Result.Failure(voidInvoice.Errors);
+        }
 
         //atomic save cause we're calling both Invoice and WorkflowStep
         await _uow.SaveChangesAsync();
