@@ -116,7 +116,7 @@ public class InvoiceOrchestratorService : IInvoiceOrchestratorService
         {
             return Result.Failure(Error.Validation(InvoiceErrors.Service.InvoiceNotFound, "No such Invoice found"));
         }
-        if (InvoiceStatusRules.CanReject.Contains(invoice.Status))
+        if (!InvoiceStatusRules.CanReject.Contains(invoice.Status))
         {
             return Result.Failure(Error.Validation(InvoiceErrors.Approval.InvalidStatus, "Only Invoices pending for approval can be rejected"));
         }
