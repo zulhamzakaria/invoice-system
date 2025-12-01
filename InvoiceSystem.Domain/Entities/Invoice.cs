@@ -141,7 +141,7 @@ public class Invoice : AuditableEntity
         }
         if (CreatedById != employee.Id)
         {
-            throw new DomainException("The Clerk cannot act on this Invoice", InvoiceErrors.Voiding.Processed);
+            throw new DomainException("The Clerk cannot act on this Invoice", InvoiceErrors.Voiding.CannotVoid);
         }
         UpdatedById = employee.Id;
         UpdatedAt = DateTime.UtcNow;
