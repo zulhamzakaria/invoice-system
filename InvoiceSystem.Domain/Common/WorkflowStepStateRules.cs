@@ -6,6 +6,7 @@ public static class WorkflowStepStateRules
 {
     public static InvoiceStatus DetermineNextStatus(InvoiceStatus currentStatus, WorkflowStepType stepType, EmployeeType? employeeType)
     {
+        throw new Exception(employeeType.GetType().Name);
         return (currentStatus, stepType, employeeType) switch
         {
             //(InvoiceStatus.Draft, WorkflowStepType.Submission, EmployeeType.Clerk) => InvoiceStatus.PendingOfficerApproval,
