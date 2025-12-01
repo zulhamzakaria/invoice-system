@@ -227,20 +227,23 @@ public class InvoiceOrchestratorService : IInvoiceOrchestratorService
         {
             return Result.Failure(Error.Validation(InvoiceErrors.Service.InvoiceNotFound, "No such Invoice found"));
         }
+
         if (string.IsNullOrWhiteSpace(dto.Reason))
         {
             return Result.Failure(Error.Validation(WorkflowStepErrors.Creation.MissingReason, "Reason must be provided to Void an Invoice"));
         }
+
         var employee = await _employeeRepository.GetByIdAsync(dto.EmployeeId);
         if (employee is null)
         {
             return Result.Failure(Error.Validation(EmployeeErrors.Service.EmployeeNotFound, "No such Employee found"));
         }
-        //TODO: invoice ownership check
+
         if (invoice.Value.CreatedById != dto.EmployeeId)
         {
-
+            return Result.Failure(Error.Validation(InvoiceErrors.Service.CannotVoid, "The Clerk cannot act on this Invoice"));
         }
+
 
         //calls the InvoiceService Void() instead
         var voidInvoice = await _invoiceService.VoidInvoiceAsync(invoice.Value.Id, employee);
@@ -248,8 +251,6 @@ public class InvoiceOrchestratorService : IInvoiceOrchestratorService
         {
             return Result.Failure(voidInvoice.Errors);
         }
-
-        //TODO: Workflowstep for Void
         WorkflowstepsCreationDTO creationDTO =
             new WorkflowstepsCreationDTO(WorkflowStepType.Void, dto.EmployeeId, EmployeeType.Clerk, dto.Reason);
         var createWorkflowResult = await _workflowstepService.CreateWorkflowstepAsync(invoiceId, dto.EmployeeId, creationDTO);
@@ -257,6 +258,7 @@ public class InvoiceOrchestratorService : IInvoiceOrchestratorService
         {
             return Result.Failure(createWorkflowResult.Errors);
         }
+
 
         //atomic save cause we're calling both Invoice and WorkflowStep
         await _uow.SaveChangesAsync();
