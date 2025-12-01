@@ -25,6 +25,7 @@ public static class InvoiceErrors
         public const string Processed = "INV.INVOICE_PROCESSED_ALREADY";
         public const string Voided = "INV.INVOICE_VOIDED_ALREADY";
         public const string InvalidEmployeeRole = "INV.EMPLOYEE_NOT_A_CLERK";
+        public const string CannotVoid = "INV.NOT_INVOICE_CREATOR";
     }
     public static class Submission
     {
