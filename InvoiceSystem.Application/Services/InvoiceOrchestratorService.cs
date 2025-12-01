@@ -138,6 +138,12 @@ public class InvoiceOrchestratorService : IInvoiceOrchestratorService
             return Result.Failure(assignedInvoices.Errors);
         }
 
+        //Validate the correct status and employee combination
+        if(!approvingOfficer.EmployeeType.CanActOn(invoice.Status))
+        {
+
+        }
+
         //should be re-sent back to the Clerk (Invoice Creator)
         var clerkId = invoice.CreatedById;
         //using CreateWorkflowStepAsync 

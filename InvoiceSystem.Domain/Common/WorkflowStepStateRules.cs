@@ -32,4 +32,14 @@ public static class WorkflowStepStateRules
             _ => currentStatus
         };
     }
+
+    public static bool CanActOn(this EmployeeType employeeType, InvoiceStatus invoiceStatus)
+    {
+        return (invoiceStatus, employeeType) switch
+        {
+            (InvoiceStatus.PendingOfficerApproval, EmployeeType.FO ) => true,
+            (InvoiceStatus.PendingManagerApproval, EmployeeType.FM) => true,
+            _ => false
+        };
+    }
 }
