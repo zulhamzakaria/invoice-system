@@ -59,6 +59,7 @@ public static class InvoiceErrors
         public const string AdvancedDate = "INV.INVOICE_DATE_IN_FUTURE";
         public const string NoAssignedInvoice = "INV.NO_INVOICES_UNDER_APPROVER";
         public const string NotAssignedInvoice = "INV.APPROVER_CANNOT_ACT";
+        public const string NotCreatedInvoice = "INV.CLERK_CANNOT_ACT";
         public const string InvoiceExists = "INV.ACTIVE_DUPLICATE_FOUND";
     }
 }

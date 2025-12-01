@@ -142,7 +142,7 @@ public class InvoiceOrchestratorService : IInvoiceOrchestratorService
         //should be re-sent back to the Clerk (Invoice Creator)
         var clerkId = invoice.CreatedById;
         //using CreateWorkflowStepAsync 
-        WorkflowstepsCreationDTO creationDTO = 
+        WorkflowstepsCreationDTO creationDTO =
             new WorkflowstepsCreationDTO(WorkflowStepType.Rejection, dto.EmployeeId, approvingOfficer.EmployeeType, dto.Reason);
         var createWorkflowResult = await _workflowstepService.CreateWorkflowstepAsync(invoiceId, clerkId, creationDTO);
 
@@ -200,7 +200,7 @@ public class InvoiceOrchestratorService : IInvoiceOrchestratorService
         }
 
         //var nextStatus = DetermineNextStatus(statusType, dTO.WorkflowStepType);
-        WorkflowstepsCreationDTO creationDTO = 
+        WorkflowstepsCreationDTO creationDTO =
             new WorkflowstepsCreationDTO(WorkflowStepType.Submission, dTO.EmployeeId, EmployeeType.Clerk, dTO.Reason);
         var createWorkflowResult = await _workflowstepService.CreateWorkflowstepAsync(invoiceId, approver.Value.Id, creationDTO);
         if (createWorkflowResult.IsFailure)
@@ -237,7 +237,10 @@ public class InvoiceOrchestratorService : IInvoiceOrchestratorService
             return Result.Failure(Error.Validation(EmployeeErrors.Service.EmployeeNotFound, "No such Employee found"));
         }
         //TODO: invoice ownership check
- 
+        if (invoice.Value.CreatedById != dto.EmployeeId)
+        {
+
+        }
 
         //calls the InvoiceService Void() instead
         var voidInvoice = await _invoiceService.VoidInvoiceAsync(invoice.Value.Id, employee);
@@ -247,7 +250,7 @@ public class InvoiceOrchestratorService : IInvoiceOrchestratorService
         }
 
         //TODO: Workflowstep for Void
-        WorkflowstepsCreationDTO creationDTO = 
+        WorkflowstepsCreationDTO creationDTO =
             new WorkflowstepsCreationDTO(WorkflowStepType.Void, dto.EmployeeId, EmployeeType.Clerk, dto.Reason);
         var createWorkflowResult = await _workflowstepService.CreateWorkflowstepAsync(invoiceId, dto.EmployeeId, creationDTO);
         if (createWorkflowResult.IsFailure)
