@@ -141,7 +141,8 @@ public class InvoiceOrchestratorService : IInvoiceOrchestratorService
         //Validate the correct status and employee combination
         if(!approvingOfficer.EmployeeType.CanActOn(invoice.Status))
         {
-
+            return Result.Failure(Error.Validation(WorkflowStepErrors.Rejection.InvalidApprover, 
+                "The Approver cannot act on this Invoice at its current stage"));
         }
 
         //should be re-sent back to the Clerk (Invoice Creator)
