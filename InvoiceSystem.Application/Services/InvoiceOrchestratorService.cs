@@ -109,7 +109,7 @@ public class InvoiceOrchestratorService : IInvoiceOrchestratorService
     {
         if (string.IsNullOrWhiteSpace(dto.Reason))
         {
-            return Result.Failure(Error.Validation(WorkflowStepErrors.Creation.MissingReason, "Reason must be provided to Void an Invoice"));
+            return Result.Failure(Error.Validation(WorkflowStepErrors.Creation.MissingReason, "Reason must be provided to Reject an Invoice"));
         }
         var invoice = await _invoiceRepository.GetByIdAsync(invoiceId);
         if (invoice is null)
