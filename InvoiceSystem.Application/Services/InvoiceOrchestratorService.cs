@@ -116,11 +116,10 @@ public class InvoiceOrchestratorService : IInvoiceOrchestratorService
         {
             return Result.Failure(Error.Validation(InvoiceErrors.Service.InvoiceNotFound, "No such Invoice found"));
         }
-        if (invoice.Status != InvoiceStatus.PendingOfficerApproval)
+        if (InvoiceStatusRules.CanReject.Contains(invoice.Status))
         {
             return Result.Failure(Error.Validation(InvoiceErrors.Approval.InvalidStatus, "Only Invoices pending for approval can be rejected"));
         }
-
         var approver = await _employeeRepository.GetByIdAsync(dto.EmployeeId);
         if (approver is null)
         {
