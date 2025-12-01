@@ -82,29 +82,4 @@ public class WorkflowstepService : IWorkflowstepService
 
     }
 
-    private InvoiceStatus DetermineNextStatus(InvoiceStatus currentStatus, WorkflowStepType stepType)
-    {
-        return (currentStatus, stepType) switch
-        {
-            (InvoiceStatus.Draft, WorkflowStepType.Submission) => InvoiceStatus.PendingOfficerApproval,
-
-            (InvoiceStatus.PendingOfficerApproval, WorkflowStepType.Approval) => InvoiceStatus.PendingManagerApproval,
-            (InvoiceStatus.PendingManagerApproval, WorkflowStepType.Approval) => InvoiceStatus.ApprovedByManager,
-            (InvoiceStatus.PendingOfficerApproval, WorkflowStepType.AutoApproval) => InvoiceStatus.ApprovedByManager,
-
-            // REJECTIONS — only valid at approval stages
-            (InvoiceStatus.PendingOfficerApproval, WorkflowStepType.Rejection) => InvoiceStatus.Rejected,
-            (InvoiceStatus.PendingManagerApproval, WorkflowStepType.Rejection) => InvoiceStatus.Rejected,
-
-            (InvoiceStatus.PendingOfficerApproval, WorkflowStepType.Routing) => InvoiceStatus.PendingOfficerApproval,
-            (InvoiceStatus.ApprovedByManager, WorkflowStepType.PaymentProcessing) => InvoiceStatus.Paid,
-
-            (_, WorkflowStepType.Recall) => InvoiceStatus.Draft,
-            (_, WorkflowStepType.Delegation) => currentStatus,
-            (_, WorkflowStepType.Escalation) => currentStatus,
-
-            _ => currentStatus
-        };
-    }
-
 }
