@@ -16,4 +16,6 @@ public record InvoiceDetailsDTO(
     AddressDTO BillingAddress,
     AddressDTO ShippingAddress,
 
+    Guid CreatedById,
+
     List<InvoiceItemDTO> InvoiceItems);

@@ -236,6 +236,8 @@ public class InvoiceOrchestratorService : IInvoiceOrchestratorService
         {
             return Result.Failure(Error.Validation(EmployeeErrors.Service.EmployeeNotFound, "No such Employee found"));
         }
+        //TODO: invoice ownership check
+ 
 
         //calls the InvoiceService Void() instead
         var voidInvoice = await _invoiceService.VoidInvoiceAsync(invoice.Value.Id, employee);
