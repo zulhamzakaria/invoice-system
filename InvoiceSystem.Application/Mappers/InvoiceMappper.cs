@@ -28,6 +28,7 @@ public class InvoiceMappper : IInvoiceMapper
             company,
             billingAddress,
             shippingAddress,
+            invoice.CreatedById,
             invoice.InvoiceItems.Select(InvoiceItemMapper.ToDetailsDTO).ToList()
             );
 
