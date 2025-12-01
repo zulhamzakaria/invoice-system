@@ -135,10 +135,13 @@ public class Invoice : AuditableEntity
         {
             throw new DomainException("Only Clerk can void an invoice.", InvoiceErrors.Voiding.InvalidEmployeeRole);
         }
-
         if (!InvoiceStatusRules.CanVoid.Contains(Status))
         {
             throw new DomainException("Processed invoices cannot be voided.", InvoiceErrors.Voiding.Processed);
+        }
+        if (CreatedById != employee.Id)
+        {
+            throw new DomainException("The Clerk cannot act on this Invoice", InvoiceErrors.Voiding.Processed);
         }
         UpdatedById = employee.Id;
         UpdatedAt = DateTime.UtcNow;
