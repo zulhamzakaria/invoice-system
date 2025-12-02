@@ -15,4 +15,9 @@ public class WorkflowStepErrors
     {
         public const string InvalidApprover = "WFS.INVOICE_STATUS_EMPLOYEE_TYPE_MISMATCHED";
     }
+
+    public static class Common
+    {
+        public const string NoWorkflow = "WFS.INVOICE_NO_WORKFLOW";
+    }
 }
