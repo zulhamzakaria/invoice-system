@@ -26,19 +26,30 @@ public class WorkflowStepRepository : IWorkflowStepRepository
     {
         return await _context.WorkflowSteps
             .AsNoTracking()
-            .Where(ws=> ws.ApproverId == employeeId)
+            .Where(ws => ws.ApproverId == employeeId)
             .Select(ws => (Guid?)ws.InvoiceId)
             .ToListAsync();
     }
 
-    public Task<IReadOnlyList<WorkflowStep>> GetByEmployeeIdAsync(Guid employeeId)
+    public async Task<IReadOnlyList<WorkflowStep>> GetByEmployeeIdAsync(Guid employeeId)
     {
-        throw new NotImplementedException();
+        return await _context.WorkflowSteps
+            .AsNoTracking()
+            .Where(ws => ws.ApproverId.Equals(employeeId))
+            .ToListAsync();
     }
 
     public async Task<WorkflowStep?> GetByIdAsync(Guid id)
     {
         return await _context.WorkflowSteps.FindAsync(id);
+    }
+
+    public async Task<IReadOnlyList<WorkflowStep>> GetByInvoiceIdAsync(Guid invoiceId)
+    {
+        return await _context.WorkflowSteps
+            .AsNoTracking()
+            .Where(ws => ws.InvoiceId.Equals(invoiceId))
+            .ToListAsync();
     }
 
     public async Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
@@ -47,9 +58,4 @@ public class WorkflowStepRepository : IWorkflowStepRepository
 
     }
 
-    //public async Task UpdateAsync(WorkflowStep workflowStep)
-    //{
-    //     _context.WorkflowSteps.Update(workflowStep);
-    //    //await _context.SaveChangesAsync();
-    //}
 }
