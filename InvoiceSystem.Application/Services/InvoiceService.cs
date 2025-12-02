@@ -1,5 +1,6 @@
 ﻿using InvoiceSystem.Application.DTOs.Invoice;
 using InvoiceSystem.Application.DTOs.InvoiceItem;
+using InvoiceSystem.Application.DTOs.WorkflowSteps;
 using InvoiceSystem.Application.Mappers;
 using InvoiceSystem.Application.Mappers.Interfaces;
 using InvoiceSystem.Application.Services.Interfaces;
@@ -13,17 +14,21 @@ namespace InvoiceSystem.Application.Services
 {
     public class InvoiceService : IInvoiceService
     {
-        private readonly IInvoiceRepository _invoiceRepository;
+        private readonly IWorkflowStepRepository _workflowStepRepository;
         private readonly IEmployeeRepository _employeeRepository;
+        private readonly IInvoiceRepository _invoiceRepository;
         private readonly ICompanyRepository _companyRepository;
         private readonly IInvoiceMapper _invoiceMapper;
         private readonly IUnitOfWork _uow;
         public InvoiceService(IEmployeeRepository employeeRepository,
+            IWorkflowStepRepository workflowStepRepository,
             IInvoiceRepository invoiceRepository,
             ICompanyRepository companyRepository,
             IInvoiceMapper invoiceMapper,
-            IUnitOfWork uow)
+            IUnitOfWork uow
+            )
         {
+            _workflowStepRepository = workflowStepRepository;
             _employeeRepository = employeeRepository;
             _invoiceRepository = invoiceRepository;
             _companyRepository = companyRepository;
@@ -199,6 +204,13 @@ namespace InvoiceSystem.Application.Services
             if (result is null)
                 return Result<InvoiceDetailsDTO>.Failure(Error.Validation(InvoiceErrors.Service.InvoiceNotFound, "No such invoice exists"));
             return Result<InvoiceDetailsDTO>.Success(_invoiceMapper.ToDetailsDTO(result));
+        }
+
+        public Task<Result<IReadOnlyList<WorkflowstepHistoryDTO>>> GetInvoiceHistoryAsync(Guid invoiceId)
+        {
+            var results = _workflowStepRepository.GetByInvoiceIdAsync(invoiceId);
+            if(results is null)
+                return Result<IReadOnlyList<WorkflowstepHistoryDTO>>.Failure(Error.Validation())
         }
 
         public async Task<Result> SubmitInvoiceAsync(Guid invoiceId, Employee employee)

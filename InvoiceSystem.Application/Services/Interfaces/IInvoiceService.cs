@@ -1,5 +1,6 @@
 ﻿using InvoiceSystem.Application.DTOs.Invoice;
 using InvoiceSystem.Application.DTOs.InvoiceItem;
+using InvoiceSystem.Application.DTOs.WorkflowSteps;
 using InvoiceSystem.Domain.Common;
 using InvoiceSystem.Domain.Entities;
 using InvoiceSystem.Domain.Enums;
@@ -11,6 +12,7 @@ public interface IInvoiceService
     public Task<Result<InvoiceDetailsDTO>> CreateInvoiceAsync(InvoiceCreationDTO creationDTO);
     public Task<Result<InvoiceDetailsDTO>> GetInvoiceByIdAsync(Guid invoiceId);
     public Task<Result<IReadOnlyList<InvoiceSummaryDTO>>> GetAllInvoicesAsync();
+    public Task<Result<IReadOnlyList<WorkflowstepHistoryDTO>>> GetInvoiceHistoryAsync(Guid invoiceId);
 
     public Task<Result> UpdateInvoiceAsync(Guid invoiceId, InvoiceUpdateDTO updateDTO, Guid userId);
 
