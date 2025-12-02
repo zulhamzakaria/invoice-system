@@ -66,6 +66,18 @@ namespace InvoiceSystem.API.Controllers
             return CreatedAtAction(nameof(GetInvoiceDetails), new { id = result.Value.Id }, result.Value);
         }
 
+        [HttpGet("{invoiceId:guid}/workflow-history")]
+        public async Task<IActionResult> GetWorkflowHistory(Guid invoiceId)
+        {
+            var results = await _invoiceService.GetInvoiceHistoryAsync(invoiceId);
+            if (results.IsFailure)
+            {
+                return BadRequest(results.Errors);
+            }
+            return Ok(results.Value);
+        }
+
+
         [HttpGet("{invoiceId:guid}/items")]
         public async Task<IActionResult> GetAllInvoiceItems(Guid invoiceId)
         {
