@@ -40,4 +40,20 @@ public class WorkflowstepMapper
             entity.Timestamp
         );
     }
+
+    public static WorkflowstepHistoryDTO ToHistoryDTO(WorkflowStep workflowStep)
+    {
+        return new WorkflowstepHistoryDTO(
+            workflowStep.StatusBefore,
+            workflowStep.StatusAfter,
+            workflowStep.ActionType,
+            workflowStep.ApproverId,
+            workflowStep.Reason ?? "",
+            workflowStep.Timestamp);
+    }
+
+    public static IReadOnlyList<WorkflowstepHistoryDTO> ToHistoryDTO(IEnumerable<WorkflowStep> workflowSteps)
+    {
+        return workflowSteps.Select(ToHistoryDTO).ToList();
+    }
 }
