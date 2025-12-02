@@ -206,11 +206,13 @@ namespace InvoiceSystem.Application.Services
             return Result<InvoiceDetailsDTO>.Success(_invoiceMapper.ToDetailsDTO(result));
         }
 
-        public Task<Result<IReadOnlyList<WorkflowstepHistoryDTO>>> GetInvoiceHistoryAsync(Guid invoiceId)
+        public async Task<Result<IReadOnlyList<WorkflowstepHistoryDTO>>> GetInvoiceHistoryAsync(Guid invoiceId)
         {
-            var results = _workflowStepRepository.GetByInvoiceIdAsync(invoiceId);
-            if(results is null)
-                return Result<IReadOnlyList<WorkflowstepHistoryDTO>>.Failure(Error.Validation())
+            var results = await _workflowStepRepository.GetByInvoiceIdAsync(invoiceId);
+            if (results is null || results.Count == 0)
+                return Result<IReadOnlyList<WorkflowstepHistoryDTO>>
+                    .Failure(Error.Validation(WorkflowStepErrors.Common.NoWorkflow, "No Workflow has been created for this Invoice yet"));
+            return Result<IReadOnlyList<WorkflowstepHistoryDTO>>.Success(WorkflowstepMapper.ToHistoryDTO(results));
         }
 
         public async Task<Result> SubmitInvoiceAsync(Guid invoiceId, Employee employee)
