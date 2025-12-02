@@ -31,6 +31,11 @@ public class WorkflowStepRepository : IWorkflowStepRepository
             .ToListAsync();
     }
 
+    public Task<IReadOnlyList<WorkflowStep>> GetByEmployeeIdAsync(Guid employeeId)
+    {
+        throw new NotImplementedException();
+    }
+
     public async Task<WorkflowStep?> GetByIdAsync(Guid id)
     {
         return await _context.WorkflowSteps.FindAsync(id);
