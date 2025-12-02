@@ -1,4 +1,5 @@
 ﻿using InvoiceSystem.Domain.Entities;
+using InvoiceSystem.Domain.Enums;
 using InvoiceSystem.Domain.Repositories;
 using Microsoft.EntityFrameworkCore;
 
@@ -20,6 +21,16 @@ public class WorkflowStepRepository : IWorkflowStepRepository
     public async Task<IReadOnlyList<WorkflowStep>> GetAllAsync()
     {
         return await _context.WorkflowSteps.ToListAsync();
+    }
+
+    public IQueryable<object> GetApproverTasksAsync(Guid employeeId, InvoiceStatus status)
+    {
+        return _context.WorkflowSteps
+            .Where(ws => ws.ApproverId.Equals(employeeId) && ws.StatusAfter.Equals(status))
+            .Join(_context.Invoices,
+                    ws => ws.InvoiceId,
+                    inv => inv.Id,
+                    (ws, inv) => new { Step = ws, Invoice = inv });
     }
 
     public async Task<IReadOnlyList<Guid?>> GetByApproverIdAsync(Guid employeeId)
