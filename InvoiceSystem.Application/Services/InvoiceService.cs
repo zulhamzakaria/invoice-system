@@ -198,12 +198,12 @@ namespace InvoiceSystem.Application.Services
             return Result<IReadOnlyList<InvoiceSummaryDTO>>.Success(_invoiceMapper.ToSummaryDTO(results));
         }
 
-        public Task<Result<WorkflowStep>> GetApproverTasks(Guid employeeId)
+        public Task<Result<IReadOnlyList<InvoiceTaskDTO>>> GetApproverTasks(Guid employeeId)
         {
             throw new NotImplementedException();
         }
 
-        public Task<Result<WorkflowStep>> GetClerkTasks(Guid invoiceId, Guid employeeId)
+        public Task<Result<IReadOnlyList<InvoiceTaskDTO>>> GetClerkTasks(Guid invoiceId, Guid employeeId)
         {
             throw new NotImplementedException();
         }

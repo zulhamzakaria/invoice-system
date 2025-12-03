@@ -13,8 +13,8 @@ public interface IInvoiceService
     public Task<Result<InvoiceDetailsDTO>> GetInvoiceByIdAsync(Guid invoiceId);
     public Task<Result<IReadOnlyList<InvoiceSummaryDTO>>> GetAllInvoicesAsync();
     public Task<Result<IReadOnlyList<WorkflowstepHistoryDTO>>> GetInvoiceHistoryAsync(Guid invoiceId);
-    public Task<Result<WorkflowStep>> GetApproverTasks(Guid employeeId);
-    public Task<Result<WorkflowStep>> GetClerkTasks(Guid invoiceId, Guid employeeId);
+    public Task<Result<IReadOnlyList<InvoiceTaskDTO>>> GetApproverTasks(Guid employeeId);
+    public Task<Result<IReadOnlyList<InvoiceTaskDTO>>> GetClerkTasks(Guid invoiceId, Guid employeeId);
 
     public Task<Result> UpdateInvoiceAsync(Guid invoiceId, InvoiceUpdateDTO updateDTO, Guid userId);
 
