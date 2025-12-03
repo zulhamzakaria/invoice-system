@@ -60,10 +60,13 @@ public class WorkflowstepService : IWorkflowstepService
 
     public Result<IReadOnlyList<InvoiceTaskDTO>> GetApproverTasks(Employee employee)
     {
-        var latestSteps =  _workflowStepRepository.QueryAll()
-            .GroupBy(wfs => wfs.InvoiceId)
-            .Select(ws => ws.OrderByDescending(wfs => wfs.Timestamp).First())
+        var steps = _workflowStepRepository.QueryAll()
             .Where(ws => ws.ApproverId == employee.Id)
+            .ToList(); // execute query first
+
+        var latestSteps = steps
+            .GroupBy(ws => ws.InvoiceId)
+            .Select(g => g.OrderByDescending(ws => ws.Timestamp).First())
             .ToList();
 
         var validInvoices = latestSteps.Select(ws => ws.InvoiceId).ToList();
