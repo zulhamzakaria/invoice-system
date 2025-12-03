@@ -37,9 +37,17 @@ public static class WorkflowStepStateRules
     {
         return (invoiceStatus, employeeType) switch
         {
-            (InvoiceStatus.PendingOfficerApproval, EmployeeType.FO ) => true,
+            (InvoiceStatus.PendingOfficerApproval, EmployeeType.FO) => true,
             (InvoiceStatus.PendingManagerApproval, EmployeeType.FM) => true,
             _ => false
         };
     }
+
+    public static readonly Dictionary<EmployeeType, InvoiceStatus> ApprovalStatusMap =
+        new()
+        {
+                {EmployeeType.FO, InvoiceStatus.PendingOfficerApproval },
+                {EmployeeType.FM, InvoiceStatus.PendingManagerApproval }
+        };
+
 }
