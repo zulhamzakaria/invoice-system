@@ -8,6 +8,7 @@ using InvoiceSystem.Domain.Common;
 using InvoiceSystem.Domain.Entities;
 using InvoiceSystem.Domain.Enums;
 using InvoiceSystem.Domain.Errors;
+using InvoiceSystem.Domain.Interfaces;
 using InvoiceSystem.Domain.Repositories;
 
 namespace InvoiceSystem.Application.Services
@@ -198,9 +199,23 @@ namespace InvoiceSystem.Application.Services
             return Result<IReadOnlyList<InvoiceSummaryDTO>>.Success(_invoiceMapper.ToSummaryDTO(results));
         }
 
-        public Task<Result<IReadOnlyList<InvoiceTaskDTO>>> GetApproverTasks(Guid employeeId)
+        public async Task<Result<IReadOnlyList<InvoiceTaskDTO>>> GetApproverTasks(Guid employeeId)
         {
-            throw new NotImplementedException();
+            var employee = await _employeeRepository.GetByIdAsync(employeeId);
+            if (employee is null) 
+            {
+                return Result<IReadOnlyList<InvoiceTaskDTO>>.Failure(Error.Validation(EmployeeErrors.Service.EmployeeNotFound, "No such Employee found"));
+            }
+            if(employee is not IApprover approver)
+            {
+                return Result<IReadOnlyList<InvoiceTaskDTO>>.Failure(Error.Validation(EmployeeErrors.Service.InvalidApprover, "Provided Employee is not an Approver"));
+            }
+            var workflowstep = await _workflowStepRepository.GetByApproverIdAsync(employeeId);
+            if (workflowstep is null)
+            {
+                return Result<IReadOnlyList<InvoiceTaskDTO>>.Failure(Error.Validation(WorkflowStepErrors.Common.NoApproverWorkflow, "The Approver has no assigned Invoice"));
+            }
+            var tasks
         }
 
         public Task<Result<IReadOnlyList<InvoiceTaskDTO>>> GetClerkTasks(Guid invoiceId, Guid employeeId)
@@ -221,7 +236,7 @@ namespace InvoiceSystem.Application.Services
             var results = await _workflowStepRepository.GetByInvoiceIdAsync(invoiceId);
             if (results is null || results.Count == 0)
                 return Result<IReadOnlyList<WorkflowstepHistoryDTO>>
-                    .Failure(Error.Validation(WorkflowStepErrors.Common.NoWorkflow, "No Workflow has been created for this Invoice yet"));
+                    .Failure(Error.Validation(WorkflowStepErrors.Common.NoInvoiceWorkflow, "No Workflow has been created for this Invoice yet"));
             return Result<IReadOnlyList<WorkflowstepHistoryDTO>>.Success(WorkflowstepMapper.ToHistoryDTO(results));
         }
 

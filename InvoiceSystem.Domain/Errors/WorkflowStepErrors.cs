@@ -18,6 +18,7 @@ public class WorkflowStepErrors
 
     public static class Common
     {
-        public const string NoWorkflow = "WFS.INVOICE_NO_WORKFLOW";
+        public const string NoInvoiceWorkflow = "WFS.NO_INVOICE_WORKFLOW";
+        public const string NoApproverWorkflow = "WFS.NO_APPROVER_WORKFLOW";
     }
 }
