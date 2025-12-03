@@ -77,6 +77,12 @@ namespace InvoiceSystem.API.Controllers
             return Ok(results.Value);
         }
 
+        [HttpGet("{employeeId:guid}/approver-tasks")]
+        public async Task<IActionResult> GetApproverTasks(Guid employeeId)
+        {
+            var results = await _invoiceService.GetApproverTasksAsync(employeeId);
+            return results.IsFailure ? BadRequest(results.Errors) : Ok(results.Value); 
+        }
 
         [HttpGet("{invoiceId:guid}/items")]
         public async Task<IActionResult> GetAllInvoiceItems(Guid invoiceId)

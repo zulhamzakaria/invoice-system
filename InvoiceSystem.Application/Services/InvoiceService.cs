@@ -202,7 +202,7 @@ namespace InvoiceSystem.Application.Services
             return Result<IReadOnlyList<InvoiceSummaryDTO>>.Success(_invoiceMapper.ToSummaryDTO(results));
         }
 
-        public async Task<Result<IReadOnlyList<InvoiceTaskDTO>>> GetApproverTasks(Guid employeeId)
+        public async Task<Result<IReadOnlyList<InvoiceTaskDTO>>> GetApproverTasksAsync(Guid employeeId)
         {
             var employee = await _employeeRepository.GetByIdAsync(employeeId);
             if (employee is null) 
@@ -224,7 +224,7 @@ namespace InvoiceSystem.Application.Services
             return Result<IReadOnlyList<InvoiceTaskDTO>>.Success(tasks.Value);
         }
 
-        public Task<Result<IReadOnlyList<InvoiceTaskDTO>>> GetClerkTasks(Guid invoiceId, Guid employeeId)
+        public Task<Result<IReadOnlyList<InvoiceTaskDTO>>> GetClerkTasksAsync(Guid invoiceId, Guid employeeId)
         {
             throw new NotImplementedException();
         }
