@@ -9,7 +9,6 @@ public interface IWorkflowStepRepository
     Task<IReadOnlyList<WorkflowStep>> GetAllAsync();
     Task<IReadOnlyList<Guid?>> GetByApproverIdAsync(Guid employeeId);
     Task<IReadOnlyList<WorkflowStep>> GetByEmployeeIdAsync(Guid employeeId);
-    IQueryable<object> GetApproverTasksAsync(Guid employeeId, InvoiceStatus status);
     Task<IReadOnlyList<WorkflowStep>> GetByInvoiceIdAsync(Guid invoiceId);
     Task AddAsync(WorkflowStep workflowStep);
     //Task UpdateAsync(WorkflowStep workflowStep);
