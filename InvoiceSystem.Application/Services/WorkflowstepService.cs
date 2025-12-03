@@ -76,6 +76,13 @@ public class WorkflowstepService : IWorkflowstepService
             .ToList();
 
         var approverTasks = WorkflowstepMapper.ToTaskDTO(invoices, latestSteps);
+
+        if(approverTasks.Any() is false)
+        {
+            return Result<IReadOnlyList<InvoiceTaskDTO>>
+                .Failure(Error.Validation(WorkflowStepErrors.Common.NoApproverWorkflow, "No Pending Tasks for this Approver"));
+        }
+
         return Result<IReadOnlyList<InvoiceTaskDTO>>.Success(approverTasks);
     }
 
