@@ -198,6 +198,16 @@ namespace InvoiceSystem.Application.Services
             return Result<IReadOnlyList<InvoiceSummaryDTO>>.Success(_invoiceMapper.ToSummaryDTO(results));
         }
 
+        public Task<Result<WorkflowStep>> GetApproverTasks(Guid employeeId)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<Result<WorkflowStep>> GetClerkTasks(Guid invoiceId, Guid employeeId)
+        {
+            throw new NotImplementedException();
+        }
+
         public async Task<Result<InvoiceDetailsDTO>> GetInvoiceByIdAsync(Guid invoiceId)
         {
             var result = await _invoiceRepository.GetByIdAsync(invoiceId);
