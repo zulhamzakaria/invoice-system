@@ -58,7 +58,7 @@ public class WorkflowstepService : IWorkflowstepService
         return Result<WorkflowstepsDetailsDTO>.Success(WorkflowstepMapper.ToDetailsDTO(newStep));
     }
 
-    public Task<Result<InvoiceTaskDTO>> GetApproverTasks(Employee employee)
+    public async Task<Result<IReadOnlyList<InvoiceTaskDTO>>> GetApproverTasks(Employee employee)
     {
         var latestSteps = _workflowStepRepository.QueryAll()
             .GroupBy(wfs => wfs.InvoiceId)
@@ -69,6 +69,7 @@ public class WorkflowstepService : IWorkflowstepService
         var invoices = _invoiceRepository.QueryAll()
             .Where(inv => validInvoices.Contains(inv.Id) && inv.Status == WorkflowStepStateRules.ApprovalStatusMap[EmployeeType.FO])
             .ToList();
+
         var tasks = invoices.Select(inv =>
         {
             var step = latestSteps.FirstOrDefault(wfs => wfs.InvoiceId == inv.Id);
@@ -82,7 +83,7 @@ public class WorkflowstepService : IWorkflowstepService
                 );
         }).ToList();
 
-        return Result<>.Success(tasks);
+        return Result<IReadOnlyList<InvoiceTaskDTO>>.Failure(Error.Validation("", "")); // ignore this
 
     }
 

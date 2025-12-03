@@ -9,7 +9,7 @@ namespace InvoiceSystem.Application.Services.Interfaces;
 public interface IWorkflowstepService
 {
     Task<Result<WorkflowstepsDetailsDTO>> CreateWorkflowstepAsync(Guid invoiceId, Guid approverId, WorkflowstepsCreationDTO dto);
-    Task<Result<InvoiceTaskDTO>> GetApproverTasks(Employee employee);
+    Task<Result<IReadOnlyList<InvoiceTaskDTO>>> GetApproverTasks(Employee employee);
     Task<IReadOnlyList<Guid?>> GetInvoicesByApproverId(Guid approverId);
     Task<Result> RecordStepAsync(Guid invoiceId,
                                 InvoiceStatus before,

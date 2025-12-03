@@ -1,4 +1,5 @@
-﻿using InvoiceSystem.Application.DTOs.WorkflowSteps;
+﻿using InvoiceSystem.Application.DTOs.Invoice;
+using InvoiceSystem.Application.DTOs.WorkflowSteps;
 using InvoiceSystem.Domain.Common;
 using InvoiceSystem.Domain.Entities;
 using InvoiceSystem.Domain.Enums;
@@ -55,5 +56,24 @@ public class WorkflowstepMapper
     public static IReadOnlyList<WorkflowstepHistoryDTO> ToHistoryDTO(IEnumerable<WorkflowStep> workflowSteps)
     {
         return workflowSteps.Select(ToHistoryDTO).ToList();
+    }
+
+    public static InvoiceTaskDTO ToTaskDTO(Invoice invoice, WorkflowStep? step)
+    {
+        return new InvoiceTaskDTO(
+            invoice.Id,
+            invoice.InvoiceNumber,
+            invoice.Status,
+            step?.ActionType,
+            step?.ApproverId ?? invoice.CreatedBy.Id,
+            step?.CreatedAt ?? invoice.CreatedAt
+        );
+    }
+
+    public static IReadOnlyList<InvoiceTaskDTO> ToTaskDTO(IEnumerable<Invoice> invoices, IEnumerable<WorkflowStep> steps)
+    {
+        var stepLookup = steps.ToDictionary(ws => ws.InvoiceId, ws => ws);
+        return invoices.Select(inv =>
+        ToTaskDTO(inv, stepLookup.ContainsKey(inv.Id) ? stepLookup[inv.Id] : null)).ToList();
     }
 }
