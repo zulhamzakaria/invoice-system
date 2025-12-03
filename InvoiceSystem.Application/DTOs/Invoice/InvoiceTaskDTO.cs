@@ -7,6 +7,6 @@ public record InvoiceTaskDTO(
         string InvoiceNo,
         InvoiceStatus CurrentStatus,
         WorkflowStepType? StepType,  // null for Drafts
-        Guid AssignedToId,           // ClerkId or ApproverId
-        DateTime CreatedAt
+        Guid? AssignedToId,           // ClerkId or ApproverId
+        DateTimeOffset? CreatedAt
     );

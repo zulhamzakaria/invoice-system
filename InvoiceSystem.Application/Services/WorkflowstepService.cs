@@ -65,6 +65,25 @@ public class WorkflowstepService : IWorkflowstepService
             .Select(ws => ws.OrderByDescending(wfs => wfs.Timestamp).First())
             .Where(ws => ws.ApproverId == employee.Id)
             .ToList();
+        var validInvoices = latestSteps.Select(ws => ws.InvoiceId).ToList();
+        var invoices = _invoiceRepository.QueryAll()
+            .Where(inv => validInvoices.Contains(inv.Id) && inv.Status == WorkflowStepStateRules.ApprovalStatusMap[EmployeeType.FO])
+            .ToList();
+        var tasks = invoices.Select(inv =>
+        {
+            var step = latestSteps.FirstOrDefault(wfs => wfs.InvoiceId == inv.Id);
+            return new InvoiceTaskDTO(
+                inv.Id,
+                inv.InvoiceNumber,
+                inv.Status,
+                step?.ActionType,
+                step?.ApproverId ?? inv.CreatedBy.Id,
+                step?.CreatedAt ?? inv.CreatedAt
+                );
+        }).ToList();
+
+        return Result<>.Success(tasks);
+
     }
 
     public async Task<IReadOnlyList<Guid?>> GetInvoicesByApproverId(Guid approverId)
