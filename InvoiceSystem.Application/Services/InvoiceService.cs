@@ -211,11 +211,11 @@ namespace InvoiceSystem.Application.Services
                 return Result<IReadOnlyList<InvoiceTaskDTO>>.Failure(Error.Validation(EmployeeErrors.Service.InvalidApprover, "Provided Employee is not an Approver"));
             }
             var workflowstep = await _workflowStepRepository.GetByApproverIdAsync(employeeId);
-            if (workflowstep is null)
+            if (workflowstep is null || !workflowstep.Any())
             {
                 return Result<IReadOnlyList<InvoiceTaskDTO>>.Failure(Error.Validation(WorkflowStepErrors.Common.NoApproverWorkflow, "The Approver has no assigned Invoice"));
             }
-            var tasks
+
         }
 
         public Task<Result<IReadOnlyList<InvoiceTaskDTO>>> GetClerkTasks(Guid invoiceId, Guid employeeId)
