@@ -58,7 +58,7 @@ public class WorkflowstepService : IWorkflowstepService
         return Result<WorkflowstepsDetailsDTO>.Success(WorkflowstepMapper.ToDetailsDTO(newStep));
     }
 
-    public async Task<Result<IReadOnlyList<InvoiceTaskDTO>>> GetApproverTasks(Employee employee)
+    public Result<IReadOnlyList<InvoiceTaskDTO>> GetApproverTasks(Employee employee)
     {
         var latestSteps =  _workflowStepRepository.QueryAll()
             .GroupBy(wfs => wfs.InvoiceId)

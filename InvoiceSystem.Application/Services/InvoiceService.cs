@@ -221,7 +221,7 @@ namespace InvoiceSystem.Application.Services
 
             var tasks = _workflowstepService.GetApproverTasks(employee);
 
-            return Result<IReadOnlyList<InvoiceTaskDTO>>.Success(tasks);
+            return Result<IReadOnlyList<InvoiceTaskDTO>>.Success(tasks.Value);
         }
 
         public Task<Result<IReadOnlyList<InvoiceTaskDTO>>> GetClerkTasks(Guid invoiceId, Guid employeeId)
