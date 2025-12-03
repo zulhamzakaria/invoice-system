@@ -60,31 +60,20 @@ public class WorkflowstepService : IWorkflowstepService
 
     public async Task<Result<IReadOnlyList<InvoiceTaskDTO>>> GetApproverTasks(Employee employee)
     {
-        var latestSteps = _workflowStepRepository.QueryAll()
+        var latestSteps =  _workflowStepRepository.QueryAll()
             .GroupBy(wfs => wfs.InvoiceId)
             .Select(ws => ws.OrderByDescending(wfs => wfs.Timestamp).First())
             .Where(ws => ws.ApproverId == employee.Id)
             .ToList();
+
         var validInvoices = latestSteps.Select(ws => ws.InvoiceId).ToList();
+
         var invoices = _invoiceRepository.QueryAll()
             .Where(inv => validInvoices.Contains(inv.Id) && inv.Status == WorkflowStepStateRules.ApprovalStatusMap[EmployeeType.FO])
             .ToList();
 
-        var tasks = invoices.Select(inv =>
-        {
-            var step = latestSteps.FirstOrDefault(wfs => wfs.InvoiceId == inv.Id);
-            return new InvoiceTaskDTO(
-                inv.Id,
-                inv.InvoiceNumber,
-                inv.Status,
-                step?.ActionType,
-                step?.ApproverId ?? inv.CreatedBy.Id,
-                step?.CreatedAt ?? inv.CreatedAt
-                );
-        }).ToList();
-
-        return Result<IReadOnlyList<InvoiceTaskDTO>>.Failure(Error.Validation("", "")); // ignore this
-
+        var approverTasks = WorkflowstepMapper.ToTaskDTO(invoices, latestSteps);
+        return Result<IReadOnlyList<InvoiceTaskDTO>>.Success(approverTasks);
     }
 
     public async Task<IReadOnlyList<Guid?>> GetInvoicesByApproverId(Guid approverId)

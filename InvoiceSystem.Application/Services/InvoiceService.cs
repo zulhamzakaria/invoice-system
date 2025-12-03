@@ -16,6 +16,7 @@ namespace InvoiceSystem.Application.Services
     public class InvoiceService : IInvoiceService
     {
         private readonly IWorkflowStepRepository _workflowStepRepository;
+        private readonly IWorkflowstepService _workflowstepService;
         private readonly IEmployeeRepository _employeeRepository;
         private readonly IInvoiceRepository _invoiceRepository;
         private readonly ICompanyRepository _companyRepository;
@@ -23,6 +24,7 @@ namespace InvoiceSystem.Application.Services
         private readonly IUnitOfWork _uow;
         public InvoiceService(IEmployeeRepository employeeRepository,
             IWorkflowStepRepository workflowStepRepository,
+            IWorkflowstepService workflowstepService,
             IInvoiceRepository invoiceRepository,
             ICompanyRepository companyRepository,
             IInvoiceMapper invoiceMapper,
@@ -30,6 +32,7 @@ namespace InvoiceSystem.Application.Services
             )
         {
             _workflowStepRepository = workflowStepRepository;
+            _workflowstepService = workflowstepService;
             _employeeRepository = employeeRepository;
             _invoiceRepository = invoiceRepository;
             _companyRepository = companyRepository;
@@ -216,6 +219,9 @@ namespace InvoiceSystem.Application.Services
                 return Result<IReadOnlyList<InvoiceTaskDTO>>.Failure(Error.Validation(WorkflowStepErrors.Common.NoApproverWorkflow, "The Approver has no assigned Invoice"));
             }
 
+            var tasks = _workflowstepService.GetApproverTasks(employee);
+
+            return Result<IReadOnlyList<InvoiceTaskDTO>>.Success(tasks);
         }
 
         public Task<Result<IReadOnlyList<InvoiceTaskDTO>>> GetClerkTasks(Guid invoiceId, Guid employeeId)
