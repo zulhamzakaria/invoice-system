@@ -1,4 +1,5 @@
-﻿using InvoiceSystem.Application.DTOs.WorkflowSteps;
+﻿using InvoiceSystem.Application.DTOs.Invoice;
+using InvoiceSystem.Application.DTOs.WorkflowSteps;
 using InvoiceSystem.Application.Mappers;
 using InvoiceSystem.Application.Services.Interfaces;
 using InvoiceSystem.Domain.Common;
@@ -55,6 +56,15 @@ public class WorkflowstepService : IWorkflowstepService
         await _workflowStepRepository.AddAsync(newStep);
         //await _workflowStepRepository.SaveChangesAsync();
         return Result<WorkflowstepsDetailsDTO>.Success(WorkflowstepMapper.ToDetailsDTO(newStep));
+    }
+
+    public Task<Result<InvoiceTaskDTO>> GetApproverTasks(Employee employee)
+    {
+        var latestSteps = _workflowStepRepository.QueryAll()
+            .GroupBy(wfs => wfs.InvoiceId)
+            .Select(ws => ws.OrderByDescending(wfs => wfs.Timestamp).First())
+            .Where(ws => ws.ApproverId == employee.Id)
+            .ToList();
     }
 
     public async Task<IReadOnlyList<Guid?>> GetInvoicesByApproverId(Guid approverId)

@@ -1,5 +1,7 @@
-﻿using InvoiceSystem.Application.DTOs.WorkflowSteps;
+﻿using InvoiceSystem.Application.DTOs.Invoice;
+using InvoiceSystem.Application.DTOs.WorkflowSteps;
 using InvoiceSystem.Domain.Common;
+using InvoiceSystem.Domain.Entities;
 using InvoiceSystem.Domain.Enums;
 
 namespace InvoiceSystem.Application.Services.Interfaces;
@@ -7,7 +9,7 @@ namespace InvoiceSystem.Application.Services.Interfaces;
 public interface IWorkflowstepService
 {
     Task<Result<WorkflowstepsDetailsDTO>> CreateWorkflowstepAsync(Guid invoiceId, Guid approverId, WorkflowstepsCreationDTO dto);
-
+    Task<Result<InvoiceTaskDTO>> GetApproverTasks(Employee employee);
     Task<IReadOnlyList<Guid?>> GetInvoicesByApproverId(Guid approverId);
     Task<Result> RecordStepAsync(Guid invoiceId,
                                 InvoiceStatus before,
