@@ -296,5 +296,12 @@ namespace InvoiceSystem.Application.Services
 
             return Result.Success();
         }
+
+        private static readonly Dictionary<EmployeeType, InvoiceStatus> ApprovalStatusMap =
+            new()
+            {
+                {EmployeeType.FO, InvoiceStatus.PendingOfficerApproval },
+                {EmployeeType.FM, InvoiceStatus.PendingManagerApproval }
+            };
     }
 }
