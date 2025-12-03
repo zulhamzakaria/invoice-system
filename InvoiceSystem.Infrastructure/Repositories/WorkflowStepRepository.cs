@@ -63,6 +63,11 @@ public class WorkflowStepRepository : IWorkflowStepRepository
             .ToListAsync();
     }
 
+    public IQueryable<WorkflowStep> QueryAll()
+    {
+        return _context.WorkflowSteps.AsQueryable();
+    }
+
     public async Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
     {
         return await _context.SaveChangesAsync(cancellationToken);
