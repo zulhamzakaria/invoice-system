@@ -54,11 +54,6 @@ namespace InvoiceSystem.Infrastructure.Repositories
                 .FirstOrDefaultAsync(i => i.Id == id);
         }
 
-        public IQueryable<Invoice> QueryAll()
-        {
-            return _context.Invoices.AsQueryable();
-        }
-
         public async Task<int> SaveChangesAsync(CancellationToken token = default)
         {
 
