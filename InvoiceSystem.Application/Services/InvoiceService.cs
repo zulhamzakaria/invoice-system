@@ -227,15 +227,20 @@ namespace InvoiceSystem.Application.Services
         public async Task<Result<IReadOnlyList<InvoiceClerkTaskDTO>>> GetClerkTasksAsync(Guid employeeId)
         {
             var employee = await _employeeRepository.GetByIdAsync(employeeId);
-            if (employee is null) 
+            if (employee is null)
             {
                 return Result<IReadOnlyList<InvoiceClerkTaskDTO>>.Failure(Error.Validation(EmployeeErrors.Service.EmployeeNotFound, "No such Employee found"));
             }
-            if(employee is not Clerk clerk)
+            if (employee is not Clerk clerk)
             {
                 return Result<IReadOnlyList<InvoiceClerkTaskDTO>>.Failure(Error.Validation(EmployeeErrors.Service.NotAClerk, "Employee is not a Clerk"));
             }
-            
+            var invoices = await _invoiceRepository.GetByCreatedByIdAsync(employeeId);
+            if (invoices is null || invoices.Any() is false)
+            {
+                return Result<IReadOnlyList<InvoiceClerkTaskDTO>>.Failure(Error.Validation(InvoiceErrors.Service.NoAssignedInvoice, "No Invoice created by this Employee"));
+            }
+
         }
 
         public async Task<Result<InvoiceDetailsDTO>> GetInvoiceByIdAsync(Guid invoiceId)
