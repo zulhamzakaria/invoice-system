@@ -233,8 +233,9 @@ namespace InvoiceSystem.Application.Services
             }
             if(employee is not Clerk clerk)
             {
-                return Result<IReadOnlyList<InvoiceClerkTaskDTO>>.Failure(Error.Validation(EmployeeErrors.Service.InvalidEmployeeType, "Employee is not a Clerk"));
+                return Result<IReadOnlyList<InvoiceClerkTaskDTO>>.Failure(Error.Validation(EmployeeErrors.Service.NotAClerk, "Employee is not a Clerk"));
             }
+            
         }
 
         public async Task<Result<InvoiceDetailsDTO>> GetInvoiceByIdAsync(Guid invoiceId)
