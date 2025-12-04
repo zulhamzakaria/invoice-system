@@ -1,5 +1,4 @@
-﻿using InvoiceSystem.Domain.Common;
-using InvoiceSystem.Domain.Entities;
+﻿using InvoiceSystem.Domain.Entities;
 using InvoiceSystem.Domain.Enums;
 using Microsoft.EntityFrameworkCore;
 
@@ -43,6 +42,13 @@ namespace InvoiceSystem.Infrastructure.Repositories
             return await _context.Invoices
                 .Include(i => i.InvoiceItems)        // include invoice items
                 .Include(i => i.Company)      // include company
+                .ToListAsync();
+        }
+
+        public async Task<IReadOnlyList<Invoice>> GetByCreatedByIdAsync(Guid employeeId)
+        {
+            return await _context.Invoices
+                .Where(inv => inv.CreatedById == employeeId)
                 .ToListAsync();
         }
 
