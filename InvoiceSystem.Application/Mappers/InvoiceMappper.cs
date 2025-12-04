@@ -43,7 +43,7 @@ public class InvoiceMappper : IInvoiceMapper
             invoice.InvoiceDate,
             invoice.TotalAmount,
             invoice.Status.ToString(),
-            company, 
+            company,
             invoice.InvoiceItems.Count()
             );
     }
@@ -51,5 +51,19 @@ public class InvoiceMappper : IInvoiceMapper
     public IReadOnlyList<InvoiceSummaryDTO> ToSummaryDTO(IEnumerable<Invoice> invoices)
     {
         return invoices.Select(ToSummaryDTO).ToList();
+    }
+
+    public InvoiceClerkTaskDTO ToClerkTaskDTO(Invoice invoice)
+    {
+        return new InvoiceClerkTaskDTO(
+            invoice.Id,
+            invoice.InvoiceNumber,
+            invoice.Status
+        );
+    }
+
+    public IReadOnlyList<InvoiceClerkTaskDTO> ToClerkTaskDTO(IEnumerable<Invoice> invoices)
+    {
+        return invoices.Select(ToClerkTaskDTO).ToList();
     }
 }

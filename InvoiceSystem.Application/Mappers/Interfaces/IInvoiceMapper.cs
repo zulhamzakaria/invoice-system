@@ -8,4 +8,6 @@ public interface IInvoiceMapper
     InvoiceDetailsDTO ToDetailsDTO(Invoice invoice);
     InvoiceSummaryDTO ToSummaryDTO(Invoice invoice);
     IReadOnlyList<InvoiceSummaryDTO> ToSummaryDTO(IEnumerable<Invoice> invoices);
+    InvoiceClerkTaskDTO ToClerkTaskDTO(Invoice invoice);
+    IReadOnlyList<InvoiceClerkTaskDTO> ToClerkTaskDTO(IEnumerable<Invoice> invoices);
 }

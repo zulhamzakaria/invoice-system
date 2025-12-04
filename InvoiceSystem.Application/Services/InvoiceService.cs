@@ -240,7 +240,7 @@ namespace InvoiceSystem.Application.Services
             {
                 return Result<IReadOnlyList<InvoiceClerkTaskDTO>>.Failure(Error.Validation(InvoiceErrors.Service.NoAssignedInvoice, "No Invoice created by this Employee"));
             }
-
+            var tasks = _invoiceMapper.
         }
 
         public async Task<Result<InvoiceDetailsDTO>> GetInvoiceByIdAsync(Guid invoiceId)
