@@ -242,7 +242,12 @@ namespace InvoiceSystem.Application.Services
                 return Result<IReadOnlyList<InvoiceClerkTaskDTO>>.Failure(Error.Validation(InvoiceErrors.Service.NoAssignedInvoice, "No Invoice created by this Employee"));
             }
 
-            var tasks = _invoiceMapper.ToClerkTaskDTO(invoices);
+            var validStatuses = new[] { InvoiceStatus.Draft, InvoiceStatus.Rejected };
+            var clerkInvoices = invoices
+                .Where(inv => validStatuses.Contains(inv.Status))
+                .ToList();
+
+            var tasks = _invoiceMapper.ToClerkTaskDTO(clerkInvoices);
             return Result<IReadOnlyList<InvoiceClerkTaskDTO>>.Success(tasks);
         }
 
