@@ -235,12 +235,15 @@ namespace InvoiceSystem.Application.Services
             {
                 return Result<IReadOnlyList<InvoiceClerkTaskDTO>>.Failure(Error.Validation(EmployeeErrors.Service.NotAClerk, "Employee is not a Clerk"));
             }
+
             var invoices = await _invoiceRepository.GetByCreatedByIdAsync(employeeId);
-            if (invoices is null || invoices.Any() is false)
+            if (invoices.Count() == 0)
             {
                 return Result<IReadOnlyList<InvoiceClerkTaskDTO>>.Failure(Error.Validation(InvoiceErrors.Service.NoAssignedInvoice, "No Invoice created by this Employee"));
             }
-            var tasks = _invoiceMapper.
+
+            var tasks = _invoiceMapper.ToClerkTaskDTO(invoices);
+            return Result<IReadOnlyList<InvoiceClerkTaskDTO>>.Success(tasks);
         }
 
         public async Task<Result<InvoiceDetailsDTO>> GetInvoiceByIdAsync(Guid invoiceId)
