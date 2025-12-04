@@ -224,9 +224,17 @@ namespace InvoiceSystem.Application.Services
             return Result<IReadOnlyList<InvoiceApproverTaskDTO>>.Success(tasks.Value);
         }
 
-        public Task<Result<IReadOnlyList<InvoiceApproverTaskDTO>>> GetClerkTasksAsync(Guid invoiceId, Guid employeeId)
+        public async Task<Result<IReadOnlyList<InvoiceClerkTaskDTO>>> GetClerkTasksAsync(Guid employeeId)
         {
-            throw new NotImplementedException();
+            var employee = await _employeeRepository.GetByIdAsync(employeeId);
+            if (employee is null) 
+            {
+                return Result<IReadOnlyList<InvoiceClerkTaskDTO>>.Failure(Error.Validation(EmployeeErrors.Service.EmployeeNotFound, "No such Employee found"));
+            }
+            if(employee is not Clerk clerk)
+            {
+                return Result<IReadOnlyList<InvoiceClerkTaskDTO>>.Failure(Error.Validation(EmployeeErrors.Service.InvalidEmployeeType, "Employee is not a Clerk"));
+            }
         }
 
         public async Task<Result<InvoiceDetailsDTO>> GetInvoiceByIdAsync(Guid invoiceId)
