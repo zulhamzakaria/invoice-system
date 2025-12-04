@@ -58,9 +58,9 @@ public class WorkflowstepMapper
         return workflowSteps.Select(ToHistoryDTO).ToList();
     }
 
-    public static InvoiceTaskDTO ToTaskDTO(Invoice invoice, WorkflowStep? step)
+    public static InvoiceApproverTaskDTO ToTaskDTO(Invoice invoice, WorkflowStep? step)
     {
-        return new InvoiceTaskDTO(
+        return new InvoiceApproverTaskDTO(
             invoice.Id,
             invoice.InvoiceNumber,
             invoice.Status,
@@ -70,7 +70,7 @@ public class WorkflowstepMapper
         );
     }
 
-    public static IReadOnlyList<InvoiceTaskDTO> ToTaskDTO(IEnumerable<Invoice> invoices, IEnumerable<WorkflowStep> steps)
+    public static IReadOnlyList<InvoiceApproverTaskDTO> ToTaskDTO(IEnumerable<Invoice> invoices, IEnumerable<WorkflowStep> steps)
     {
         var stepLookup = steps.ToDictionary(ws => ws.InvoiceId, ws => ws);
         return invoices.Select(inv =>

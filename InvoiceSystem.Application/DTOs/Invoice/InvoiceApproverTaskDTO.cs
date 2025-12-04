@@ -2,7 +2,7 @@
 
 namespace InvoiceSystem.Application.DTOs.Invoice;
 
-public record InvoiceTaskDTO(
+public record InvoiceApproverTaskDTO(
         Guid InvoiceId,
         string InvoiceNo,
         InvoiceStatus CurrentStatus,

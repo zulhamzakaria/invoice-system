@@ -202,29 +202,29 @@ namespace InvoiceSystem.Application.Services
             return Result<IReadOnlyList<InvoiceSummaryDTO>>.Success(_invoiceMapper.ToSummaryDTO(results));
         }
 
-        public async Task<Result<IReadOnlyList<InvoiceTaskDTO>>> GetApproverTasksAsync(Guid employeeId)
+        public async Task<Result<IReadOnlyList<InvoiceApproverTaskDTO>>> GetApproverTasksAsync(Guid employeeId)
         {
             var employee = await _employeeRepository.GetByIdAsync(employeeId);
             if (employee is null) 
             {
-                return Result<IReadOnlyList<InvoiceTaskDTO>>.Failure(Error.Validation(EmployeeErrors.Service.EmployeeNotFound, "No such Employee found"));
+                return Result<IReadOnlyList<InvoiceApproverTaskDTO>>.Failure(Error.Validation(EmployeeErrors.Service.EmployeeNotFound, "No such Employee found"));
             }
             if(employee is not IApprover approver)
             {
-                return Result<IReadOnlyList<InvoiceTaskDTO>>.Failure(Error.Validation(EmployeeErrors.Service.InvalidApprover, "Provided Employee is not an Approver"));
+                return Result<IReadOnlyList<InvoiceApproverTaskDTO>>.Failure(Error.Validation(EmployeeErrors.Service.InvalidApprover, "Provided Employee is not an Approver"));
             }
             var workflowstep = await _workflowStepRepository.GetByApproverIdAsync(employeeId);
             if (workflowstep is null || !workflowstep.Any())
             {
-                return Result<IReadOnlyList<InvoiceTaskDTO>>.Failure(Error.Validation(WorkflowStepErrors.Common.NoApproverWorkflow, "The Approver has no assigned Invoice"));
+                return Result<IReadOnlyList<InvoiceApproverTaskDTO>>.Failure(Error.Validation(WorkflowStepErrors.Common.NoApproverWorkflow, "The Approver has no assigned Invoice"));
             }
 
             var tasks = _workflowstepService.GetApproverTasks(employee);
 
-            return Result<IReadOnlyList<InvoiceTaskDTO>>.Success(tasks.Value);
+            return Result<IReadOnlyList<InvoiceApproverTaskDTO>>.Success(tasks.Value);
         }
 
-        public Task<Result<IReadOnlyList<InvoiceTaskDTO>>> GetClerkTasksAsync(Guid invoiceId, Guid employeeId)
+        public Task<Result<IReadOnlyList<InvoiceApproverTaskDTO>>> GetClerkTasksAsync(Guid invoiceId, Guid employeeId)
         {
             throw new NotImplementedException();
         }
