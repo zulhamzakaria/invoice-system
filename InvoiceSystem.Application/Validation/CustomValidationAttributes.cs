@@ -13,6 +13,7 @@ public class NotEqualAttribute : ValidationAttribute
     public NotEqualAttribute(string value)
     {
         _forbiddenValue = value;
+        ErrorMessage = $"Invalid value: {_forbiddenValue}";
     }
     protected override ValidationResult? IsValid(object? value, ValidationContext validationContext)
     {
