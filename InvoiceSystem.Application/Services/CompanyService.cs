@@ -72,17 +72,6 @@ public class CompanyService : ICompanyService
             );
     }
 
-    private Result<TEnum> TryConvertStringToEnum<TEnum>(string inputValue, string errorCode, string fieldName, string expectedValues)
-        where TEnum : struct
-    {
-        if (!Enum.TryParse<TEnum>(inputValue, true, out TEnum result))
-        {
-            return Result<TEnum>.Failure(Error.Validation("Invalid enum value",
-                $"The {fieldName} value '{inputValue}' is not valid. Expected values are: {expectedValues}."));
-        }
-        return Result<TEnum>.Success(result);
-    }
-
     public async Task<Result<CompanyDetailsDTO>> UpdateCompanyAsync(Guid id, CompanyUpdateDTO dto)
     {
         var company = await _companyRepository.GetByIdAsync(id);
