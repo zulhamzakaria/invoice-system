@@ -15,7 +15,7 @@ public static class EmployeeEndpoints
             return result.IsSuccess
             ? Results.Created($"api/employees/{result.Value.Id}", result.Value)
             : Results.BadRequest(result.Errors);
-        });
+        }).WithSummary("Valid EmployeeRole: Clerk, FO, FM");
 
         group.MapGet("/", async (IEmployeeService service) =>
         {
