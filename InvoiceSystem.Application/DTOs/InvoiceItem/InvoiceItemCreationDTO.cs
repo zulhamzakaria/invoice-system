@@ -1,9 +1,10 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using InvoiceSystem.Application.Validation;
+using System.ComponentModel.DataAnnotations;
 
 namespace InvoiceSystem.Application.DTOs.InvoiceItem;
 
 public record InvoiceItemCreationDTO(
-    [Required] string Description,
-    [Required] int Quantity,
-    [Required] decimal UnitPrice
+    [Required, NotEqual("string")] string Description,
+    [Required, NotEqual("string")] int Quantity,
+    [Required, NotEqual("string")] decimal UnitPrice
     );

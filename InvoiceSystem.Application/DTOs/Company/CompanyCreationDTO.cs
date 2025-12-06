@@ -6,6 +6,6 @@ namespace InvoiceSystem.Application.DTOs.Company;
 
 public record CompanyCreationDTO(
                 [Required, StringLength(50, MinimumLength =1), NotEqual("string")] string Name,
-                [Required, StringLength(10, MinimumLength =1)] string RegistrationNumber,
+                [Required, StringLength(10, MinimumLength =1), NotEqual("string")] string RegistrationNumber,
                 [Required] AddressCreationDTO ShippingAddress,
                 [Required] AddressCreationDTO BillingAddress);
