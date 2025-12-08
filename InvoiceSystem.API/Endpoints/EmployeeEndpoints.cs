@@ -1,5 +1,7 @@
 ﻿using InvoiceSystem.Application.DTOs.Employee;
 using InvoiceSystem.Application.Services.Interfaces;
+using System.ComponentModel.DataAnnotations;
+using System.Linq;
 
 namespace InvoiceSystem.API.Endpoints;
 
@@ -33,12 +35,14 @@ public static class EmployeeEndpoints
             : Results.BadRequest(result.Errors);
         });
 
-        group.MapPatch("/{id:guid}", async (Guid id, EmployeeUpdateDTO dto, IEmployeeService service)=>{
+        group.MapPatch("/{id:guid}", async (Guid id, EmployeeUpdateDTO dto, IEmployeeService service)=>
+        {
             var result = await service.UpdateEmployeeAsync(id, dto);
             return result.IsSuccess
             ? Results.Ok(result.Value)
             : Results.BadRequest(result.Errors);
-
         });
+
+
     }
 }
