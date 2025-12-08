@@ -118,7 +118,7 @@ public abstract class Employee : AuditableEntity
             if (result.IsFailure)
                 errors.AddRange(result.Errors);
         }
-        if (maxApprovalLimit is not null)
+        if (maxApprovalLimit is not null && this is not Clerk)
         {
             var result = UpdateMaxApprovalLimit((decimal)maxApprovalLimit);
             if (result.IsFailure)
