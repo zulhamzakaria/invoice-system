@@ -1,6 +1,7 @@
 ﻿using InvoiceSystem.Application.DTOs.Employee;
 using InvoiceSystem.Application.Services.Interfaces;
 using InvoiceSystem.Application.Validation;
+using Microsoft.AspNetCore.Http.HttpResults;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 
@@ -15,9 +16,9 @@ public static class EmployeeEndpoints
         group.MapPost("/", async (EmployeeCreationDTO dto, IEmployeeService service) =>
         {
 
-            var errors = AttributesValidationHelper.ValidateDTO(dto);
-            if (errors.Any())
-                return Results.ValidationProblem(errors);
+            var validate = AttributesValidationHelper.ValidateObjectManually(dto);
+            if (validate.IsFailure)
+                return Results.BadRequest(validate.Error);
 
             var result = await service.CreateEmployeeAsync(dto);
             return result.IsSuccess
@@ -43,9 +44,9 @@ public static class EmployeeEndpoints
 
         group.MapPatch("/{id:guid}", async (Guid id, EmployeeUpdateDTO dto, IEmployeeService service)=>
         {
-            var errors = AttributesValidationHelper.ValidateDTO(dto);
-            if(errors.Any())
-                return Results.ValidationProblem(errors);
+            var validate = AttributesValidationHelper.ValidateObjectManually(dto);
+            if (validate.IsFailure)
+                return Results.BadRequest(validate.Error);
 
             var result = await service.UpdateEmployeeAsync(id, dto);
             return result.IsSuccess

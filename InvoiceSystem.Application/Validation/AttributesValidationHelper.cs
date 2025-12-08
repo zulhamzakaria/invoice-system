@@ -1,4 +1,6 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using InvoiceSystem.Application.DTOs.Employee;
+using InvoiceSystem.Domain.Common;
+using System.ComponentModel.DataAnnotations;
 
 namespace InvoiceSystem.Application.Validation;
 
@@ -22,4 +24,26 @@ public static class AttributesValidationHelper
 
         return errorsDict;
     } 
+
+    public static Result<Dictionary<string, string>> ValidateObjectManually(object dto)
+    {
+        switch (dto)
+        {
+            case EmployeeCreationDTO createDto:
+                return ValidateFields(createDto.Name, createDto.Email);
+            case EmployeeUpdateDTO updateDTO:
+                return ValidateFields(updateDTO.Name, updateDTO.Email ?? "");
+            default:
+                return Result<Dictionary<string, string>>.Success(new Dictionary<string, string>());
+        }      
+    }
+
+    private static Result<Dictionary<string, string>> ValidateFields(string name, string email)
+    {
+        if (name == "string" || email == "string")
+        {
+            return Result<Dictionary<string, string>>.Failure(Error.Validation("DEFAULT_VALUE", "Name/Email cannot be in default values"));
+        }
+        return Result<Dictionary<string, string>>.Success(new Dictionary<string, string>());
+    }
 }
