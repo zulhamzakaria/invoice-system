@@ -1,8 +1,7 @@
 {
   "version": 3,
   "targets": {
-    "net8.0": {},
-    "net8.0/linux-x64": {}
+    "net8.0": {}
   },
   "libraries": {},
   "projectFileDependencyGroups": {
@@ -25,6 +24,7 @@
         "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
       ],
       "configFilePaths": [
+        "D:\\Learning1\\Projects\\invoice-system\\InvoiceSystem.API\\NuGet.Config",
         "C:\\Users\\zulham\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
@@ -33,8 +33,6 @@
         "net8.0"
       ],
       "sources": {
-        "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
-        "D:\\learning1\\dotNet_Microservices_Basics_Course\\packages": {},
         "https://api.nuget.org/v3/index.json": {}
       },
       "frameworks": {
@@ -75,11 +73,6 @@
           }
         },
         "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.308/PortableRuntimeIdentifierGraph.json"
-      }
-    },
-    "runtimes": {
-      "linux-x64": {
-        "#import": []
       }
     }
   }

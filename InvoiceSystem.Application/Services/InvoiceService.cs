@@ -184,7 +184,7 @@ namespace InvoiceSystem.Application.Services
             return Result.Success();
         }
 
-        public Result<IReadOnlyList<InvoiceApproverTaskDTO>> GetAllApproversTasksAsync()
+        public Result<IReadOnlyList<InvoiceApproverTaskDTO>> GetAllApproversTasks()
         {
             var tasks = _workflowstepService.GetAllApproversTasks();
             return Result<IReadOnlyList<InvoiceApproverTaskDTO>>.Success(tasks.Value);
