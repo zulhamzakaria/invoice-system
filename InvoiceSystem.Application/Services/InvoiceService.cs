@@ -205,7 +205,7 @@ namespace InvoiceSystem.Application.Services
 
             if (clerksInvoices.Any() is false)
             {
-                return Result<IReadOnlyList<InvoiceClerkTaskDTO>>.Failure(Error.Validation(InvoiceErrors.Service.NoClerksTasks, "No Pending Tasks for this Clerk"));
+                return Result<IReadOnlyList<InvoiceClerkTaskDTO>>.Failure(Error.Validation(InvoiceErrors.Service.NoClerksTasks, "No Pending Tasks Clerks"));
             }
 
             var tasks = _invoiceMapper.ToClerkTaskDTO(clerksInvoices);
