@@ -58,6 +58,35 @@ public class WorkflowstepService : IWorkflowstepService
         return Result<WorkflowstepsDetailsDTO>.Success(WorkflowstepMapper.ToDetailsDTO(newStep));
     }
 
+    public Result<IReadOnlyList<InvoiceApproverTaskDTO>> GetAllApproversTasks()
+    {
+        var steps = _workflowStepRepository.QueryAll()
+            .Where(ws => ws.StatusAfter == WorkflowStepStateRules.ApprovalStatusMap[EmployeeType.FO]
+            || ws.StatusAfter == WorkflowStepStateRules.ApprovalStatusMap[EmployeeType.FM])
+            .ToList();
+
+        var latestSteps = steps
+            .GroupBy(ws => ws.InvoiceId)
+            .Select(g => g.OrderByDescending(ws => ws.Timestamp).First())
+            .ToList();
+
+        var validInvoices = latestSteps.Select(ws => ws.InvoiceId).ToList();
+
+        var invoices = _invoiceRepository.QueryAll()
+            .Where(inv => validInvoices.Contains(inv.Id))
+            .ToList();
+
+        var approversTasks = WorkflowstepMapper.ToTaskDTO(invoices, latestSteps);
+
+        if(approversTasks.Any() is false)
+        {
+            return Result<IReadOnlyList<InvoiceApproverTaskDTO>>
+                .Failure(Error.Validation(WorkflowStepErrors.Common.NoApproverWorkflow, "No Pending Tasks for Approvers"));
+        }
+
+        return Result<IReadOnlyList<InvoiceApproverTaskDTO>>.Success(approversTasks);
+    }
+
     public Result<IReadOnlyList<InvoiceApproverTaskDTO>> GetApproverTasks(Employee employee)
     {
         var steps = _workflowStepRepository.QueryAll()
@@ -84,7 +113,7 @@ public class WorkflowstepService : IWorkflowstepService
         }
 
         return Result<IReadOnlyList<InvoiceApproverTaskDTO>>.Success(approverTasks);
-    }
+    }  
 
     public async Task<IReadOnlyList<Guid?>> GetInvoicesByApproverId(Guid approverId)
     {
