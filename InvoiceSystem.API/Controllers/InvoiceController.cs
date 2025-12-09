@@ -85,10 +85,10 @@ namespace InvoiceSystem.API.Controllers
                 : Ok(results.Value); 
         }
 
-        [HttpGet("{employyee:guid}/clerk-tasks")]
-        public async Task<IActionResult> GetClerkTasks(Guid empployeeId)
+        [HttpGet("{employeeId:guid}/clerk-tasks")]
+        public async Task<IActionResult> GetClerkTasks(Guid employeeId)
         {
-            var results = await _invoiceService.GetClerkTasksAsync(empployeeId);
+            var results = await _invoiceService.GetClerkTasksAsync(employeeId);
             return results.IsFailure ? BadRequest(results.Errors) 
                 : Ok(results.Value);
         }
