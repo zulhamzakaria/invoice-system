@@ -100,6 +100,13 @@ namespace InvoiceSystem.API.Controllers
             return results.IsFailure ? BadRequest(results.Errors) 
                 : Ok(results.Value);
         }
+        [HttpGet("clerks-tasks")]
+        public async Task<IActionResult> GetClerksTasks()
+        {
+            var results = await _invoiceService.GetAllClerksTasksAsync();
+            return results.IsFailure ? BadRequest(results.Errors) 
+                : Ok(results.Value);
+        }
 
         [HttpGet("{invoiceId:guid}/items")]
         public async Task<IActionResult> GetAllInvoiceItems(Guid invoiceId)

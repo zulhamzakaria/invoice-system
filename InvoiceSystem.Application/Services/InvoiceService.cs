@@ -196,9 +196,21 @@ namespace InvoiceSystem.Application.Services
             return Result<IReadOnlyList<InvoiceApproverTaskDTO>>.Success(tasks.Value);
         }
 
-        public Task<Result<IReadOnlyList<InvoiceClerkTaskDTO>>> GetAllClerksTasksAsync()
+        public async Task<Result<IReadOnlyList<InvoiceClerkTaskDTO>>> GetAllClerksTasksAsync()
         {
-            throw new NotImplementedException();
+            var validStatuses = new[] { InvoiceStatus.Draft, InvoiceStatus.Rejected };
+            var invoices = await _invoiceRepository.GetAllAsync();
+            var clerksInvoices = invoices.Where(inv => validStatuses.Contains(inv.Status))
+                .ToList();
+
+            if (clerksInvoices.Any() is false)
+            {
+                return Result<IReadOnlyList<InvoiceClerkTaskDTO>>.Failure(Error.Validation(InvoiceErrors.Service.NoClerksTasks, "No Pending Tasks for this Clerk"));
+            }
+
+            var tasks = _invoiceMapper.ToClerkTaskDTO(clerksInvoices);
+
+            return Result<IReadOnlyList<InvoiceClerkTaskDTO>>.Success(tasks);
         }
 
         public async Task<Result<IReadOnlyList<InvoiceItemDTO>>> GetAllInvoiceItemsAsync(Guid invoiceId)
@@ -271,7 +283,7 @@ namespace InvoiceSystem.Application.Services
 
             if(clerkInvoices.Any() is false)
             {
-
+                return Result<IReadOnlyList<InvoiceClerkTaskDTO>>.Failure(Error.Validation(InvoiceErrors.Service.NoClerksTasks, "No Pending Tasks for this Clerk"));
             }
 
             var tasks = _invoiceMapper.ToClerkTaskDTO(clerkInvoices);

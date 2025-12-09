@@ -1,7 +1,4 @@
-﻿using System.Globalization;
-using System.Security.Cryptography.X509Certificates;
-
-namespace InvoiceSystem.Domain.Errors;
+﻿namespace InvoiceSystem.Domain.Errors;
 
 public static class InvoiceErrors
 {
@@ -62,5 +59,6 @@ public static class InvoiceErrors
         public const string NotAssignedInvoice = "INV.APPROVER_CANNOT_ACT";
         public const string CannotVoid = "INV.NOT_INVOICE_CREATOR";
         public const string InvoiceExists = "INV.ACTIVE_DUPLICATE_FOUND";
+        public const string NoClerksTasks = "INV.NO_CLERKS_TASKS";
     }
 }
