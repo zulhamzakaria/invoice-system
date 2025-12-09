@@ -233,6 +233,11 @@ namespace InvoiceSystem.Application.Services
 
             var tasks = _workflowstepService.GetApproverTasks(employee);
 
+            if (tasks.IsFailure)
+            {
+                return Result<IReadOnlyList<InvoiceApproverTaskDTO>>.Failure(tasks.Errors);
+            }
+
             return Result<IReadOnlyList<InvoiceApproverTaskDTO>>.Success(tasks.Value);
         }
 
@@ -260,6 +265,7 @@ namespace InvoiceSystem.Application.Services
                 .ToList();
 
             var tasks = _invoiceMapper.ToClerkTaskDTO(clerkInvoices);
+
             return Result<IReadOnlyList<InvoiceClerkTaskDTO>>.Success(tasks);
         }
 
