@@ -196,6 +196,11 @@ namespace InvoiceSystem.Application.Services
             return Result<IReadOnlyList<InvoiceApproverTaskDTO>>.Success(tasks.Value);
         }
 
+        public Task<Result<IReadOnlyList<InvoiceClerkTaskDTO>>> GetAllClerksTasksAsync()
+        {
+            throw new NotImplementedException();
+        }
+
         public async Task<Result<IReadOnlyList<InvoiceItemDTO>>> GetAllInvoiceItemsAsync(Guid invoiceId)
         {
             var invoice = await _invoiceRepository.GetByIdAsync(invoiceId);
@@ -263,6 +268,11 @@ namespace InvoiceSystem.Application.Services
             var clerkInvoices = invoices
                 .Where(inv => validStatuses.Contains(inv.Status))
                 .ToList();
+
+            if(clerkInvoices.Any() is false)
+            {
+
+            }
 
             var tasks = _invoiceMapper.ToClerkTaskDTO(clerkInvoices);
 
