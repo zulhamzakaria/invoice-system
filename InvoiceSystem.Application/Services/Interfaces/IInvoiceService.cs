@@ -14,6 +14,7 @@ public interface IInvoiceService
     public Task<Result<IReadOnlyList<InvoiceSummaryDTO>>> GetAllInvoicesAsync();
     public Task<Result<IReadOnlyList<WorkflowstepHistoryDTO>>> GetInvoiceHistoryAsync(Guid invoiceId);
     public Task<Result<IReadOnlyList<InvoiceApproverTaskDTO>>> GetApproverTasksAsync(Guid employeeId);
+    public Result<IReadOnlyList<InvoiceApproverTaskDTO>> GetAllApproversTasksAsync();
     public Task<Result<IReadOnlyList<InvoiceClerkTaskDTO>>> GetClerkTasksAsync(Guid employeeId);
 
     public Task<Result> UpdateInvoiceAsync(Guid invoiceId, InvoiceUpdateDTO updateDTO, Guid userId);

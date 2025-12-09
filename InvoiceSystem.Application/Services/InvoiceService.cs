@@ -184,6 +184,12 @@ namespace InvoiceSystem.Application.Services
             return Result.Success();
         }
 
+        public Result<IReadOnlyList<InvoiceApproverTaskDTO>> GetAllApproversTasksAsync()
+        {
+            var tasks = _workflowstepService.GetAllApproversTasks();
+            return Result<IReadOnlyList<InvoiceApproverTaskDTO>>.Success(tasks.Value);
+        }
+
         public async Task<Result<IReadOnlyList<InvoiceItemDTO>>> GetAllInvoiceItemsAsync(Guid invoiceId)
         {
             var invoice = await _invoiceRepository.GetByIdAsync(invoiceId);

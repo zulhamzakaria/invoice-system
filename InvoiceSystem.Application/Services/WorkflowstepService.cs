@@ -74,6 +74,8 @@ public class WorkflowstepService : IWorkflowstepService
 
         var invoices = _invoiceRepository.QueryAll()
             .Where(inv => validInvoices.Contains(inv.Id))
+            .Where(inv => inv.Status == WorkflowStepStateRules.ApprovalStatusMap[EmployeeType.FO]
+            || inv.Status == WorkflowStepStateRules.ApprovalStatusMap[EmployeeType.FM])
             .ToList();
 
         var approversTasks = WorkflowstepMapper.ToTaskDTO(invoices, latestSteps);
