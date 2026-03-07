@@ -3,7 +3,13 @@
   "WorkspaceRootPath": "D:\\Learning1\\Projects\\invoice-system\\InvoiceSystem.API\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{16CA3BFB-D56E-49CE-9E89-2719355BC7C8}|..\\InvoiceSystem.Domain\\InvoiceSystem.Domain.csproj|d:\\learning1\\projects\\invoice-system\\invoicesystem.domain\\entities\\invoice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{8E11EC7A-5DCF-4032-820F-B4453E8B1FC7}|..\\InvoiceSystem.MLTrainer\\InvoiceSystem.MLTrainer.csproj|d:\\learning1\\projects\\invoice-system\\invoicesystem.mltrainer\\trainers\\delaymodeltrainer.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{8E11EC7A-5DCF-4032-820F-B4453E8B1FC7}|..\\InvoiceSystem.MLTrainer\\InvoiceSystem.MLTrainer.csproj|d:\\learning1\\projects\\invoice-system\\invoicesystem.mltrainer\\trainers\\riskmodeltrainer.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{8E11EC7A-5DCF-4032-820F-B4453E8B1FC7}|..\\InvoiceSystem.MLTrainer\\InvoiceSystem.MLTrainer.csproj|d:\\learning1\\projects\\invoice-system\\invoicesystem.mltrainer\\data\\invoicetrainingrecord.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
   "DocumentGroupContainers": [
@@ -34,14 +40,40 @@
             {
               "$type": "Document",
               "DocumentIndex": 0,
-              "Title": "Invoice.cs",
-              "DocumentMoniker": "D:\\Learning1\\Projects\\invoice-system\\InvoiceSystem.Domain\\Entities\\Invoice.cs",
-              "RelativeDocumentMoniker": "..\\InvoiceSystem.Domain\\Entities\\Invoice.cs",
-              "ToolTip": "D:\\Learning1\\Projects\\invoice-system\\InvoiceSystem.Domain\\Entities\\Invoice.cs",
-              "RelativeToolTip": "..\\InvoiceSystem.Domain\\Entities\\Invoice.cs",
-              "ViewState": "AgIAAAEAAAAAAAAAAAAqwBMAAAAAAAAAAAAAAA==",
+              "Title": "DelayModelTrainer.cs",
+              "DocumentMoniker": "D:\\Learning1\\Projects\\invoice-system\\InvoiceSystem.MLTrainer\\Trainers\\DelayModelTrainer.cs",
+              "RelativeDocumentMoniker": "..\\InvoiceSystem.MLTrainer\\Trainers\\DelayModelTrainer.cs",
+              "ToolTip": "D:\\Learning1\\Projects\\invoice-system\\InvoiceSystem.MLTrainer\\Trainers\\DelayModelTrainer.cs",
+              "RelativeToolTip": "..\\InvoiceSystem.MLTrainer\\Trainers\\DelayModelTrainer.cs",
+              "ViewState": "AgIAAAIAAAAAAAAAAAAxwAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-12-11T02:37:52.085Z",
+              "WhenOpened": "2026-03-06T08:37:26.691Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "RiskModelTrainer.cs",
+              "DocumentMoniker": "D:\\Learning1\\Projects\\invoice-system\\InvoiceSystem.MLTrainer\\Trainers\\RiskModelTrainer.cs",
+              "RelativeDocumentMoniker": "..\\InvoiceSystem.MLTrainer\\Trainers\\RiskModelTrainer.cs",
+              "ToolTip": "D:\\Learning1\\Projects\\invoice-system\\InvoiceSystem.MLTrainer\\Trainers\\RiskModelTrainer.cs",
+              "RelativeToolTip": "..\\InvoiceSystem.MLTrainer\\Trainers\\RiskModelTrainer.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-03-06T08:36:59.029Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "InvoiceTrainingRecord.cs",
+              "DocumentMoniker": "D:\\Learning1\\Projects\\invoice-system\\InvoiceSystem.MLTrainer\\Data\\InvoiceTrainingRecord.cs",
+              "RelativeDocumentMoniker": "..\\InvoiceSystem.MLTrainer\\Data\\InvoiceTrainingRecord.cs",
+              "ToolTip": "D:\\Learning1\\Projects\\invoice-system\\InvoiceSystem.MLTrainer\\Data\\InvoiceTrainingRecord.cs",
+              "RelativeToolTip": "..\\InvoiceSystem.MLTrainer\\Data\\InvoiceTrainingRecord.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-03-06T08:35:34.59Z",
               "EditorCaption": ""
             }
           ]
