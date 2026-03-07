@@ -2,6 +2,7 @@
 using InvoiceSystem.Domain.Interfaces;
 using InvoiceSystem.Domain.Errors;
 using InvoiceSystem.Domain.Enums;
+using InvoiceSystem.Domain.ValueObjects;
 
 namespace InvoiceSystem.Domain.Entities;
 
@@ -29,6 +30,9 @@ public class Invoice : AuditableEntity
     public Employee? ApprovedBy { get; private set; }
     public Guid? ApprovedById { get; private set; }
 
+    public InvoiceRiskAssessment RiskAssessment { get; private set; }
+    public InvoiceApprovalPrediction ApprovalPrediction { get; private set; }
+
     private Invoice() { } // EF Core needs this
 
     public Invoice(string invoiceNumber, Company company, Address billingAddress, Address shippingAddress, DateTime invoiceDate, Employee createdBy)
@@ -42,6 +46,12 @@ public class Invoice : AuditableEntity
         CreatedAt = DateTimeOffset.UtcNow;
     }
 
+    public void ApplyPrediction(InvoiceRiskAssessment risk,
+        InvoiceApprovalPrediction approvalPrediction)
+    {
+        RiskAssessment = risk;
+        ApprovalPrediction = approvalPrediction;
+    }
 
     public static Result<Invoice> Create(string invoiceNumber, Company company, Address billingAddress, Address shippingAddress, DateTime invoiceDate, Employee createdBy)
     {
