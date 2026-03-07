@@ -4,17 +4,16 @@ public sealed class InvoiceApprovalPrediction
 {
     public double PredictedHours { get; }
     public string ModelVersion { get; } = string.Empty;
-    public DateTimeOffset CreatedAt { get; }
     public DateTimeOffset EstimatedCompletionDate { get; }
-    public InvoiceApprovalPrediction(double predictedHrs, string modelVersion)
+    public InvoiceApprovalPrediction(double predictedHrs, string modelVersion,
+        DateTimeOffset createdAt)
     {
         if(predictedHrs < 0)
             predictedHrs = Math.Max(0, predictedHrs);
 
         PredictedHours = predictedHrs;
         ModelVersion = modelVersion;
-        CreatedAt = DateTimeOffset.UtcNow;
-        EstimatedCompletionDate = CreatedAt.AddHours(predictedHrs);
+        EstimatedCompletionDate = createdAt.AddHours(predictedHrs);
     }
 
     public bool IsSLAAtRisk(TimeSpan slaThreshold)
