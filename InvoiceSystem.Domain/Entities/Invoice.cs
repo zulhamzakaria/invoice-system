@@ -31,8 +31,8 @@ public class Invoice : AuditableEntity
     public Guid? ApprovedById { get; private set; }
     public DateTimeOffset ApprovalDate { get; private set; }
 
-    public InvoiceRiskAssessment RiskAssessment { get; private set; }
-    public InvoiceApprovalPrediction ApprovalPrediction { get; private set; }
+    public InvoiceRiskAssessment? RiskAssessment { get; private set; }
+    public InvoiceApprovalPrediction? ApprovalPrediction { get; private set; }
 
     private Invoice() { } // EF Core needs this
 

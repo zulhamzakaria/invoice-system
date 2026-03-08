@@ -5,6 +5,7 @@ public sealed class InvoiceApprovalPrediction
     public double PredictedHours { get; }
     public string ModelVersion { get; } = string.Empty;
     public DateTimeOffset EstimatedCompletionDate { get; }
+
     public InvoiceApprovalPrediction(double predictedHrs, string modelVersion,
         DateTimeOffset createdAt)
     {
