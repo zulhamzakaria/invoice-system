@@ -36,7 +36,8 @@ public class Invoice : AuditableEntity
 
     private Invoice() { } // EF Core needs this
 
-    public Invoice(string invoiceNumber, Company company, Address billingAddress, Address shippingAddress, DateTime invoiceDate, Employee createdBy)
+    public Invoice(string invoiceNumber, Company company, Address billingAddress, 
+        Address shippingAddress, DateTime invoiceDate, Employee createdBy)
     {
         InvoiceNumber = invoiceNumber;
         Company = company;
