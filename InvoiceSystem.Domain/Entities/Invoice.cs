@@ -29,6 +29,7 @@ public class Invoice : AuditableEntity
 
     public Employee? ApprovedBy { get; private set; }
     public Guid? ApprovedById { get; private set; }
+    public DateTimeOffset ApprovalDate { get; private set; }
 
     public InvoiceRiskAssessment RiskAssessment { get; private set; }
     public InvoiceApprovalPrediction ApprovalPrediction { get; private set; }
@@ -53,7 +54,7 @@ public class Invoice : AuditableEntity
         ApprovalPrediction = approvalPrediction;
     }
 
-    public static Result<Invoice> Create(string invoiceNumber, Company company, Address billingAddress, 
+    public static Result<Invoice> Create(string invoiceNumber, Company company, Address billingAddress,
         Address shippingAddress, DateTime invoiceDate, Employee createdBy)
     {
         var trimmedInvoiceNo = invoiceNumber?.Trim() ?? string.Empty;
@@ -128,6 +129,7 @@ public class Invoice : AuditableEntity
         UpdatedById = approver.Id;
         UpdatedAt = DateTime.UtcNow;
         Status = invoiceStatus;
+        ApprovalDate = DateTimeOffset.UtcNow;
     }
 
     public void Reject(Employee employee)
