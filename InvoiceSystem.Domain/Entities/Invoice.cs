@@ -29,7 +29,7 @@ public class Invoice : AuditableEntity
 
     public Employee? ApprovedBy { get; private set; }
     public Guid? ApprovedById { get; private set; }
-    public DateTimeOffset ApprovalDate { get; private set; }
+    public DateTimeOffset? ApprovalDate { get; private set; }
 
     public InvoiceRiskAssessment? RiskAssessment { get; private set; }
     //public InvoiceApprovalPrediction? ApprovalPrediction { get; private set; }
