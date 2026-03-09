@@ -3,10 +3,10 @@
   "WorkspaceRootPath": "D:\\Learning1\\Projects\\invoice-system\\InvoiceSystem.API\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{24C62EA7-6535-4EFD-B5A1-C0EB68924D59}|..\\InvoiceSystem.Infrastructure\\InvoiceSystem.Infrastructure.csproj|d:\\learning1\\projects\\invoice-system\\invoicesystem.infrastructure\\appdbcontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{16CA3BFB-D56E-49CE-9E89-2719355BC7C8}|..\\InvoiceSystem.Domain\\InvoiceSystem.Domain.csproj|d:\\learning1\\projects\\invoice-system\\invoicesystem.domain\\entities\\invoice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{16CA3BFB-D56E-49CE-9E89-2719355BC7C8}|..\\InvoiceSystem.Domain\\InvoiceSystem.Domain.csproj|d:\\learning1\\projects\\invoice-system\\invoicesystem.domain\\entities\\invoice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{24C62EA7-6535-4EFD-B5A1-C0EB68924D59}|..\\InvoiceSystem.Infrastructure\\InvoiceSystem.Infrastructure.csproj|d:\\learning1\\projects\\invoice-system\\invoicesystem.infrastructure\\appdbcontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{16CA3BFB-D56E-49CE-9E89-2719355BC7C8}|..\\InvoiceSystem.Domain\\InvoiceSystem.Domain.csproj|d:\\learning1\\projects\\invoice-system\\invoicesystem.domain\\valueobjects\\invoiceriskassessment.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
@@ -19,7 +19,7 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 4,
+          "SelectedChildIndex": 5,
           "Children": [
             {
               "$type": "Bookmark",
@@ -39,7 +39,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 0,
+              "DocumentIndex": 1,
               "Title": "AppDbContext.cs",
               "DocumentMoniker": "D:\\Learning1\\Projects\\invoice-system\\InvoiceSystem.Infrastructure\\AppDbContext.cs",
               "RelativeDocumentMoniker": "..\\InvoiceSystem.Infrastructure\\AppDbContext.cs",
@@ -52,7 +52,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
+              "DocumentIndex": 0,
               "Title": "Invoice.cs",
               "DocumentMoniker": "D:\\Learning1\\Projects\\invoice-system\\InvoiceSystem.Domain\\Entities\\Invoice.cs",
               "RelativeDocumentMoniker": "..\\InvoiceSystem.Domain\\Entities\\Invoice.cs",
@@ -71,7 +71,7 @@
               "RelativeDocumentMoniker": "..\\InvoiceSystem.Domain\\ValueObjects\\InvoiceRiskAssessment.cs",
               "ToolTip": "D:\\Learning1\\Projects\\invoice-system\\InvoiceSystem.Domain\\ValueObjects\\InvoiceRiskAssessment.cs",
               "RelativeToolTip": "..\\InvoiceSystem.Domain\\ValueObjects\\InvoiceRiskAssessment.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAB4AAAABAAAAAAAAAA==",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAMAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2026-03-07T00:29:47.6Z",
               "EditorCaption": ""
