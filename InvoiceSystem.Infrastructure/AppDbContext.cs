@@ -98,7 +98,6 @@ public class AppDbContext : DbContext
             .Property(i => i.Status)
             .HasConversion<string>(); // store enum as string
 
-
         //invoice_item
         modelBuilder.Entity<Invoice>()
             .HasMany(i => i.InvoiceItems)
