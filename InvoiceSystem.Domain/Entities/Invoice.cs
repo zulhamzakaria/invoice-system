@@ -32,7 +32,7 @@ public class Invoice : AuditableEntity
     public DateTimeOffset ApprovalDate { get; private set; }
 
     public InvoiceRiskAssessment? RiskAssessment { get; private set; }
-    public InvoiceApprovalPrediction? ApprovalPrediction { get; private set; }
+    //public InvoiceApprovalPrediction? ApprovalPrediction { get; private set; }
 
     private Invoice() { } // EF Core needs this
 
@@ -52,7 +52,7 @@ public class Invoice : AuditableEntity
         InvoiceApprovalPrediction approvalPrediction)
     {
         RiskAssessment = risk;
-        ApprovalPrediction = approvalPrediction;
+        //ApprovalPrediction = approvalPrediction;
     }
 
     public static Result<Invoice> Create(string invoiceNumber, Company company, Address billingAddress,
