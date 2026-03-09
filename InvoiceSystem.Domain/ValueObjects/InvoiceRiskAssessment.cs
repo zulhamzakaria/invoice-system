@@ -7,6 +7,7 @@ public sealed class InvoiceRiskAssessment
     public double RiskScore { get; }
     public RiskAssessment RiskLevel { get; }
     public string ModelVersion { get; } = string.Empty;
+    public DateTimeOffset GeneratedAt { get; }
 
     public InvoiceRiskAssessment(double riskScore, string modelVersion)
     {
@@ -16,6 +17,7 @@ public sealed class InvoiceRiskAssessment
         RiskScore = riskScore;
         RiskLevel = CalculateRiskLevel(riskScore);
         ModelVersion = modelVersion;
+        GeneratedAt = DateTimeOffset.UtcNow;
     }
 
     private RiskAssessment CalculateRiskLevel(double riskScore)
