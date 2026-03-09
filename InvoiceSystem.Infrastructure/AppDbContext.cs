@@ -114,6 +114,12 @@ public class AppDbContext : DbContext
             .Navigation(i => i.InvoiceItems)
             .UsePropertyAccessMode(PropertyAccessMode.Field);
 
+        modelBuilder.Entity<Invoice>()
+            .OwnsOne(i => i.RiskAssessment, ra =>
+            {
+                ra.ToJson(); // store as JSON in a single column
+                ra.Property(p => p.RiskLevel).HasColumnName("RiskLevel").HasConversion<string>();
+            });
 
         modelBuilder.Entity<Invoice>()
             .HasOne(i => i.CreatedBy)
