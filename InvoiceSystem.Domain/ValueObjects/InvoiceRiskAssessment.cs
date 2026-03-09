@@ -9,6 +9,7 @@ public sealed class InvoiceRiskAssessment
     public string ModelVersion { get; } = string.Empty;
     public DateTimeOffset GeneratedAt { get; }
 
+    public InvoiceRiskAssessment() { }
     public InvoiceRiskAssessment(double riskScore, string modelVersion)
     {
         if (riskScore is < 0 or > 1)
@@ -27,5 +28,5 @@ public sealed class InvoiceRiskAssessment
             >= 0.5 => RiskAssessment.Medium,
             _ => RiskAssessment.Low
         };
-
 }
+
