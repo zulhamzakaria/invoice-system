@@ -1,5 +1,18 @@
-﻿namespace InvoiceSystem.MLTrainer.Trainers;
+﻿using Microsoft.ML;
 
-internal class RiskModelTrainer
+namespace InvoiceSystem.MLTrainer.Trainers;
+
+public sealed class RiskModelTrainer
 {
+    private readonly int _seeder;
+
+    public RiskModelTrainer(int seed = 1)
+    {
+        _seeder = seed;
+    }
+
+    public void Train(string datasetPath)
+    {
+        var mlContext = new MLContext(_seeder);
+    }
 }

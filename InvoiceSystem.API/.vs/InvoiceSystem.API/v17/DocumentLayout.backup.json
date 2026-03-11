@@ -6,6 +6,9 @@
       "AbsoluteMoniker": "D:0:0:{8E11EC7A-5DCF-4032-820F-B4453E8B1FC7}|..\\InvoiceSystem.MLTrainer\\InvoiceSystem.MLTrainer.csproj|d:\\learning1\\projects\\invoice-system\\invoicesystem.mltrainer\\dataset\\datasetexporter.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
+      "AbsoluteMoniker": "D:0:0:{8E11EC7A-5DCF-4032-820F-B4453E8B1FC7}|..\\InvoiceSystem.MLTrainer\\InvoiceSystem.MLTrainer.csproj|d:\\learning1\\projects\\invoice-system\\invoicesystem.mltrainer\\trainers\\riskmodeltrainer.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
       "AbsoluteMoniker": "D:0:0:{8E11EC7A-5DCF-4032-820F-B4453E8B1FC7}|..\\InvoiceSystem.MLTrainer\\InvoiceSystem.MLTrainer.csproj|d:\\learning1\\projects\\invoice-system\\invoicesystem.mltrainer\\data\\invoicerisktrainingrecord.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
@@ -16,7 +19,7 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 4,
+          "SelectedChildIndex": 5,
           "Children": [
             {
               "$type": "Bookmark",
@@ -36,6 +39,19 @@
             },
             {
               "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "RiskModelTrainer.cs",
+              "DocumentMoniker": "D:\\Learning1\\Projects\\invoice-system\\InvoiceSystem.MLTrainer\\Trainers\\RiskModelTrainer.cs",
+              "RelativeDocumentMoniker": "..\\InvoiceSystem.MLTrainer\\Trainers\\RiskModelTrainer.cs",
+              "ToolTip": "D:\\Learning1\\Projects\\invoice-system\\InvoiceSystem.MLTrainer\\Trainers\\RiskModelTrainer.cs",
+              "RelativeToolTip": "..\\InvoiceSystem.MLTrainer\\Trainers\\RiskModelTrainer.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAArAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-03-11T09:21:58.981Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
               "DocumentIndex": 0,
               "Title": "DatasetExporter.cs",
               "DocumentMoniker": "D:\\Learning1\\Projects\\invoice-system\\InvoiceSystem.MLTrainer\\Dataset\\DatasetExporter.cs",
@@ -49,13 +65,13 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
+              "DocumentIndex": 2,
               "Title": "InvoiceRiskTrainingRecord.cs",
               "DocumentMoniker": "D:\\Learning1\\Projects\\invoice-system\\InvoiceSystem.MLTrainer\\Data\\InvoiceRiskTrainingRecord.cs",
               "RelativeDocumentMoniker": "..\\InvoiceSystem.MLTrainer\\Data\\InvoiceRiskTrainingRecord.cs",
               "ToolTip": "D:\\Learning1\\Projects\\invoice-system\\InvoiceSystem.MLTrainer\\Data\\InvoiceRiskTrainingRecord.cs",
               "RelativeToolTip": "..\\InvoiceSystem.MLTrainer\\Data\\InvoiceRiskTrainingRecord.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA0AAAAZAAAAAAAAAA==",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAQAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2026-03-11T08:22:24.494Z",
               "EditorCaption": ""
