@@ -1,4 +1,5 @@
 ﻿using Microsoft.ML;
+using System.Text.Json;
 
 namespace InvoiceSystem.MLTrainer.Trainers;
 
@@ -35,8 +36,27 @@ public sealed class RiskModelTrainer
         var model = pipeline.Fit(dataView);
         string outputFolder = "Output";
         string modelPath = Path.Combine(outputFolder, "RiskModel.zip");
+        string metadataPath = Path.Combine(outputFolder, "RiskModelMetadata.json");
 
         Directory.CreateDirectory(outputFolder);
         mlContext.Model.Save(model, dataView.Schema, modelPath);
+
+        var metrics = mlContext.BinaryClassification.Evaluate(model.Transform(dataView));
+        var metadata = new
+        {
+            TrainingDate = DateTime.UtcNow,
+            Algorithm = "FastTree",
+            Parameters = new { Seed = _seeder, Leaves = 20, Trees = 100},
+            Performance = new
+            {
+                Accuracy = metrics.Accuracy,
+                AreaUnderRocCurve = metrics.AreaUnderRocCurve,
+            }
+        };
+
+        File.WriteAllText(metadataPath,
+            JsonSerializer.Serialize(metadata, 
+            new JsonSerializerOptions { WriteIndented = true }));
+
     }
 }
