@@ -14,5 +14,29 @@ public sealed class RiskModelTrainer
     public void Train(string datasetPath)
     {
         var mlContext = new MLContext(_seeder);
+
+        IDataView dataView = mlContext.Data.LoadFromTextFile<Data.InvoiceRiskTrainingRecord>
+            (
+                datasetPath,
+                hasHeader: true,
+                separatorChar: ','
+            );
+
+        var pipeline = mlContext.Transforms.Concatenate(
+            "Features", 
+            nameof(Data.InvoiceRiskTrainingRecord.Amount),
+            nameof(Data.InvoiceRiskTrainingRecord.VendorAverageAmount),
+            nameof(Data.InvoiceRiskTrainingRecord.IsNewVendor))
+            .Append(mlContext.BinaryClassification.Trainers.FastTree(
+                labelColumnName: "Label", 
+                numberOfLeaves: 20,
+                numberOfTrees: 100));
+
+        var model = pipeline.Fit(dataView);
+        string outputFolder = "Output";
+        string modelPath = Path.Combine(outputFolder, "RiskModel.zip");
+
+        Directory.CreateDirectory(outputFolder);
+        mlContext.Model.Save(model, dataView.Schema, modelPath);
     }
 }
