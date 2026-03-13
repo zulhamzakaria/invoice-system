@@ -3,16 +3,10 @@
   "WorkspaceRootPath": "D:\\Learning1\\Projects\\invoice-system\\InvoiceSystem.API\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{75669D0E-FF10-431A-9DD3-7C24DDA855AE}|..\\InvoiceSystem.Application\\InvoiceSystem.Application.csproj|d:\\learning1\\projects\\invoice-system\\invoicesystem.application\\services\\helpers\\employeehelpers\\employeefactory.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{75669D0E-FF10-431A-9DD3-7C24DDA855AE}|..\\InvoiceSystem.Application\\InvoiceSystem.Application.csproj|d:\\learning1\\projects\\invoice-system\\invoicesystem.application\\common\\models\\ml\\csvinvoiceexporter.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{75669D0E-FF10-431A-9DD3-7C24DDA855AE}|..\\InvoiceSystem.Application\\InvoiceSystem.Application.csproj|d:\\learning1\\projects\\invoice-system\\invoicesystem.application\\services\\helpers\\companyhelpers\\companymappingservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{75669D0E-FF10-431A-9DD3-7C24DDA855AE}|..\\InvoiceSystem.Application\\InvoiceSystem.Application.csproj|d:\\learning1\\projects\\invoice-system\\invoicesystem.application\\common\\models\\ml\\invoicerisktrainingrecord.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{8E11EC7A-5DCF-4032-820F-B4453E8B1FC7}|..\\InvoiceSystem.MLTrainer\\InvoiceSystem.MLTrainer.csproj|d:\\learning1\\projects\\invoice-system\\invoicesystem.mltrainer\\trainers\\riskmodeltrainer.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{75669D0E-FF10-431A-9DD3-7C24DDA855AE}|..\\InvoiceSystem.Application\\InvoiceSystem.Application.csproj|d:\\learning1\\projects\\invoice-system\\invoicesystem.application\\common\\models\\ml\\iinvoiceexporter.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
   "DocumentGroupContainers": [
@@ -43,53 +37,27 @@
             {
               "$type": "Document",
               "DocumentIndex": 0,
-              "Title": "EmployeeFactory.cs",
-              "DocumentMoniker": "D:\\Learning1\\Projects\\invoice-system\\InvoiceSystem.Application\\Services\\Helpers\\EmployeeHelpers\\EmployeeFactory.cs",
-              "RelativeDocumentMoniker": "..\\InvoiceSystem.Application\\Services\\Helpers\\EmployeeHelpers\\EmployeeFactory.cs",
-              "ToolTip": "D:\\Learning1\\Projects\\invoice-system\\InvoiceSystem.Application\\Services\\Helpers\\EmployeeHelpers\\EmployeeFactory.cs",
-              "RelativeToolTip": "..\\InvoiceSystem.Application\\Services\\Helpers\\EmployeeHelpers\\EmployeeFactory.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Title": "CsvInvoiceExporter.cs",
+              "DocumentMoniker": "D:\\Learning1\\Projects\\invoice-system\\InvoiceSystem.Application\\Common\\Models\\ML\\CsvInvoiceExporter.cs",
+              "RelativeDocumentMoniker": "..\\InvoiceSystem.Application\\Common\\Models\\ML\\CsvInvoiceExporter.cs",
+              "ToolTip": "D:\\Learning1\\Projects\\invoice-system\\InvoiceSystem.Application\\Common\\Models\\ML\\CsvInvoiceExporter.cs",
+              "RelativeToolTip": "..\\InvoiceSystem.Application\\Common\\Models\\ML\\CsvInvoiceExporter.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA4AAAAiAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-03-13T10:58:09.557Z",
+              "WhenOpened": "2026-03-13T11:01:40.834Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
               "DocumentIndex": 1,
-              "Title": "CompanyMappingService.cs",
-              "DocumentMoniker": "D:\\Learning1\\Projects\\invoice-system\\InvoiceSystem.Application\\Services\\Helpers\\CompanyHelpers\\CompanyMappingService.cs",
-              "RelativeDocumentMoniker": "..\\InvoiceSystem.Application\\Services\\Helpers\\CompanyHelpers\\CompanyMappingService.cs",
-              "ToolTip": "D:\\Learning1\\Projects\\invoice-system\\InvoiceSystem.Application\\Services\\Helpers\\CompanyHelpers\\CompanyMappingService.cs",
-              "RelativeToolTip": "..\\InvoiceSystem.Application\\Services\\Helpers\\CompanyHelpers\\CompanyMappingService.cs",
-              "ViewState": "AgIAAAkAAAAAAAAAAAAAAAsAAAAAAAAAAAAAAA==",
+              "Title": "IInvoiceExporter.cs",
+              "DocumentMoniker": "D:\\Learning1\\Projects\\invoice-system\\InvoiceSystem.Application\\Common\\Models\\ML\\IInvoiceExporter.cs",
+              "RelativeDocumentMoniker": "..\\InvoiceSystem.Application\\Common\\Models\\ML\\IInvoiceExporter.cs",
+              "ToolTip": "D:\\Learning1\\Projects\\invoice-system\\InvoiceSystem.Application\\Common\\Models\\ML\\IInvoiceExporter.cs",
+              "RelativeToolTip": "..\\InvoiceSystem.Application\\Common\\Models\\ML\\IInvoiceExporter.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAYAAAAoAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-03-13T10:57:52.397Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 3,
-              "Title": "RiskModelTrainer.cs",
-              "DocumentMoniker": "D:\\Learning1\\Projects\\invoice-system\\InvoiceSystem.MLTrainer\\Trainers\\RiskModelTrainer.cs",
-              "RelativeDocumentMoniker": "..\\InvoiceSystem.MLTrainer\\Trainers\\RiskModelTrainer.cs",
-              "ToolTip": "D:\\Learning1\\Projects\\invoice-system\\InvoiceSystem.MLTrainer\\Trainers\\RiskModelTrainer.cs",
-              "RelativeToolTip": "..\\InvoiceSystem.MLTrainer\\Trainers\\RiskModelTrainer.cs",
-              "ViewState": "AgIAAAYAAAAAAAAAAAAAAB4AAAATAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-03-13T08:07:45.973Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 2,
-              "Title": "InvoiceRiskTrainingRecord.cs",
-              "DocumentMoniker": "D:\\Learning1\\Projects\\invoice-system\\InvoiceSystem.Application\\Common\\Models\\ML\\InvoiceRiskTrainingRecord.cs",
-              "RelativeDocumentMoniker": "..\\InvoiceSystem.Application\\Common\\Models\\ML\\InvoiceRiskTrainingRecord.cs",
-              "ToolTip": "D:\\Learning1\\Projects\\invoice-system\\InvoiceSystem.Application\\Common\\Models\\ML\\InvoiceRiskTrainingRecord.cs",
-              "RelativeToolTip": "..\\InvoiceSystem.Application\\Common\\Models\\ML\\InvoiceRiskTrainingRecord.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-03-13T08:06:32.613Z",
+              "WhenOpened": "2026-03-13T11:00:03.267Z",
               "EditorCaption": ""
             }
           ]
