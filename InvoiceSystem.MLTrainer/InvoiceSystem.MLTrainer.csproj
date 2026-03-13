@@ -12,4 +12,8 @@
     <PackageReference Include="Microsoft.ML.FastTree" Version="5.0.0" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\InvoiceSystem.Application\InvoiceSystem.Application.csproj" />
+  </ItemGroup>
+
 </Project>

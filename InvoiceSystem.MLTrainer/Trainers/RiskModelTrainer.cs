@@ -1,4 +1,5 @@
-﻿using Microsoft.ML;
+﻿using InvoiceSystem.Application.Common.Models.ML;
+using Microsoft.ML;
 using System.Text.Json;
 
 namespace InvoiceSystem.MLTrainer.Trainers;
@@ -16,7 +17,7 @@ public sealed class RiskModelTrainer
     {
         var mlContext = new MLContext(_seeder);
 
-        IDataView dataView = mlContext.Data.LoadFromTextFile<Data.InvoiceRiskTrainingRecord>
+        IDataView dataView = mlContext.Data.LoadFromTextFile<InvoiceRiskTrainingRecord>
             (
                 datasetPath,
                 hasHeader: true,
@@ -25,9 +26,9 @@ public sealed class RiskModelTrainer
 
         var pipeline = mlContext.Transforms.Concatenate(
             "Features", 
-            nameof(Data.InvoiceRiskTrainingRecord.Amount),
-            nameof(Data.InvoiceRiskTrainingRecord.VendorAverageAmount),
-            nameof(Data.InvoiceRiskTrainingRecord.IsNewVendor))
+            nameof(InvoiceRiskTrainingRecord.Amount),
+            nameof(InvoiceRiskTrainingRecord.VendorAverageAmount),
+            nameof(InvoiceRiskTrainingRecord.IsNewVendor))
             .Append(mlContext.BinaryClassification.Trainers.FastTree(
                 labelColumnName: "Label", 
                 numberOfLeaves: 20,
