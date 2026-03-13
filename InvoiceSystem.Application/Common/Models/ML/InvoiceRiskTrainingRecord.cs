@@ -1,6 +1,6 @@
 ﻿using Microsoft.ML.Data;
 
-namespace InvoiceSystem.MLTrainer.Data;
+namespace InvoiceSystem.Application.Common.Models.ML;
 
 public sealed class InvoiceRiskTrainingRecord
 {
