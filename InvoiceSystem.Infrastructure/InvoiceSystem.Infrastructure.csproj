@@ -24,4 +24,8 @@
     <ProjectReference Include="..\InvoiceSystem.Domain\InvoiceSystem.Domain.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="MLModels\" />
+  </ItemGroup>
+
 </Project>
