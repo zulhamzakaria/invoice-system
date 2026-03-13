@@ -1,7 +1,14 @@
 {
   "Version": 1,
   "WorkspaceRootPath": "D:\\Learning1\\Projects\\invoice-system\\InvoiceSystem.API\\",
-  "Documents": [],
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{8E11EC7A-5DCF-4032-820F-B4453E8B1FC7}|..\\InvoiceSystem.MLTrainer\\InvoiceSystem.MLTrainer.csproj|d:\\learning1\\projects\\invoice-system\\invoicesystem.mltrainer\\trainers\\riskmodeltrainer.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{75669D0E-FF10-431A-9DD3-7C24DDA855AE}|..\\InvoiceSystem.Application\\InvoiceSystem.Application.csproj|d:\\learning1\\projects\\invoice-system\\invoicesystem.application\\common\\models\\ml\\invoicerisktrainingrecord.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    }
+  ],
   "DocumentGroupContainers": [
     {
       "Orientation": 0,
@@ -9,7 +16,7 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": -1,
+          "SelectedChildIndex": 4,
           "Children": [
             {
               "$type": "Bookmark",
@@ -26,6 +33,32 @@
             {
               "$type": "Bookmark",
               "Name": "ST:0:0:{0174dea2-fdbe-4ef1-8f99-c0beae78880f}"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "RiskModelTrainer.cs",
+              "DocumentMoniker": "D:\\Learning1\\Projects\\invoice-system\\InvoiceSystem.MLTrainer\\Trainers\\RiskModelTrainer.cs",
+              "RelativeDocumentMoniker": "..\\InvoiceSystem.MLTrainer\\Trainers\\RiskModelTrainer.cs",
+              "ToolTip": "D:\\Learning1\\Projects\\invoice-system\\InvoiceSystem.MLTrainer\\Trainers\\RiskModelTrainer.cs",
+              "RelativeToolTip": "..\\InvoiceSystem.MLTrainer\\Trainers\\RiskModelTrainer.cs",
+              "ViewState": "AgIAAA8AAAAAAAAAAAA1wB4AAAATAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-03-13T08:07:45.973Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "InvoiceRiskTrainingRecord.cs",
+              "DocumentMoniker": "D:\\Learning1\\Projects\\invoice-system\\InvoiceSystem.Application\\Common\\Models\\ML\\InvoiceRiskTrainingRecord.cs",
+              "RelativeDocumentMoniker": "..\\InvoiceSystem.Application\\Common\\Models\\ML\\InvoiceRiskTrainingRecord.cs",
+              "ToolTip": "D:\\Learning1\\Projects\\invoice-system\\InvoiceSystem.Application\\Common\\Models\\ML\\InvoiceRiskTrainingRecord.cs",
+              "RelativeToolTip": "..\\InvoiceSystem.Application\\Common\\Models\\ML\\InvoiceRiskTrainingRecord.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-03-13T08:06:32.613Z",
+              "EditorCaption": ""
             }
           ]
         }
