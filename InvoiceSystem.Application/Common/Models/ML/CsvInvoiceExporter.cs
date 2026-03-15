@@ -11,6 +11,5 @@ public class CsvInvoiceExporter : IInvoiceExporter
         using var csv = new CsvWriter(writer, CultureInfo.InvariantCulture);
 
         //csv.WriteRecords(records);
-
     }
 }
