@@ -1,10 +1,6 @@
-﻿## [ Build Artifacts ]
+## [ Build Artifacts ]
 **/bin/
 **/obj/
-[debug]/
-[release]/
-
-## [ Visual Studio ]
 .vs/
 *.user
 *.suo
@@ -24,7 +20,6 @@ DocumentLayout.json
 *.zip
 *.mlnet
 *.csv
-!InvoiceSystem.Domain/Data/
 
 ## [ Environment / Secrets ]
 .env
