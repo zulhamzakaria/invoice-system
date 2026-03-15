@@ -1,6 +1,4 @@
-﻿using InvoiceSystem.Domain.Entities;
-
-namespace InvoiceSystem.Application.Common.Models.ML;
+﻿namespace InvoiceSystem.Application.Common.Models.ML;
 
 public interface IInvoiceExporter
 {
