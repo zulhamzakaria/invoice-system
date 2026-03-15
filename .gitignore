@@ -1,6 +1,6 @@
 ﻿## [ Visual Studio ]
-bin/
-obj/
+*.bin/
+*.obj/
 .vs/
 *.user
 *.suo
@@ -32,3 +32,5 @@ secrets.json
 ## [ OS / Tools ]
 .DS_Store
 Thumbs.db
+/InvoiceSystem.API/.vs/InvoiceSystem.API/v17/.suo
+/InvoiceSystem.API/.vs/InvoiceSystem.API/v17/DocumentLayout.json
