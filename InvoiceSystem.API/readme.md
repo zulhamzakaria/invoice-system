@@ -85,7 +85,6 @@
 | Actor Modeling            | Separate classes inheriting from an abstract Employee base class |
 | Domain Responsibility     | Core entities and business rules                                 |
 | Application Responsibility| Workflow orchestration, use cases, approval routing              |
-| Approval Pattern          | Chain of Responsibility (CoC) for dynamic, multi-step approval   |
 | Workload Management       | Round robin, FIFO, least loaded, and routing strategies          |
 
 ---

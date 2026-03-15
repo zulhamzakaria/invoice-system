@@ -10,3 +10,15 @@ D:\Learning1\Projects\invoice-system\InvoiceSystem.Domain\obj\Debug\net8.0\Invoi
 D:\Learning1\Projects\invoice-system\InvoiceSystem.Domain\obj\Debug\net8.0\refint\InvoiceSystem.Domain.dll
 D:\Learning1\Projects\invoice-system\InvoiceSystem.Domain\obj\Debug\net8.0\InvoiceSystem.Domain.pdb
 D:\Learning1\Projects\invoice-system\InvoiceSystem.Domain\obj\Debug\net8.0\ref\InvoiceSystem.Domain.dll
+D:\invoice-system\InvoiceSystem.Domain\bin\Debug\net8.0\InvoiceSystem.Domain.deps.json
+D:\invoice-system\InvoiceSystem.Domain\bin\Debug\net8.0\InvoiceSystem.Domain.dll
+D:\invoice-system\InvoiceSystem.Domain\bin\Debug\net8.0\InvoiceSystem.Domain.pdb
+D:\invoice-system\InvoiceSystem.Domain\obj\Debug\net8.0\InvoiceSystem.Domain.GeneratedMSBuildEditorConfig.editorconfig
+D:\invoice-system\InvoiceSystem.Domain\obj\Debug\net8.0\InvoiceSystem.Domain.AssemblyInfoInputs.cache
+D:\invoice-system\InvoiceSystem.Domain\obj\Debug\net8.0\InvoiceSystem.Domain.AssemblyInfo.cs
+D:\invoice-system\InvoiceSystem.Domain\obj\Debug\net8.0\InvoiceSystem.Domain.csproj.CoreCompileInputs.cache
+D:\invoice-system\InvoiceSystem.Domain\obj\Debug\net8.0\InvoiceSystem.Domain.sourcelink.json
+D:\invoice-system\InvoiceSystem.Domain\obj\Debug\net8.0\InvoiceSystem.Domain.dll
+D:\invoice-system\InvoiceSystem.Domain\obj\Debug\net8.0\refint\InvoiceSystem.Domain.dll
+D:\invoice-system\InvoiceSystem.Domain\obj\Debug\net8.0\InvoiceSystem.Domain.pdb
+D:\invoice-system\InvoiceSystem.Domain\obj\Debug\net8.0\ref\InvoiceSystem.Domain.dll

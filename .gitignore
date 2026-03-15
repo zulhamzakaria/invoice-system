@@ -1,0 +1,34 @@
+﻿## [ Visual Studio ]
+bin/
+obj/
+.vs/
+*.user
+*.suo
+*.userosscache
+*.sln.docstates
+
+## [ .NET / C# ]
+*.exe
+*.dll
+*.pdb
+*.log
+.buildlog
+project.lock.json
+project.fragment.lock.json
+
+## [ ML.NET Specific ]
+# Ignore the generated model files and training data if they are large
+# or frequently changing during local development
+*.zip
+*.csv
+!InvoiceSystem.Domain/Data/ # Optional: keep this if you want to track sample data
+
+## [ Environment / Secrets ]
+.env
+appsettings.Development.json
+appsettings.Production.json
+secrets.json
+
+## [ OS / Tools ]
+.DS_Store
+Thumbs.db
