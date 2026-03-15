@@ -1,6 +1,6 @@
 ﻿## [ Build Artifacts ]
-bin/
-obj/
+**/bin/
+**/obj/
 [debug]/
 [release]/
 
@@ -35,6 +35,3 @@ secrets.json
 ## [ OS / Tools ]
 .DS_Store
 Thumbs.db
-/InvoiceSystem.Application/bin/Debug/net8.0/InvoiceSystem.Application.dll
-
-/InvoiceSystem.Application/bin/Debug/net8.0/InvoiceSystem.Application.pdb
