@@ -1,5 +1,6 @@
 ﻿using InvoiceSystem.Domain.Entities;
 using InvoiceSystem.Domain.Enums;
+using InvoiceSystem.Domain.SharedContracts;
 using Microsoft.EntityFrameworkCore;
 
 namespace InvoiceSystem.Infrastructure.Repositories
@@ -58,6 +59,11 @@ namespace InvoiceSystem.Infrastructure.Repositories
                 .Include(i => i.InvoiceItems)
                 .Include(i => i.Company)
                 .FirstOrDefaultAsync(i => i.Id == id);
+        }
+
+        public Task<IEnumerable<ITrainingData>> GetTrainingDataAsync(CancellationToken token = default)
+        {
+            throw new NotImplementedException();
         }
 
         public IQueryable<Invoice> QueryAll()
