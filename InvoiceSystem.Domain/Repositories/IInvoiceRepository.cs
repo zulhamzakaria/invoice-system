@@ -1,5 +1,4 @@
 ﻿using InvoiceSystem.Domain.Entities;
-using InvoiceSystem.Domain.SharedContracts;
 
 public interface IInvoiceRepository
 {

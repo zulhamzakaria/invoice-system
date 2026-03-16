@@ -1,6 +1,5 @@
 ﻿using InvoiceSystem.Domain.Entities;
 using InvoiceSystem.Domain.Enums;
-using InvoiceSystem.Domain.SharedContracts;
 using Microsoft.EntityFrameworkCore;
 
 namespace InvoiceSystem.Infrastructure.Repositories
