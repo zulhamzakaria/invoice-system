@@ -13,5 +13,4 @@ public interface IInvoiceRepository
     Task UpdateAsync(Invoice invoice);
     Task DeleteAsync(Invoice invoice);
     Task<int> SaveChangesAsync(CancellationToken token = default);
-    Task<IEnumerable<ITrainingData>> GetTrainingDataAsync(CancellationToken token = default);
 }

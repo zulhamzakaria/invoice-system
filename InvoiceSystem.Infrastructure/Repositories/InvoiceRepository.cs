@@ -61,11 +61,6 @@ namespace InvoiceSystem.Infrastructure.Repositories
                 .FirstOrDefaultAsync(i => i.Id == id);
         }
 
-        public Task<IEnumerable<ITrainingData>> GetTrainingDataAsync(CancellationToken token = default)
-        {
-            throw new NotImplementedException();
-        }
-
         public IQueryable<Invoice> QueryAll()
         {
             return _context.Invoices.AsQueryable();
