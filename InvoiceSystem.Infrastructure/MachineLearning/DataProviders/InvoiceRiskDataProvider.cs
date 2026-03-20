@@ -1,5 +1,7 @@
 ﻿using InvoiceSystem.Application.Common.Models.ML;
 using InvoiceSystem.Application.Common.Models.ML.DataProviders;
+using InvoiceSystem.Domain.Enums;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 
 namespace InvoiceSystem.Infrastructure.MachineLearning.DataProviders;
@@ -14,8 +16,77 @@ public sealed class InvoiceRiskDataProvider : IRiskTrainingDataProvider
         _dbContext = dbContext;
         _logger = logger;
     }
-    public Task<IEnumerable<InvoiceRiskTrainingRecord>> GetTrainingDataAsync(CancellationToken token = default)
+    public async Task<IEnumerable<InvoiceRiskTrainingRecord>> GetTrainingDataAsync
+        (CancellationToken token = default)
     {
-        throw new NotImplementedException();
+        try 
+        {
+            _logger.LogInformation("starting risk training data");
+            var vendorStats = await GetVendorStatisticAsync(token);
+
+            if (!vendorStats.Any())
+            {
+                _logger.LogWarning("No vendor stats for training data");
+                return Enumerable.Empty<InvoiceRiskTrainingRecord>();
+            }
+
+            var trainingRecords = await GetRiskTrainingRecordAsync
+                (vendorStats, token);
+
+            return trainingRecords;
+
+        } 
+        catch (OperationCanceledException)
+        {
+            _logger.LogInformation("Risk training data export was canceled");
+            throw;
+        }
+        catch(Exception ex) 
+        {
+            _logger.LogError(ex, "Failed to export risk training data");
+            throw;
+        }
+    }
+
+    private async Task<IEnumerable<InvoiceRiskTrainingRecord>> GetRiskTrainingRecordAsync
+        (Dictionary<Guid, VendorRiskStats> vendorStats, CancellationToken token)
+    {
+        var trainingRecord = new List<InvoiceRiskTrainingRecord>();
+
+        var invoiceQuert = _dbContext.Invoices
+            .Where(i => i.Status == InvoiceStatus.ApprovedByManager || i.Status == InvoiceStatus.Paid)
+            .Select(i=> new
+            {
+                i.Id,
+                i.TotalAmount,
+                CompanyId = i.Company.Id,
+                i.RiskAssessment,
+                i.CreatedAt
+            }).AsAsyncEnumerable();
+    }
+
+    private async Task<Dictionary<Guid, VendorRiskStats>> GetVendorStatisticAsync(CancellationToken token)
+    {
+        return await _dbContext.Invoices
+            .Where(i => i.Status == InvoiceStatus.ApprovedByManager || i.Status == InvoiceStatus.Paid)
+            .GroupBy(i => i.Company.Id)
+            .Select(g => new
+            {
+                CompanyId = g.Key,
+                AverageAmount = g.Average(i => i.TotalAmount),
+                InvoiceCount = g.Count(),
+                MaxAmount = g.Max(i => i.TotalAmount),
+                StdDev = EF.Functions.StandardDeviationSample(g.Select(i => (double)i.TotalAmount))
+            })
+            .ToDictionaryAsync(
+            x => x.CompanyId,
+            x => new VendorRiskStats(
+                x.AverageAmount, 
+                x.InvoiceCount, 
+                x.MaxAmount, 
+                x.StdDev ?? 0
+                ), token);
     }
 }
+
+internal record VendorRiskStats(decimal AverageAmount, int InvoiceCount, decimal MaxaAmount, double StdDev);
