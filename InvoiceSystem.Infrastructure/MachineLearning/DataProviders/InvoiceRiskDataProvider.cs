@@ -1,6 +1,8 @@
 ﻿using InvoiceSystem.Application.Common.Models.ML;
 using InvoiceSystem.Application.Common.Models.ML.DataProviders;
+using InvoiceSystem.Domain.Entities;
 using InvoiceSystem.Domain.Enums;
+using InvoiceSystem.Domain.ValueObjects;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 
@@ -19,7 +21,7 @@ public sealed class InvoiceRiskDataProvider : IRiskTrainingDataProvider
     public async Task<IEnumerable<InvoiceRiskTrainingRecord>> GetTrainingDataAsync
         (CancellationToken token = default)
     {
-        try 
+        try
         {
             _logger.LogInformation("starting risk training data");
             var vendorStats = await GetVendorStatisticAsync(token);
@@ -35,13 +37,13 @@ public sealed class InvoiceRiskDataProvider : IRiskTrainingDataProvider
 
             return trainingRecords;
 
-        } 
+        }
         catch (OperationCanceledException)
         {
             _logger.LogInformation("Risk training data export was canceled");
             throw;
         }
-        catch(Exception ex) 
+        catch (Exception ex)
         {
             _logger.LogError(ex, "Failed to export risk training data");
             throw;
@@ -53,16 +55,44 @@ public sealed class InvoiceRiskDataProvider : IRiskTrainingDataProvider
     {
         var trainingRecord = new List<InvoiceRiskTrainingRecord>();
 
-        var invoiceQuert = _dbContext.Invoices
+        var invoiceQuery = _dbContext.Invoices
             .Where(i => i.Status == InvoiceStatus.ApprovedByManager || i.Status == InvoiceStatus.Paid)
-            .Select(i=> new
-            {
+            .Select(i => new InvoiceProjection
+            (
                 i.Id,
                 i.TotalAmount,
-                CompanyId = i.Company.Id,
+                i.Company.Id,
                 i.RiskAssessment,
                 i.CreatedAt
-            }).AsAsyncEnumerable();
+            )).AsAsyncEnumerable();
+
+        await foreach (var invoice in invoiceQuery.WithCancellation(token))
+        {
+            if (!vendorStats.TryGetValue(invoice.CompanyId, out var stats))
+                _logger.LogWarning("No vendor stats for Company: {CompanyId}", invoice.CompanyId);
+            continue;
+
+            var isHighRisk = DetermineHighRiskLabel(invoice, stats);
+
+        }
+    }
+
+    private object DetermineHighRiskLabel(InvoiceProjection invoice, VendorRiskStats stats)
+    {
+        if(invoice.RiskAssessment?.RiskLevel == RiskAssessment.High)
+            return true;
+
+        if(stats.StdDev > 0 && 
+            invoice.TotalAmount > stats.AverageAmount + (2 * (decimal)stats.StdDev))
+            return true;
+
+        if(invoice.TotalAmount > stats.AverageAmount * 2.5m)
+            return true;
+
+        if(invoice.TotalAmount > 100000m)
+            return true;
+
+        return false;
     }
 
     private async Task<Dictionary<Guid, VendorRiskStats>> GetVendorStatisticAsync(CancellationToken token)
@@ -81,12 +111,19 @@ public sealed class InvoiceRiskDataProvider : IRiskTrainingDataProvider
             .ToDictionaryAsync(
             x => x.CompanyId,
             x => new VendorRiskStats(
-                x.AverageAmount, 
-                x.InvoiceCount, 
-                x.MaxAmount, 
+                x.AverageAmount,
+                x.InvoiceCount,
+                x.MaxAmount,
                 x.StdDev ?? 0
                 ), token);
     }
 }
 
 internal record VendorRiskStats(decimal AverageAmount, int InvoiceCount, decimal MaxaAmount, double StdDev);
+
+internal record InvoiceProjection(
+        Guid Id,
+        decimal TotalAmount,
+        Guid CompanyId,
+        InvoiceRiskAssessment RiskAssessment,
+        DateTimeOffset CreatedAt);
