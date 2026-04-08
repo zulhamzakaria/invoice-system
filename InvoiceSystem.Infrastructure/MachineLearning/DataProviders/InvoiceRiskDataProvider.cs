@@ -53,7 +53,7 @@ public sealed class InvoiceRiskDataProvider : IRiskTrainingDataProvider
     private async Task<IEnumerable<InvoiceRiskTrainingRecord>> GetRiskTrainingRecordAsync
         (Dictionary<Guid, VendorRiskStats> vendorStats, CancellationToken token)
     {
-        var trainingRecord = new List<InvoiceRiskTrainingRecord>();
+        var trainingRecords = new List<InvoiceRiskTrainingRecord>();
 
         var invoiceQuery = _dbContext.Invoices
             .Where(i => i.Status == InvoiceStatus.ApprovedByManager || i.Status == InvoiceStatus.Paid)
@@ -69,27 +69,47 @@ public sealed class InvoiceRiskDataProvider : IRiskTrainingDataProvider
         await foreach (var invoice in invoiceQuery.WithCancellation(token))
         {
             if (!vendorStats.TryGetValue(invoice.CompanyId, out var stats))
+            {
                 _logger.LogWarning("No vendor stats for Company: {CompanyId}", invoice.CompanyId);
-            continue;
+                continue;
+            }
 
             var isHighRisk = DetermineHighRiskLabel(invoice, stats);
 
+            var record = new InvoiceRiskTrainingRecord
+            {
+                Amount = (float)invoice.TotalAmount,
+                VendorAverageAmount = (float)stats.AverageAmount,
+                IsNewVendor = stats.InvoiceCount < 5, // Consider vendors with less than 5 invoices as new
+                IsHighRisk = isHighRisk
+            };
+
+            trainingRecords.Add(record);
+
+            if(trainingRecords.Count % 10000 == 0)
+            {
+                _logger.LogInformation("Processed {Count} training records", trainingRecords.Count);
+            }   
+
         }
+
+        return trainingRecords;
+
     }
 
-    private object DetermineHighRiskLabel(InvoiceProjection invoice, VendorRiskStats stats)
+    private bool DetermineHighRiskLabel(InvoiceProjection invoice, VendorRiskStats stats)
     {
-        if(invoice.RiskAssessment?.RiskLevel == RiskAssessment.High)
+        if (invoice.RiskAssessment?.RiskLevel == RiskAssessment.High)
             return true;
 
-        if(stats.StdDev > 0 && 
+        if (stats.StdDev > 0 &&
             invoice.TotalAmount > stats.AverageAmount + (2 * (decimal)stats.StdDev))
             return true;
 
-        if(invoice.TotalAmount > stats.AverageAmount * 2.5m)
+        if (invoice.TotalAmount > stats.AverageAmount * 2.5m)
             return true;
 
-        if(invoice.TotalAmount > 100000m)
+        if (invoice.TotalAmount > 100000m)
             return true;
 
         return false;
