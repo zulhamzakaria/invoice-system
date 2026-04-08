@@ -1,4 +1,5 @@
 using InvoiceSystem.API.Endpoints;
+using InvoiceSystem.Application.Common.Models.ML.DataProviders;
 using InvoiceSystem.Application.Mappers;
 using InvoiceSystem.Application.Mappers.Interfaces;
 using InvoiceSystem.Application.Services;
@@ -6,6 +7,7 @@ using InvoiceSystem.Application.Services.Helpers.CompanyHelpers;
 using InvoiceSystem.Application.Services.Interfaces;
 using InvoiceSystem.Domain.Repositories;
 using InvoiceSystem.Infrastructure;
+using InvoiceSystem.Infrastructure.MachineLearning.DataProviders;
 using InvoiceSystem.Infrastructure.Repositories;
 using Microsoft.AspNetCore.Http.Json;
 using Microsoft.EntityFrameworkCore;
@@ -78,6 +80,8 @@ builder.Services.AddScoped<IAddressMapper, AddressMapper>();
 builder.Services.AddScoped<ICompanyMapper, CompanyMapper>();
 builder.Services.AddScoped<IEmployeeMapper, EmployeeMapper>();
 builder.Services.AddScoped<IInvoiceMapper, InvoiceMappper>();
+
+builder.Services.AddScoped<IRiskTrainingDataProvider, InvoiceRiskDataProvider>();
 
 var app = builder.Build();
 
