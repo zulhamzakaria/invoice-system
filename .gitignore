@@ -30,3 +30,4 @@ secrets.json
 ## [ OS / Tools ]
 .DS_Store
 Thumbs.db
+/InvoiceSystem.MLTrainer/appsettings.json
