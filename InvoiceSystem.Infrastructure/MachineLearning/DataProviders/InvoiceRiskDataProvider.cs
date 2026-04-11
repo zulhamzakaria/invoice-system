@@ -5,6 +5,7 @@ using InvoiceSystem.Domain.Enums;
 using InvoiceSystem.Domain.ValueObjects;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
+using System.Runtime.CompilerServices;
 
 namespace InvoiceSystem.Infrastructure.MachineLearning.DataProviders;
 
@@ -50,11 +51,10 @@ public sealed class InvoiceRiskDataProvider : IRiskTrainingDataProvider
         }
     }
 
-    private async Task<IEnumerable<InvoiceRiskTrainingRecord>> GetRiskTrainingRecordAsync
-        (Dictionary<Guid, VendorRiskStats> vendorStats, CancellationToken token)
+    private async IAsyncEnumerable<InvoiceRiskTrainingRecord> GetRiskTrainingRecordStreamAsync
+        (Dictionary<Guid, VendorRiskStats> vendorStats, 
+        [EnumeratorCancellation] CancellationToken token)
     {
-        var trainingRecords = new List<InvoiceRiskTrainingRecord>();
-
         var invoiceQuery = _dbContext.Invoices
             .Where(i => i.Status == InvoiceStatus.ApprovedByManager || i.Status == InvoiceStatus.Paid)
             .Select(i => new InvoiceProjection
@@ -66,6 +66,8 @@ public sealed class InvoiceRiskDataProvider : IRiskTrainingDataProvider
                 i.CreatedAt
             )).AsAsyncEnumerable();
 
+        var count = 0;
+
         await foreach (var invoice in invoiceQuery.WithCancellation(token))
         {
             if (!vendorStats.TryGetValue(invoice.CompanyId, out var stats))
@@ -76,7 +78,7 @@ public sealed class InvoiceRiskDataProvider : IRiskTrainingDataProvider
 
             var isHighRisk = DetermineHighRiskLabel(invoice, stats);
 
-            var record = new InvoiceRiskTrainingRecord
+            yield return new InvoiceRiskTrainingRecord
             {
                 Amount = (float)invoice.TotalAmount,
                 VendorAverageAmount = (float)stats.AverageAmount,
@@ -84,16 +86,13 @@ public sealed class InvoiceRiskDataProvider : IRiskTrainingDataProvider
                 IsHighRisk = isHighRisk
             };
 
-            trainingRecords.Add(record);
-
-            if(trainingRecords.Count % 10000 == 0)
+            count++;
+            if (count % 10000 == 0)
             {
-                _logger.LogInformation("Processed {Count} training records", trainingRecords.Count);
+                _logger.LogInformation("Processed {Count} training records", count);
             }   
 
         }
-
-        return trainingRecords;
 
     }
 
