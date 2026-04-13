@@ -19,40 +19,29 @@ public sealed class InvoiceRiskDataProvider : IRiskTrainingDataProvider
         _dbContext = dbContext;
         _logger = logger;
     }
-    public async IAsyncEnumerable<InvoiceRiskTrainingRecord> GetTrainingDataStreamAsync
+    public async IAsyncEnumerable<InvoiceRiskTrainingRecord> GetTrainingDataStream
         (CancellationToken token = default)
     {
-        try
+        _logger.LogInformation("Starting risk training data stream");
+
+        var vendorStats = await GetVendorStatisticAsync(token);
+
+        if (!vendorStats.Any())
         {
-            _logger.LogInformation("starting risk training data");
-            var vendorStats = await GetVendorStatisticAsync(token);
-
-            if (!vendorStats.Any())
-            {
-                _logger.LogWarning("No vendor stats for training data");
-                return Enumerable.Empty<InvoiceRiskTrainingRecord>();
-            }
-
-            var trainingRecords = await GetRiskTrainingRecordAsync
-                (vendorStats, token);
-
-            return trainingRecords;
-
+            _logger.LogWarning("No vendor stats for training data");
+            yield break;
         }
-        catch (OperationCanceledException)
+
+        await foreach (var record in GetRiskTrainingRecordStreamAsync(vendorStats, token))
         {
-            _logger.LogInformation("Risk training data export was canceled");
-            throw;
+            yield return record;
         }
-        catch (Exception ex)
-        {
-            _logger.LogError(ex, "Failed to export risk training data");
-            throw;
-        }
+
+        _logger.LogInformation("Training data stream completed successfully");
     }
 
     private async IAsyncEnumerable<InvoiceRiskTrainingRecord> GetRiskTrainingRecordStreamAsync
-        (Dictionary<Guid, VendorRiskStats> vendorStats, 
+        (Dictionary<Guid, VendorRiskStats> vendorStats,
         [EnumeratorCancellation] CancellationToken token)
     {
         var invoiceQuery = _dbContext.Invoices
@@ -90,7 +79,7 @@ public sealed class InvoiceRiskDataProvider : IRiskTrainingDataProvider
             if (count % 10000 == 0)
             {
                 _logger.LogInformation("Processed {Count} training records", count);
-            }   
+            }
 
         }
 
