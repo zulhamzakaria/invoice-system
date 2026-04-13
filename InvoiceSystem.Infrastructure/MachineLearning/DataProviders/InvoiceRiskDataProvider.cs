@@ -19,7 +19,7 @@ public sealed class InvoiceRiskDataProvider : IRiskTrainingDataProvider
         _dbContext = dbContext;
         _logger = logger;
     }
-    public async Task<IEnumerable<InvoiceRiskTrainingRecord>> GetTrainingDataAsync
+    public async IAsyncEnumerable<InvoiceRiskTrainingRecord> GetTrainingDataStreamAsync
         (CancellationToken token = default)
     {
         try

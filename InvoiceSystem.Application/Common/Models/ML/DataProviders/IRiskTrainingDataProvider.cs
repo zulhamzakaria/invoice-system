@@ -2,5 +2,5 @@
 
 public interface IRiskTrainingDataProvider
 {
-    Task<IEnumerable<InvoiceRiskTrainingRecord>> GetTrainingDataAsync(CancellationToken token = default);
+    IAsyncEnumerable<InvoiceRiskTrainingRecord> GetTrainingDataStream(CancellationToken token = default);
 }
