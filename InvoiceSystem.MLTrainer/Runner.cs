@@ -12,7 +12,8 @@ public class Runner
 {
     public Task<int> RunAsync(CancellationToken ct)
     {
-
+        //// Safer hardcoding
+        //var dataPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "ML", "Data", "risk-training-data.csv");
         var dataPath = mlSettings.Value.CsvFilePath;
         var modelPath = mlSettings.Value.ModelFilePath;
 
